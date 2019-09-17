@@ -13,14 +13,14 @@
             <img src="{{ asset('img/doctor.jpg') }}">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1 class="text-primary font-abril">White Cross Medical Clinic</h1>
+                    <h2 class="text-primary font-abril">White Cross Medical Clinic</h2>
                     <p>Medical Clinic and Clinical Laboratory in Cebu City<br>Opening at 9:00 AM on Monday</p>
-                    <a class="btn btn-lg btn-primary" href="#" role="button"><i class="fa fa-phone" aria-hidden="true"></i> Contact Us</a>
+                    <a class="btn btn-lg btn-primary js-scroll-trigger" href="#Contact" >Contact Us</a>
                 </div>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('img/image_1_1.jpg') }}">
+            <img src="{{ asset('img/image_1.jpg') }}">
         </div>
         <div class="carousel-item">
             <img src="{{ asset('img/image_2.jpg') }}">
@@ -36,7 +36,7 @@
     </a>
 </div>
 <div class="container">
-    <section id="">
+    {{-- <section id="">
         <div class="marketing">
             <div class="row px-5">
                 <div class="col-lg-4">
@@ -59,114 +59,8 @@
                 </div>
             </div>
         </div>
-    </section>
-        <hr class="featurette-divider">
-    <section id="Services">
-        <div class="text-center mt-5 mb-3">
-            <span class="fas fa-briefcase-medical fa-3x"></span>
-        </div>
-        <div class="row">
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Medical<br>Check-Up</h4>
-                        <p class="card-category text-primary">PHP 250</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Medical<br>Certificate</h4>
-                        <p class="card-category text-primary">PHP 250</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Drug<br>Testing</h4>
-                        <p class="card-category text-primary">PHP 300</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title"> Chest<br>X-Ray</h4>
-                        <p class="card-category text-primary">PHP 230</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Blood<br>Typing</h4>
-                        <p class="card-category text-primary">PHP 150</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Pregnancy<br>Test</h4>
-                        <p class="card-category text-primary">PHP 100</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Blood Sugar<br>Test</h4>
-                        <p class="card-category text-primary">PHP 80</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Hepatitis A<br>Test</h4>
-                        <p class="card-category text-primary">PHP 500</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Hepatitis B<br>Test</h4>
-                        <p class="card-category text-primary">PHP 250</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">CBC Test<br>&nbsp</h4>
-                        <p class="card-category text-primary">PHP 120</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Urinalysis<br>&nbsp</h4>
-                        <p class="card-category text-primary">PHP 80</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h6 class="card-title">Stool Exam<br>&nbsp</h4>
-                        <p class="card-category text-primary">PHP 80</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        <hr class="featurette-divider">
+    </section> --}}
+        {{-- <hr class="featurette-divider"> --}}
     <section id="About">
         <div class="text-center mt-5 mb-4">
             <i class="fas fa-users fa-3x"></i>
@@ -189,22 +83,129 @@
         </div>
     </section>
     <hr class="featurette-divider">
+    <section id="Services">
+        <div class="text-center mt-5 mb-3">
+            <span class="fas fa-briefcase-medical fa-3x"></span>
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Medical<br>Check-Up</h4>
+                        <p class="card-category text-primary">PHP 250</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Medical<br>Certificate</h4>
+                        <p class="card-category text-primary">PHP 250</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Drug<br>Testing</h4>
+                        <p class="card-category text-primary">PHP 300</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title"> Chest<br>X-Ray</h4>
+                        <p class="card-category text-primary">PHP 230</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Blood<br>Typing</h4>
+                        <p class="card-category text-primary">PHP 150</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Pregnancy<br>Test</h4>
+                        <p class="card-category text-primary">PHP 100</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Blood Sugar<br>Test</h4>
+                        <p class="card-category text-primary">PHP 80</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Hepatitis A<br>Test</h4>
+                        <p class="card-category text-primary">PHP 500</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Hepatitis B<br>Test</h4>
+                        <p class="card-category text-primary">PHP 250</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">CBC Test<br>&nbsp</h4>
+                        <p class="card-category text-primary">PHP 120</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Urinalysis<br>&nbsp</h4>
+                        <p class="card-category text-primary">PHP 80</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h6 class="card-title">Stool Exam<br>&nbsp</h4>
+                        <p class="card-category text-primary">PHP 80</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="featurette-divider">
     <section id="Contact">
         <div class="row">
-            <div class="col-4">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <h4>Contact</h4>
+                <a href="tel:+63-32-255-0305" class="btn btn-primary">Call Now</a>
                 <p>(032) 255 0305</p>
-                <button class="btn btn-primary">Call Now</button>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <h4><i class="fas fa-map-marker-alt text-danger"></i> Address</h4>
+                <a href="https://www.google.com/maps/dir//White+Cross+Medical+Clinic/data=!4m8!4m7!1m0!1m5!1m1!1s0x33a99be239d7dd09:0xa9513e6c377f466!2m2!1d123.9013602!2d10.2950368" class="btn btn-primary">Get Directions</a>
                 <p>Room 205 Teodora Building, Osmeña Boulevard Corner D. Jakosalem Street
                     <br>Cebu City
                     <br>6000 Cebu
                     <br>Philippines
                 </p>
             </div>
-            <div class="col-4">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <h4>Business Hours</h4>
                 <table>
                     <tbody>

@@ -18306,12 +18306,70 @@ button.toast-close-button {
   border-radius: 0px !important;
 }
 
-.carousel-caption h1 {
-  text-shadow: 2px 2px 5px #343a40;
+.carousel-item {
+  height: 100vh !important;
+  min-height: 350px !important;
+  background: no-repeat center center scroll !important;
+  background-size: cover !important;
 }
 
-.carousel-caption p {
-  text-shadow: 2px 2px 5px #343a40;
+@media only screen and (max-width: 576px) {
+  .carousel-caption {
+    top: 50px;
+    text-align: center;
+  }
+
+  .carousel-caption h2 {
+    text-shadow: 2px 2px 5px #343a40;
+    font-size: 20px;
+  }
+
+  .carousel-caption p {
+    text-shadow: 2px 2px 5px #343a40;
+    font-size: 12px;
+  }
+
+  .carousel-caption p br {
+    content: " ";
+  }
+
+  .carousel-caption p br:after {
+    content: " ";
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .carousel-caption {
+    top: 70px;
+    text-align: left;
+  }
+
+  .carousel-caption h2 {
+    text-shadow: 2px 2px 5px #343a40;
+    font-size: 20px;
+  }
+
+  .carousel-caption p {
+    text-shadow: 2px 2px 5px #343a40;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .carousel-caption {
+    top: 200px;
+    text-align: left;
+  }
+
+  .carousel-caption h2 {
+    text-shadow: 2px 2px 5px #343a40;
+    font-size: 2.25em !important;
+  }
+
+  .carousel-caption p {
+    text-shadow: 2px 2px 5px #343a40;
+    font-size: 1em !important;
+  }
 }
 
 .sidebar-background {
@@ -18320,5 +18378,17 @@ button.toast-close-button {
 
 #loadOverlay {
   display: none;
+}
+
+.text-primary {
+  color: #03a9f4 !important;
+}
+
+.navbar-brand {
+  color: #03a9f4 !important;
+}
+
+.navbar-brand:hover {
+  color: #0c83e2 !important;
 }
 

@@ -1,26 +1,27 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand font-abril" href="{{ url('/') }}">
             {{ config('app.name', 'White Cross Medical Clinic') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon">
+            </span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active px-2">
-                    <a class="nav-link" href="{{ url('/') }}"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger text-primary" href="#About">About</a>
+                    {{-- <i class="fas fa-users fa-lg"></i>  --}}
                 </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link js-scroll-trigger" href="#Services"><span class="fas fa-briefcase-medical fa-lg"></span> Services</a>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger text-primary" href="#Services">Services</a>
+                    {{-- <span class="fas fa-briefcase-medical fa-lg"></span>  --}}
                 </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link js-scroll-trigger" href="#About"><i class="fas fa-users fa-lg"></i> About</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link js-scroll-trigger" href="#Contact"><i class="fa fa-phone" aria-hidden="true"></i> Contact</a>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger text-primary" href="#Contact">Contact</a>
+                    {{-- <i class="fa fa-phone" aria-hidden="true"></i>  --}}
                 </li>
             </ul>
 
