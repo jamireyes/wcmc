@@ -21,13 +21,6 @@ class VerificationController extends Controller
     use VerifiesEmails;
 
     /**
-     * Where to redirect users after verification.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -37,5 +30,23 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    protected function redirectTo() 
+    {
+        if (Auth::check()) {
+            $username = Auth::user()->username;
+            if (Auth::user()->role->description == 'ADMIN') {
+                $route = '/dashboard'.'/'.$username;
+            } elseif (Auth::user()->role->description == 'PATIENT') {
+                $route = '/home'.'/'.$username;
+            } elseif (Auth::user()->role->description == 'DOCTOR') {
+                $route = '/dashboard'.'/'.$username;
+            } elseif (Auth::user()->role->description == 'NURSE') {
+                $route = '/dashboard'.'/'.$username;
+            }
+        }
+
+        return $route;      
     }
 }
