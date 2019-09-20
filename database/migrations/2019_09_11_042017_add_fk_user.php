@@ -15,6 +15,7 @@ class AddFkUser extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('role_id')->references('role_id')->on('roles');
+            $table->foreign('bloodtype_id')->references('bloodtype_id')->on('bloodtypes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -27,6 +28,7 @@ class AddFkUser extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['role_id']);
+            $table->dropForeign(['bloodtype_id']);
         });
     }
 }

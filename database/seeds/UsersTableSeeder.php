@@ -24,15 +24,6 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'role_id' => 2,
-                'email' => 'johndoe@mail.com',
-                'contact_no' => '09171358001',
-                'username' => 'johndoe',
-                'password' => bcrypt('johndoe'),
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
                 'role_id' => 3,
                 'email' => 'doctor@mail.com',
                 'contact_no' => '09171358002',
@@ -52,5 +43,24 @@ class UsersTableSeeder extends Seeder
             ]
         ];
         User::insert($users);
+        User::insert([
+            'role_id' => 2,
+            'username' => 'johndoe',
+            'password' => bcrypt('johndoe'),
+            'email' => 'johndoe@mail.com',
+            'contact_no' => '09171358001',
+            'first_name' => 'Juan',
+            'last_name' => 'Dela Cruz',
+            'middle_name' => 'Fernando',
+            'sex' => 'MALE',
+            'birthday' => '1997-02-18',
+            'citizenship' => 'FILIPINO',
+            'civil_status' => 'SINGLE',
+            'address_line_1' => 'Apas',
+            'address_line_2' => 'Cebu City',
+            'bloodtype_id' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
     }
 }

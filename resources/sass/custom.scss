@@ -107,6 +107,18 @@
     }
 }
 
+#MainNav {
+    background-color: transparent !important;
+    transition: background-color 0.3s ease-in-out !important;
+    box-shadow: none !important;
+    &.navbar-shrink {
+        background-color: rgba(255, 255, 255, .25) !important;
+        backdrop-filter: blur(3px) !important;
+        transition: background-color 0.3s ease-in-out !important;
+        box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15) !important;
+    }
+}
+
 @media only screen and (min-width: 1200px) {
     .carousel-caption {
         top: 200px;
@@ -140,4 +152,9 @@
 
 .navbar-brand:hover {
     color: #0c83e2 !important;
+}
+
+.login-background {
+    background: rgb(3,169,244);
+    background: radial-gradient(circle, rgba(3,169,244,0.8) 0%, rgba(1,92,133,0.804359243697479) 97%);
 }

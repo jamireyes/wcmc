@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light shadow-sm fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="MainNav">
     <div class="container">
         <a class="navbar-brand font-abril" href="{{ url('/') }}">
             {{ config('app.name', 'White Cross Medical Clinic') }}

@@ -64,10 +64,11 @@
     <section id="About">
         <div class="text-center mt-5 mb-4">
             <i class="fas fa-users fa-3x"></i>
+            <h3 class="pt-1">About Us</h3>
         </div>
         <div class="row">
             <div class="container">
-                <p><strong class="text-primary">WHITE CROSS MEDICAL CLINIC (WCMC)</strong> is a medical clinic and clinical laboratory, duly registered and licensed by the Department of Health, that consistently upholds its mission of rendering quality services to its patients. Established in 2016, WCMC is managed by a medically-inclined family whose priority is excellence at affordable prices. Additionally, we are continuously developing our capacity to reach out a broader scope of clients through providing multiple clinical services and instituting a major facility – that is, the White Cross Medical Clinic Drug Testing Center. Since we started, we have been true to our guiding principle of promoting health among our local clients by means of initiating health-giving community outreach programs.</p>
+                <p><strong class="text-primary font-abril">White Cross Medical Clinic</strong> is a medical clinic and clinical laboratory, duly registered and licensed by the Department of Health, that consistently upholds its mission of rendering quality services to its patients. Established in 2016, WCMC is managed by a medically-inclined family whose priority is excellence at affordable prices. Additionally, we are continuously developing our capacity to reach out a broader scope of clients through providing multiple clinical services and instituting a major facility – that is, the White Cross Medical Clinic Drug Testing Center. Since we started, we have been true to our guiding principle of promoting health among our local clients by means of initiating health-giving community outreach programs.</p>
                 <br>
                 <h4>Our Vision</h4>
                 <p>We envision the White Cross Medical Clinic to be one of the fast-growing medical and laboratory centers in the City of Cebu, committed to provide quality clinical services through our ever proficient and passionate medical team and by means of utilizing state-of-the-art clinical facilities in order to ensure optimal health among local clients which aids them to become effective and efficient individuals in the society.</p>
@@ -86,6 +87,7 @@
     <section id="Services">
         <div class="text-center mt-5 mb-3">
             <span class="fas fa-briefcase-medical fa-3x"></span>
+            <h3 class="pt-1">Medical Services</h3>
         </div>
         <div class="row">
             <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
@@ -198,10 +200,9 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <h4><i class="fas fa-map-marker-alt text-danger"></i> Address</h4>
-                <a href="https://www.google.com/maps/dir//White+Cross+Medical+Clinic/data=!4m8!4m7!1m0!1m5!1m1!1s0x33a99be239d7dd09:0xa9513e6c377f466!2m2!1d123.9013602!2d10.2950368" class="btn btn-primary">Get Directions</a>
+                <a href="https://www.google.com/maps/dir//White+Cross+Medical+Clinic/data=!4m8!4m7!1m0!1m5!1m1!1s0x33a99be239d7dd09:0xa9513e6c377f466!2m2!1d123.9013602!2d10.2950368" target="_blank" class="btn btn-primary">Get Directions</a>
                 <p>Room 205 Teodora Building, Osmeña Boulevard Corner D. Jakosalem Street
-                    <br>Cebu City
-                    <br>6000 Cebu
+                    <br>Cebu City, 6000 Cebu
                     <br>Philippines
                 </p>
             </div>
@@ -258,6 +259,18 @@
         $('.js-scroll-trigger').click(function() {
             $('.navbar-collapse').collapse('hide');
         });
+
+        var navbarCollapse = function() {
+            if ($("#MainNav").offset().top > 100) {
+            $("#MainNav").addClass("navbar-shrink");
+            } else {
+            $("#MainNav").removeClass("navbar-shrink");
+            }
+        };
+
+        navbarCollapse();
+
+        $(window).scroll(navbarCollapse);
     });
 </script>
 @endsection

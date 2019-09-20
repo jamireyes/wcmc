@@ -59,15 +59,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row">
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                                <div class="d-flex justify-content-between w-100">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-link p-0 m-0 mt-3" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Your Password?') }}
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -76,4 +79,23 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function(){
+
+            var navbarCollapse = function() {
+                if ($("#MainNav").offset().top > 100) {
+                $("#MainNav").addClass("navbar-shrink");
+                } else {
+                $("#MainNav").removeClass("navbar-shrink");
+                }
+            };
+
+            navbarCollapse();
+            
+            $(window).scroll(navbarCollapse);
+        });
+    </script>
 @endsection

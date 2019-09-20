@@ -15,7 +15,7 @@ class CreateDoctorSchedulesTable extends Migration
     {
         Schema::create('doctor_schedules', function (Blueprint $table) {
             $table->bigIncrements('doctor_schedule_id');
-            $table->bigInteger('user_profile_id');
+            $table->bigInteger('user_id');
             $table->enum('day', ['MON', 'TUES', 'WED', 'THUR', 'FRI', 'SAT', 'SUN']);
             $table->time('start_time');
             $table->time('end_time');
