@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/test', 'AdminAppointmentController@show');
+
 Auth::routes();
 
 Route::group(['middleware' => 'preventBackHistory'], function()

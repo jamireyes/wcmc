@@ -1,4 +1,4 @@
-table.dataTable {
+@import url(https://fonts.googleapis.com/css?family=Roboto);@import url(https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap);table.dataTable {
   clear: both;
   margin-top: 6px !important;
   margin-bottom: 6px !important;
@@ -20067,179 +20067,16 @@ button.toast-close-button {
   }
 }
 
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
+#loadOverlay {
+  display: none;
 }
 
 .font-abril {
   font-family: "Abril Fatface", cursive;
 }
 
-.carousel-control-prev-icon {
-  color: #007bff !important;
-}
-
-.carousel-control-next-icon {
-  color: #007bff !important;
-}
-
-.head_menu ul {
-  padding: 0px;
-  margin: 0;
-  list-style: none;
-  position: relative;
-  right: 0;
-}
-
-.navbar {
-  margin-bottom: 0px !important;
-  color: #007bff !important;
-  border-radius: 0px !important;
-}
-
-.carousel-item {
-  height: 100vh !important;
-  min-height: 350px !important;
-  background: no-repeat center center scroll !important;
-  background-size: cover !important;
-}
-
-@media only screen and (max-width: 576px) {
-  .carousel-caption {
-    top: 50px;
-    text-align: center;
-  }
-
-  .carousel-caption h2 {
-    text-shadow: 2px 2px 5px #343a40;
-    font-size: 20px;
-  }
-
-  .carousel-caption p {
-    text-shadow: 2px 2px 5px #343a40;
-    font-size: 12px;
-  }
-
-  .carousel-caption p br {
-    content: " ";
-  }
-
-  .carousel-caption p br:after {
-    content: " ";
-  }
-}
-
-@media only screen and (min-width: 576px) {
-  .carousel-caption {
-    top: 70px;
-    text-align: left;
-  }
-
-  .carousel-caption h2 {
-    text-shadow: 2px 2px 5px #343a40;
-    font-size: 20px;
-  }
-
-  .carousel-caption p {
-    text-shadow: 2px 2px 5px #343a40;
-    font-size: 12px;
-  }
-}
-
-@media only screen and (max-width: 576px) {
-  #MainNav {
-    background-color: rgba(255, 255, 255, 0.25) !important;
-    -webkit-backdrop-filter: blur(3px) !important;
-            backdrop-filter: blur(3px) !important;
-    transition: background-color 0.3s ease-in-out !important;
-    box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15) !important;
-  }
-
-  .dropdown-menu {
-    background-color: rgba(255, 255, 255, 0.25) !important;
-    -webkit-backdrop-filter: blur(3px) !important;
-            backdrop-filter: blur(3px) !important;
-  }
-}
-
-#MainNav {
-  background-color: transparent !important;
-  transition: background-color 0.3s ease-in-out !important;
-  box-shadow: none !important;
-}
-
-#MainNav .navbar-toggler {
-  border: 1px solid #2196f3 !important;
-}
-
-#MainNav .navbar-toggler:focus {
-  outline: none !important;
-}
-
-#MainNav .navbar-toggler .navbar-toggler-icon {
-  color: #2196f3 !important;
-}
-
-#MainNav.navbar-shrink {
-  background-color: rgba(255, 255, 255, 0.25) !important;
-  -webkit-backdrop-filter: blur(3px) !important;
-          backdrop-filter: blur(3px) !important;
-  transition: background-color 0.3s ease-in-out !important;
-  box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15) !important;
-}
-
-#MainNav .nav-link {
-  color: #2196f3 !important;
-  text-shadow: 0 0 5px #ffffff;
-}
-
-#MainNav .navbar-brand {
-  text-shadow: 0 0 5px #ffffff;
-  color: #2196f3 !important;
-}
-
-#MainNav .navbar-brand:hover {
-  color: #0c83e2 !important;
-}
-
-.carousel-caption {
-  top: 200px;
-  text-align: left;
-}
-
-.carousel-caption h2 {
-  text-shadow: 2px 2px 5px #343a40;
-  font-size: 2.25em !important;
-}
-
-.carousel-caption p {
-  text-shadow: 2px 2px 5px #343a40;
-  font-size: 1em !important;
-}
-
-.dropdown-menu {
-  background-color: rgba(255, 255, 255, 0.25) !important;
-  -webkit-backdrop-filter: blur(3px) !important;
-          backdrop-filter: blur(3px) !important;
-}
-
 .sidebar-background {
   background-color: #fafafa !important;
-}
-
-#loadOverlay {
-  display: none;
 }
 
 .text-primary {

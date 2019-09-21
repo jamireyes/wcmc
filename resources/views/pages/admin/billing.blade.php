@@ -5,54 +5,56 @@
     @include('pages.admin.include.sidebar')
     <div class="main-panel">
         @include('pages.admin.include.navbar')
-        <div class="content">
+        <div class="content mt-5">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="card">
-                        <div class="card-header card-header-primary text-center">BILL PAYMENTS</div>
-                        <div class="card-body">
-                            <table id="bill_transactions" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>OR No.</th>
-                                        <th>Payment Date</th>
-                                        <th>Total Amount</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>14106645</td>
-                                        <td>July 18, 2019</td>
-                                        <td>PHP 450.00</td>
-                                        <td>
-                                            <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                            <a href="#" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                            <a href="#" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>15101716</td>
-                                        <td>July 19, 2019</td>
-                                        <td>PHP 500.00</td>
-                                        <td>
-                                            <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                            <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                            <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>15107788</td>
-                                        <td>July 20, 2019</td>
-                                        <td>PHP 1000.00</td>
-                                        <td>
-                                            <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                            <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                            <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary text-center">BILL PAYMENTS</div>
+                            <div class="card-body">
+                                <table id="bill_transactions" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>OR No.</th>
+                                            <th>Payment Date</th>
+                                            <th>Total Amount</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>14106645</td>
+                                            <td>July 18, 2019</td>
+                                            <td>PHP 450.00</td>
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
+                                                <a href="#" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>15101716</td>
+                                            <td>July 19, 2019</td>
+                                            <td>PHP 500.00</td>
+                                            <td>
+                                                <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>15107788</td>
+                                            <td>July 20, 2019</td>
+                                            <td>PHP 1000.00</td>
+                                            <td>
+                                                <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
+                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@
     @include('pages.admin.include.sidebar')
     <div class="main-panel">
         @include('pages.admin.include.navbar')
-        <div class="content">
+        <div class="content mt-5">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">

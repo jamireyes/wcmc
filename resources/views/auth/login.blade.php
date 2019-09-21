@@ -6,7 +6,7 @@
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-8 col-sm-12">
+        <div class="col-xl-4 col-lg-5 col-md-6 col-sm-9 col-xs-12">
             <div class="card">
                 <div class="card-header card-header-primary text-center"><i class="fa fa-lock" aria-hidden="true"></i></div>
 

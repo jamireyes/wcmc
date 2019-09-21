@@ -5,61 +5,8 @@
     @include('pages.admin.include.sidebar')
     <div class="main-panel">
         @include('pages.admin.include.navbar')
-        <div class="content">
+        <div class="content mt-5">
             <div class="container-fluid">
-                {{-- <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">Enter Appointment Details</div>
-                            <div class="card-body">
-                                <div class="form-row">
-                                    <div class="form-group mr-4">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                            <select id="Select_Doctor_Input" class="form-control">
-                                                <option>Jami Brent John E. Reyes</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mr-4">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-clock"></i>
-                                                </span>
-                                            </div>
-                                            <select class="form-control">
-                                                <option>8:00 AM - 12:00 NN</option>
-                                                <option>1:00 PM - 5:00 PM</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mr-4">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                            <input id="Select_Date_Input" type="date" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-outline-primary btn-sm">SUBMIT</button>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="card">
