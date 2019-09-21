@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="wrapper">
-    @include('pages.admin.include.sidebar')
+    @include('pages.patient.include.sidebar')
     <div class="main-panel">
-        @include('pages.admin.include.navbar')
+        @include('pages.patient.include.navbar')
         <div class="content">
             <div class="container-fluid">
                 <div class="row">

@@ -31,10 +31,11 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::post('/restore/{id}', 'Admin_UserMGTController@restore')->name('admin.restore');
     Route::resource('admin', 'Admin_UserMGTController');
     
+    // PATIENT PAGES
+    Route::get('/appointments/patient', 'PatientPageController@appointments')->name('patient.appointments');
+    Route::get('/billing/patient', 'PatientPageController@billing')->name('patient.billing');
+    Route::get('/results/patient', 'PatientPageController@results')->name('patient.results');
+    Route::get('/settings/patient', 'PatientPageController@settings')->name('patient.settings');
 });
 
-// PATIENT
-// Route::get('/home/{name}', 'PatientPageController@home')->name('patient.home')->middleware('auth', 'role:PATIENT');
-// Route::get('/appointments/{name}', 'PatientPageController@appointment')->name('patient.appointment')->middleware('auth', 'role:PATIENT');
-// Route::get('/bill_payments/{name}', 'PatientPageController@billing')->name('patient.billing')->middleware('auth', 'role:PATIENT');
-// Route::get('/settings/{name}', 'PatientPageController@setting')->name('patient.setting')->middleware('auth', 'role:PATIENT');
+    
