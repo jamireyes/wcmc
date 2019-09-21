@@ -27,7 +27,7 @@
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Profile">Profile</a>
                         <a class="dropdown-item" href="{{ route('register') }}">Register</a>
                         <a class="dropdown-item" href="{{ route('admin.setting', ['name' => Auth::user()->username]) }}">Settings</a>
                         <div class="dropdown-divider"></div>

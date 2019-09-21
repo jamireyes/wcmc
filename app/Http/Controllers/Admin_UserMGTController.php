@@ -47,14 +47,34 @@ class Admin_UserMGTController extends Controller
             'role_id' => 'required',
             'email' => 'required',
             'username' => 'required',
-            'contact_no' => 'required'
+            'contact_no' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'middle_name' => 'required',
+            'sex' => 'required',
+            'birthday' => 'required',
+            'citizenship' => 'required',
+            'civil_status' => 'required',
+            'address_line_1' => 'required',
+            'address_line_2' => 'required',
+            'bloodtype_id' => 'required',
         ]);
 
         $data = User::find($id);
         $data->role_id = $request->input('role_id');
-        $data->email = $request->input('email');
         $data->username = $request->input('username');
+        $data->email = $request->input('email');
         $data->contact_no = $request->input('contact_no');
+        $data->first_name = $request->input('first_name');
+        $data->last_name = $request->input('last_name');
+        $data->middle_name = $request->input('middle_name');
+        $data->sex = $request->input('sex');
+        $data->birthday = $request->input('birthday');
+        $data->citizenship = $request->input('citizenship');
+        $data->civil_status = $request->input('civil_status');
+        $data->address_line_1 = $request->input('address_line_1');
+        $data->address_line_2 = $request->input('address_line_2');
+        $data->bloodtype_id = $request->input('bloodtype_id');
         $data->save();
 
         if($validator->fails()){

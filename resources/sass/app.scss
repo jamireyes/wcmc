@@ -6,9 +6,6 @@
 @import 'variables';
 
 // Bootstrap
-// @import '~bootstrap/scss/bootstrap';
-@import 'material/scss/material-dashboard.css';
-@import '~datatables.net-bs4/css/dataTables.bootstrap4.css';
-@import '~material-design-icons/iconfont/material-icons.css';
-@import '~toastr/toastr.scss';
+@import '~bootstrap/scss/bootstrap';
+@import 'carousel';
 @import 'custom';

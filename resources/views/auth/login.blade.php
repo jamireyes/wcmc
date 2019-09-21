@@ -15,7 +15,7 @@
                         @csrf
                         
                         <div class="form-group">
-                            <label for="username" class="bmd-label-floating col-md-12">{{ __('Username or E-Mail') }}</label>
+                            <label for="username" class="col-md-12">{{ __('Username or E-Mail') }}</label>
                             <div class="col-md-12">
                                 <input id="username" type="text" class="form-control @error('email') is-invalid @enderror @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
                                 
@@ -34,7 +34,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password" class="bmd-label-floating col-md-12">{{ __('Password') }}</label>
+                            <label for="password" class="col-md-12">{{ __('Password') }}</label>
 
                             <div class="col-md-12">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">

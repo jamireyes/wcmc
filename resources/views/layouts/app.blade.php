@@ -14,7 +14,7 @@
 
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="{{ asset('vendor/fontawesome/css/all.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet">
         @toastr_css
     </head>
     <body>

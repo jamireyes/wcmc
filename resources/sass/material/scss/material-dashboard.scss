@@ -52,4 +52,9 @@
 @import "material-dashboard/plugins/perfect-scrollbar";
 
 @import "material-dashboard/responsive";
-@import "material-dashboard/carousel";
+
+//package scss
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.css';
+@import '~material-design-icons/iconfont/material-icons.css';
+@import '~toastr/toastr.scss';
+@import 'resources/sass/custom.scss';

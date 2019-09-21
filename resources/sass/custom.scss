@@ -1,28 +1,4 @@
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    padding: 6px 0;
-    font-size: 12px;
-    line-height: 1.428571429;
-    border-radius: 15px;
-}
-.btn-circle.btn-lg {
-    width: 50px;
-    height: 50px;
-    padding: 10px 16px;
-    font-size: 18px;
-    line-height: 1.33;
-    border-radius: 25px;
-}
-.btn-circle.btn-xl {
-    width: 70px;
-    height: 70px;
-    padding: 10px 16px;
-    font-size: 24px;
-    line-height: 1.33;
-    border-radius: 35px;
-  }.bd-placeholder-img {
+.bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
     -webkit-user-select: none;
@@ -107,31 +83,70 @@
     }
 }
 
+@media only screen and (max-width: 576px) {
+    #MainNav{
+        background-color: rgba(255, 255, 255, .25) !important;
+        backdrop-filter: blur(3px) !important;
+        transition: background-color 0.3s ease-in-out !important;
+        box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .dropdown-menu {
+        background-color: rgba(255, 255, 255, .25) !important;
+        backdrop-filter: blur(3px) !important;
+    }
+}
+
 #MainNav {
     background-color: transparent !important;
     transition: background-color 0.3s ease-in-out !important;
     box-shadow: none !important;
+    .navbar-toggler {
+        // padding: 0.75rem !important;
+        border: 1px solid $blue !important;
+        &:focus {
+            outline: none !important;
+        }
+        .navbar-toggler-icon {
+            color: $blue !important;
+        }
+    }
     &.navbar-shrink {
         background-color: rgba(255, 255, 255, .25) !important;
         backdrop-filter: blur(3px) !important;
         transition: background-color 0.3s ease-in-out !important;
         box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15) !important;
     }
+    .nav-link {
+        color: $blue !important;
+        text-shadow: 0 0 5px $white;
+    }
+    .navbar-brand {
+        text-shadow: 0 0 5px $white;
+        color: $blue !important;
+    }
+    
+    .navbar-brand:hover {
+        color: #0c83e2 !important;
+    }
 }
 
-@media only screen and (min-width: 1200px) {
-    .carousel-caption {
-        top: 200px;
-        text-align: left;
-        h2 {
-            text-shadow: 2px 2px 5px $dark;
-            font-size: 2.25em !important;
-        }
-        p {
-            text-shadow: 2px 2px 5px $dark;
-            font-size: 1em !important;
-        }
+.carousel-caption {
+    top: 200px;
+    text-align: left;
+    h2 {
+        text-shadow: 2px 2px 5px $dark;
+        font-size: 2.25em !important;
     }
+    p {
+        text-shadow: 2px 2px 5px $dark;
+        font-size: 1em !important;
+    }
+}
+
+.dropdown-menu {
+    background-color: rgba(255, 255, 255, .25) !important;
+    backdrop-filter: blur(3px) !important;
 }
 
 .sidebar-background {
@@ -144,14 +159,6 @@
 
 .text-primary {
     color: $blue !important;
-}
-
-.navbar-brand {
-    color: $blue !important;
-}
-
-.navbar-brand:hover {
-    color: #0c83e2 !important;
 }
 
 .login-background {

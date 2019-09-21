@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\user;
 use App\role;
+use Auth;
 
 class AdminPageController extends Controller
 {
@@ -38,6 +39,10 @@ class AdminPageController extends Controller
 
     public function setting()
     {
-        return view('pages.admin.setting');
+        $items_1 = user::getEnumValues('civil_status');
+        $items_2 = user::getEnumValues('sex');
+        $user = user::find(Auth::user()->id);
+
+        return view('pages.admin.setting', compact('user', 'items_1', 'items_2'));
     }
 }
