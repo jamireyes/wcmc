@@ -10784,7 +10784,6 @@ body {
 
 .carousel-item {
   height: 100vh !important;
-  min-height: 350px !important;
   background: no-repeat center center scroll !important;
   background-size: cover !important;
 }
