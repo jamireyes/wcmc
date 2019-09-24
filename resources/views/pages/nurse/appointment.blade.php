@@ -200,5 +200,79 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="AppModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter Appointment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="m-5">
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <select id="Select_Doctor_Input" class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <select id="Select_Patient_Input" class="form-control">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                            </div>
+                            <select class="form-control">
+                                <option>8:00 AM - 12:00 NN</option>
+                                <option>1:00 PM - 5:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input id="Select_Date_Input" type="date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">SUBMIT</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
