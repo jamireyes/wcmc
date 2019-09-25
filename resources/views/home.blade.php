@@ -25,30 +25,26 @@
                         {{ config('app.name', 'White Cross Medical Clinic') }}
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon">
-                        </span>
+                        {{-- <span class="navbar-toggler-icon"> --}}
+                        {{-- <i class="custom-navbar-icon fas fa-bars"></i> --}}
+                        <i class="custom-navbar-icon material-icons">menu</i>
+                        {{-- </span> --}}
                     </button>
             
                     <div class="navbar-collapse collapse" id="navbarCollapse">
-                        <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link js-scroll-trigger" href="#About">About</a>
-                                {{-- <i class="fas fa-users fa-lg"></i>  --}}
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link js-scroll-trigger" href="#Services">Services</a>
-                                {{-- <span class="fas fa-briefcase-medical fa-lg"></span>  --}}
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link js-scroll-trigger" href="#Contact">Contact</a>
-                                {{-- <i class="fa fa-phone" aria-hidden="true"></i>  --}}
                             </li>
                         </ul>
             
-                        <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
-                            <!-- Authentication Links -->
                             @guest
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -72,11 +68,7 @@
             
                                             @endif
                                         @endauth
-            
-                                        {{-- @if (Route::has('register'))
-                                            <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                                            <div class="dropdown-divider"></div>
-                                        @endif --}}
+
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
@@ -306,7 +298,7 @@
             </div>
         </div>
         <div id="ScrollTop">
-            <a class="js-scroll-trigger" href="#top-page"><i class="fas fa-chevron-up fa-lg text-secondary"></i></a>
+            <a class="js-scroll-trigger" href="#top-page"><i class="fas fa-chevron-up fa-lg text-white"></i></a>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>

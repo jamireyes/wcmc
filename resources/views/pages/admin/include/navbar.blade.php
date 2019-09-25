@@ -46,3 +46,5 @@
         </div>
     </div>
 </nav>
+
+@include('pages.admin.include.profile')

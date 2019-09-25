@@ -123,8 +123,6 @@
     </div>
 </div>
 
-@include('pages.admin.include.profile')
-
 @endsection
 
 @section('script')

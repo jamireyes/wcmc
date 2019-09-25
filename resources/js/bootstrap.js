@@ -7,9 +7,16 @@ window._ = require('lodash');
  */
 
 try {
+    import Echo from "laravel-echo";
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     window.toastr = require('toastr');
+    window.Pusher = require('pusher-js');
+
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '89973cf8f98acc38053a'
+    });
 
     require('bootstrap');
     require('datatables.net');

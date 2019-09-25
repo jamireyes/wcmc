@@ -2,7 +2,7 @@
     <div class="container">
         <div class="d-flex justify-content-center w-100">
             <div class="pt-2">
-                <a class="navbar-brand font-abril" href="{{ url('/') }}">
+                <a class="navbar-brand font-abril text-primary" href="{{ url('/') }}">
                     {{ config('app.name', 'White Cross Medical Clinic') }}
                 </a>
             </div>

@@ -11,7 +11,7 @@ class appointment extends Model
 
     protected $fillable = [
         'appointment_id',
-        'doctor_id',
+        'doctor_schedule_id',
         'nurse_id',
         'patient_id',
         'status'
@@ -21,9 +21,9 @@ class appointment extends Model
     public $primaryKey = 'appointment_id';
     protected $dates = ['deleted_at'];
 
-    public function doctor()
+    public function doctor_schedule()
     {
-        return $this->hasMany('App\User', 'id', 'doctor_id'); 
+        return $this->hasMany('App\doctor_schedule', 'doctor_schedule_id', 'doctor_schedule_id'); 
     }
 
     public function nurse()
@@ -34,5 +34,20 @@ class appointment extends Model
     public function patient()
     {
         return $this->hasMany('App\User', 'id', 'patient_id'); 
+    }
+
+    public static function getEnumValues($column)
+    {
+        $type = DB::select(DB::raw("SHOW COLUMNS FROM users WHERE Field = '{$column}'"))[0]->Type ;
+        
+        preg_match('/^enum\((.*)\)$/', $type, $matches);
+        $enum = array();
+        
+        foreach( explode(',', $matches[1]) as $value ) {
+            $v = trim( $value, "'" );
+            $enum = array_add($enum, $v, $v);
+        }
+        
+        return $enum;
     }
 }

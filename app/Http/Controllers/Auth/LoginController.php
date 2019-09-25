@@ -42,13 +42,13 @@ class LoginController extends Controller
         if (Auth::check()) {
             $username = Auth::user()->username;
             if (Auth::user()->role->description == 'ADMIN') {
-                $route = '/dashboard'.'/'.$username;
+                $route = '/admin/dashboard'.'/'.$username;
             } elseif (Auth::user()->role->description == 'PATIENT') {
-                $route = '/home'.'/'.$username;
+                $route = '/patient/appointments'.'/'.$username;
             } elseif (Auth::user()->role->description == 'DOCTOR') {
-                $route = '/dashboard'.'/'.$username;
+                $route = '/doctor/dashboard'.'/'.$username;
             } elseif (Auth::user()->role->description == 'NURSE') {
-                $route = '/dashboard'.'/'.$username;
+                $route = '/nurse/dashboard'.'/'.$username;
             }
         }
 

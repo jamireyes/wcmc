@@ -43,23 +43,6 @@ class Admin_UserMGTController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'role_id' => 'required',
-            'email' => 'required',
-            'username' => 'required',
-            'contact_no' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'middle_name' => 'required',
-            'sex' => 'required',
-            'birthday' => 'required',
-            'citizenship' => 'required',
-            'civil_status' => 'required',
-            'address_line_1' => 'required',
-            'address_line_2' => 'required',
-            'bloodtype_id' => 'required',
-        ]);
-
         $data = User::find($id);
         $data->role_id = $request->input('role_id');
         $data->username = $request->input('username');
@@ -77,9 +60,7 @@ class Admin_UserMGTController extends Controller
         $data->bloodtype_id = $request->input('bloodtype_id');
         $data->save();
 
-        if($validator->fails()){
-            return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username])->withErrors($validator);
-        }
+        toastr()->info('User Profile Updated!', 'Notification');
 
         return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username]);
     }

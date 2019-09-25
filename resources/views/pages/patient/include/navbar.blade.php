@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
     <div class="container-fluid">
         <div class="navbar-wrapper">
-            <p class="navbar-brand text-secondary text-uppercase">Welcome, {{ Auth::user()->username }}!</p>
+            <p class="navbar-brand text-secondary text-uppercase">Welcome, {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }} {{ Auth::user()->last_name }}!</p>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -27,16 +27,15 @@
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                        <a class="dropdown-item" href="{{ route('admin.setting', ['name' => Auth::user()->username]) }}">Settings</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#Profile">Profile</a>
+                        <a class="dropdown-item" href="{{ route('patient.settings', ['name' => Auth::user()->username]) }}">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
                         </a>
-
+                        
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -46,3 +45,5 @@
         </div>
     </div>
 </nav>
+
+@include('pages.patient.include.profile')
