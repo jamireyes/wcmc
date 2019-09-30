@@ -66,53 +66,53 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card card-chart">
-                        <div class="card-header card-header-success">
-                            <div class="ct-chart" id="dailySalesChart"></div>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">DAILY APPOINTMENTS</h4>
-                            <p class="card-category">
-                                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-chart">
+                            <div class="card-header card-header-success">
+                                <div class="ct-chart" id="dailySalesChart"></div>
                             </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">access_time</i> Last update 4 minutes ago
+                            <div class="card-body">
+                                <h4 class="card-title">DAILY APPOINTMENTS</h4>
+                                <p class="card-category">
+                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i> Last update 4 minutes ago
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-warning">
-                                <div class="ct-chart" id="websiteViewsChart"></div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">MONTHLY LAB TESTS</h4>
-                                <p class="card-category">Amount of Labratory Tests Done</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">access_time</i> Last update 2 days ago
+                        <div class="col-md-4">
+                            <div class="card card-chart">
+                                <div class="card-header card-header-warning">
+                                    <div class="ct-chart" id="websiteViewsChart"></div>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">MONTHLY LAB TESTS</h4>
+                                    <p class="card-category">Amount of Labratory Tests Done</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i> Last update 2 days ago
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-chart">
-                            <div class="card-header card-header-danger">
-                                <div class="ct-chart" id="completedTasksChart"></div>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="card-title">MONTHLY REVENUE</h4>
-                                <p class="card-category">Last Month's Revenue</p>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">access_time</i> Last update 2 days ago
+                        <div class="col-md-4">
+                            <div class="card card-chart">
+                                <div class="card-header card-header-danger">
+                                    <div class="ct-chart" id="completedTasksChart"></div>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">MONTHLY REVENUE</h4>
+                                    <p class="card-category">Last Month's Revenue</p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">access_time</i> Last update 2 days ago
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
 <script src="{{ asset('vendor/material/demo/demo.js') }}"></script>
 <script>
     $( document ).ready(function() {
-        
+
         md.initDashboardPageCharts();
 
         $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
@@ -148,6 +148,22 @@
 
         $('.js-scroll-trigger').click(function() {
             $('.navbar-collapse').collapse('hide');
+        });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('89973cf8f98acc38053a', {
+            cluster: 'ap1',
+            'useTLS': false,
+        });
+        
+        var channel = pusher.subscribe('AppointmentStatus.2');
+        channel.bind('AppointmentStatus', function(data) {
+            toastr.info(data.message, 'Notification');
         });
     });
 </script>

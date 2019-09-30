@@ -75,3 +75,26 @@
 </div>
 
 @endsection
+
+@section('script')
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+<script>
+    $( document ).ready(function() {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('89973cf8f98acc38053a', {
+            cluster: 'ap1',
+            'useTLS': false,
+        });
+        
+        var channel = pusher.subscribe('AppointmentStatus.2');
+        channel.bind('AppointmentStatus', function(data) {
+            toastr.info(data.message, 'Notification');
+        });
+    });
+</script>
+@endsection

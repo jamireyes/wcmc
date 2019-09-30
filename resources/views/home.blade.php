@@ -58,14 +58,17 @@
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         @auth
                                             @if(Auth::user()->role->description == 'ADMIN')
-                                                <a class="dropdown-item" href="{{ route('admin.dashboard', ['name' => Auth::user()->username]) }}">Dashboard</a>
+                                                <a class="dropdown-item" href="{{ route('admin.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
                                                 <div class="dropdown-divider"></div>
                                             @elseif(Auth::user()->role->description == 'PATIENT')
-                                                
+                                                <a class="dropdown-item" href="{{ route('patient.appointments', ['name' => Auth::user()->username]) }}">Account</a>
+                                                <div class="dropdown-divider"></div>
                                             @elseif(Auth::user()->role->description == 'DOCTOR')
-            
+                                                {{-- <a class="dropdown-item" href="{{ route('', ['name' => Auth::user()->username]) }}">Dashboard</a>
+                                                <div class="dropdown-divider"></div> --}}
                                             @elseif(Auth::user()->role->description == 'NURSE')
-            
+                                                {{-- <a class="dropdown-item" href="{{ route('', ['name' => Auth::user()->username]) }}">Account</a>
+                                                <div class="dropdown-divider"></div> --}}
                                             @endif
                                         @endauth
 

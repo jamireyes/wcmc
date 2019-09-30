@@ -15,15 +15,17 @@ class AppointmentStatus implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
+    public $role;
 
-    public function __construct($message)
+    public function __construct($message, $role)
     {
         $this->message = $message;
+        $this->role = $role;
     }
 
     public function broadcastOn()
     {
-        return ['my-channel'];
+        return ['AppointmentStatus.' .$this->role];
     }
 
     public function broadcastAs()

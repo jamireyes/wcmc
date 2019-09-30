@@ -37,6 +37,7 @@
                                                     <td>{{$user->contact_no}}</td>
                                                     <td>{{$user->role->description}}</td>
                                                     <td>
+                                                        <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                         <a href="#" id="Edit_Button" data-user="{{ $user }}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
                                                         @if(Auth::user()->id != $user->id)
                                                             @if ($user->deleted_at == NULL)
@@ -88,15 +89,15 @@
                     </div>
                     <div class="form-group col-12">
                         <label for="email">E-Mail</label>
-                        <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}">
+                        <input type="email" name="email" id="email" class="form-control" value="">
                     </div>
                     <div class="form-group col-12">
                         <label for="username">Username</label>
-                        <input type="text" name="username" id="username" class="form-control" value="{{ $user->username }}">
+                        <input type="text" name="username" id="username" class="form-control" value="">
                     </div>
                     <div class="form-group col-12">
                         <label for="contact_no">Contact No.</label>
-                        <input type="text" name="contact_no" id="contact_no" class="form-control" value="{{ $user->contact_no }}">
+                        <input type="text" name="contact_no" id="contact_no" class="form-control" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -153,35 +154,119 @@
     </div>
 </div>
 
+<!-- View Modal -->
+
+<div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-5">
+                <div class="text-center w-100 mb-5">
+                    <i class="fas fa-user-circle fa-5x text-primary" aria-hidden="true"></i>
+                </div>
+                <table id="ViewProfile">
+                    <tbody>
+                        <tr>
+                            <td>Username&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Full Name&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Email&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Contact No.&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Sex&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Birthday&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Citizenship&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Civil Status&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Address&nbsp&nbsp&nbsp&nbsp</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    <div>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')
-    <script>
-        $( document ).ready(function() {
-            
-            const user_mgt_table = $('#user_mgt_table').DataTable();
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+<script>
+    $( document ).ready(function() {
+        
+        const user_mgt_table = $('#user_mgt_table').DataTable();
 
-            user_mgt_table.on('click', '#Edit_Button', function(){
-                var user = $(this).data('user');
-                var route = "{{route('admin.update', '')}}/"+user.id;
-                $('#EditUserForm').attr('action', route);
-                $('#role_id').val(user.role_id);
-                $('#contact_no').val(user.contact_no);
-                $('#email').val(user.email);
-                $('#username').val(user.username);
-            });
-
-            user_mgt_table.on('click', '#Delete_Button', function(){
-                var id = $(this).data('id');
-                var route = "{{ route('admin.destroy', '')}}/"+id;
-                $('#DeleteUserForm').attr('action', route);
-            });
-
-            user_mgt_table.on('click', '#Restore_Button', function(){
-                var id = $(this).data('id');
-                var route = "{{ route('admin.restore', '')}}/"+id;
-                $('#RestoreUserForm').attr('action', route);
-            });
+        user_mgt_table.on('click', '#Edit_Button', function(){
+            var user = $(this).data('user');
+            var route = "{{route('admin_usermgt.update', '')}}/"+user.id;
+            $('#EditUserForm').attr('action', route);
+            $('#role_id').val(user.role_id);
+            $('#contact_no').val(user.contact_no);
+            $('#email').val(user.email);
+            $('#username').val(user.username);
         });
-    </script>
+
+        user_mgt_table.on('click', '#Delete_Button', function(){
+            var id = $(this).data('id');
+            var route = "{{ route('admin_usermgt.destroy', '')}}/"+id;
+            $('#DeleteUserForm').attr('action', route);
+        });
+
+        user_mgt_table.on('click', '#Restore_Button', function(){
+            var id = $(this).data('id');
+            var route = "{{ route('admin_usermgt.restore', '')}}/"+id;
+            $('#RestoreUserForm').attr('action', route);
+        });
+
+        user_mgt_table.on('click', '#View_Button', function(){
+            var user = $(this).data('user');
+            $('#ViewProfile').append();
+        });
+        
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('89973cf8f98acc38053a', {
+            cluster: 'ap1',
+            'useTLS': false,
+        });
+        
+        var channel = pusher.subscribe('AppointmentStatus.2');
+        channel.bind('AppointmentStatus', function(data) {
+            toastr.info(data.message, 'Notification');
+        });
+    });
+</script>
 @endsection

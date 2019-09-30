@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\user;
 use App\role;
+use App\doctor_schedule;
 use Auth;
 
 class AdminPageController extends Controller
@@ -30,6 +31,14 @@ class AdminPageController extends Controller
         $roles = role::all();
 
         return view('pages.admin.user_mgt', compact('users', 'roles'));
+    }
+
+    public function doc_schedule()
+    {
+        $schedules = doctor_schedule::withTrashed()->get();
+        $doctors = user::all()->where('role_id', 3);
+
+        return view('pages.admin.doc_schedule', compact('schedules', 'doctors'));
     }
 
     public function message()

@@ -25,6 +25,12 @@
                     <p>USER MANAGEMENT</p>
                 </a>
             </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'admin.schedule') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.schedule', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <p>DOCTOR'S SCHEDULE</p>
+                </a>
+            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.billing') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.billing', ['name' => Auth::user()->username]) }}">
                     <i class="material-icons">library_books</i>

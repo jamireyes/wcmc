@@ -12,7 +12,8 @@
                         <div class="card">
                             <div class="card-header card-header-primary">EDIT PROFILE</div>
                             <div class="card-body">
-                                <form>
+                                <form action="{{ route('nurse.UpdateSettings') }}" method="POST">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form-group">
@@ -169,24 +170,58 @@
                         <div class="card">
                             <div class="card-header card-header-primary">CHANGE PASSWORD</div>
                             <div class="card-body">
-                                <form>
+                                <form action="{{ route('ChangePassword') }}" method="POST">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label >Old Password</label>
-                                                <input type="text" class="form-control">
+                                            <div class="form-group{{ $errors->has('CurrentPassword') ? ' has-error' : '' }}">
+                                                <label >Current Password</label>
+                                                <input name="CurrentPassword" type="text" class="form-control">
+                                                
+                                                @if ($errors->has('CurrentPassword'))
+                                                    <small class="text-danger">{{ $errors->first('CurrentPassword') }}</small>
+                                                @endif
+
+                                                @if (session('CurrentPassword'))
+                                                    <small class="text-danger">
+                                                        {{ session('CurrentPassword') }}
+                                                    </small>
+                                                @endif
+
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('NewPassword') ? ' has-error' : '' }}">
                                                 <label >New Password</label>
-                                                <input type="email" class="form-control">
+                                                <input name="NewPassword" type="password" class="form-control">
+                                                
+                                                @if ($errors->has('NewPassword'))
+                                                    <small class="text-danger">{{ $errors->first('NewPassword') }}</small>
+                                                @endif
+
+                                                @if (session('NewPassword'))
+                                                    <small class="text-danger">
+                                                        {{ session('NewPassword') }}
+                                                    </small>
+                                                @endif
+
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <div class="form-group">
+                                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                                 <label >Confirm Password</label>
-                                                <input type="text" class="form-control">
+                                                <input name="password_confirmation" type="password" class="form-control">
+                                                
+                                                @if ($errors->has('password_confirmation'))
+                                                    <small class="text-danger">{{ $errors->first('password_confirmation') }}</small>
+                                                @endif
+
+                                                @if (session('password_confirmation'))
+                                                    <small class="text-danger">
+                                                        {{ session('password_confirmation') }}
+                                                    </small>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>

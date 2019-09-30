@@ -67,6 +67,11 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\bloodtype', 'bloodtype_id', 'bloodtype_id'); 
     }
+
+    public function doctor_schedule()
+    {
+        return $this->belongsTo('App\doctor_schedule', 'doctor_schedule_id', 'doctor_schedule_id');
+    }
     
     public static function getEnumValues($column)
     {

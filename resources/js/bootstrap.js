@@ -7,16 +7,9 @@ window._ = require('lodash');
  */
 
 try {
-    import Echo from "laravel-echo";
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     window.toastr = require('toastr');
-    window.Pusher = require('pusher-js');
-
-    window.Echo = new Echo({
-        broadcaster: 'pusher',
-        key: '89973cf8f98acc38053a'
-    });
 
     require('bootstrap');
     require('datatables.net');
@@ -39,13 +32,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo';
+import Echo from 'laravel-echo';
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
+Pusher.logToConsole = true; // Change to false for production
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    encrypted: true
+});

@@ -12,8 +12,13 @@
                         <div class="card">
                             <div class="card-header card-header-primary">EDIT PROFILE</div>
                             <div class="card-body">
-                                <form action="{{ route('patient.UpdateSettings') }}" method="POST">
+                                <form action="{{ route('admin_usermgt.update', ['admin_usermgt' => Auth::user()->id]) }}" method="POST">
+                                    @method('PUT')
                                     @csrf
+
+                                    <input type="hidden" value="{{$user->role_id}}">
+                                    <input type="hidden" value="{{$user->bloodtype_id}}">
+
                                     <div class="row">
                                         <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="form-group">
@@ -237,4 +242,27 @@
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+<script>
+    $( document ).ready(function() {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('89973cf8f98acc38053a', {
+            cluster: 'ap1',
+            'useTLS': false,
+        });
+        
+        var channel = pusher.subscribe('AppointmentStatus.2');
+        channel.bind('AppointmentStatus', function(data) {
+            toastr.info(data.message, 'Notification');
+        });
+    });
+</script>
 @endsection
