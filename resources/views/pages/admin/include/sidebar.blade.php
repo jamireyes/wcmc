@@ -44,9 +44,17 @@
                 </a>
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.setting') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.setting', ['name' => Auth::user()->username]) }}">
+                <a class="nav-link" href="{{ route('admin.setting', ['name' => Auth::user()->username]) }}">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                     <p>SETTINGS</p>
+                </a>
+            </li>
+            <li class="nav-item logout">
+                <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p>LOGOUT</p>
                 </a>
             </li>
         </ul>

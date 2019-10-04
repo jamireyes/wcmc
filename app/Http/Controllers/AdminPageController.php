@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\user;
 use App\role;
 use App\doctor_schedule;
+use App\appointment;
 use Auth;
 
 class AdminPageController extends Controller
@@ -17,7 +18,9 @@ class AdminPageController extends Controller
 
     public function appointment()
     {
-        return view('pages.admin.appointment');
+        $appointments = appointment::all();
+
+        return view('pages.admin.appointment', compact('appointments'));
     }
 
     public function billing()

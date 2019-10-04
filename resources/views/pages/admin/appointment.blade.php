@@ -65,77 +65,27 @@
                                     </button>
                                 </div>
                                 <div class="table-responsive">
-                                    <table id="patient_app_table" class="table patient-table">
+                                    <table id="app_request_table" class="table patient-table">
                                         <thead>
                                             <th>#</th>
                                             <th>Patient Name</th>
+                                            <th>Requested On</th>
                                             <th>Action</th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Dakota Rice</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Philip Chaney</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Jami Reyes</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Wilmar Zaragosa</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Joshua Silao</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>RJ Villafranca</td>
-                                                <td>
-                                                    <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                    <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
+                                            {{-- @foreach ($appointments as $app)
+                                                @if ($app->status == 'PENDING')
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $app->patient->first_name }} {{ $app->patient->middle_name }} {{ $app->patient->last_name }}</td>
+                                                        <td>{{ $app->created_at }}</td>
+                                                        <td>
+                                                            <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
+                                                            <a href="#"><i class="fa fa-plus-circle text-success" aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr> 
+                                                @endif
+                                            @endforeach --}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -169,12 +119,18 @@
                                 </span>
                             </div>
                             <select id="Select_Doctor_Input" class="form-control">
-                                <option>Jami Brent John E. Reyes</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="" disabled selected>Select a doctor...</option>
                             </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <input id="Select_Date_Input" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
                         </div>
                     </div>
                     <div>
@@ -188,16 +144,6 @@
                                 <option>8:00 AM - 12:00 NN</option>
                                 <option>1:00 PM - 5:00 PM</option>
                             </select>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            <input id="Select_Date_Input" type="date" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -217,6 +163,11 @@
 <script>
     $( document ).ready(function() {
         
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('admin.getAppointments') }}",    
+        });
+
         $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
             if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             var target = $(this.hash);

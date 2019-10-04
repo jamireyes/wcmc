@@ -9,6 +9,13 @@ class doctor_schedule extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'doctor_id',
+        'day',
+        'start_time',
+        'end_time'
+    ];
+
     protected $table = 'doctor_schedules';
     public $primaryKey = 'doctor_schedule_id';
     protected $dates = ['deleted_at'];

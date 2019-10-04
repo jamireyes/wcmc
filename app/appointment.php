@@ -28,12 +28,12 @@ class appointment extends Model
 
     public function nurse()
     {
-        return $this->hasMany('App\User', 'id', 'nurse_id'); 
+        return $this->hasOne('App\User', 'id', 'nurse_id'); 
     }
 
     public function patient()
     {
-        return $this->hasMany('App\User', 'id', 'patient_id'); 
+        return $this->hasOne('App\User', 'id', 'patient_id'); 
     }
 
     public static function getEnumValues($column)

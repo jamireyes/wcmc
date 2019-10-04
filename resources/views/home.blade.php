@@ -20,7 +20,7 @@
     <body>
         <div id="app">
             <nav class="navbar navbar-expand-sm navbar-light fixed-top" id="MainNav">
-                <div class="container">
+                <div class="container py-2">
                     <a class="navbar-brand font-abril" href="{{ url('/') }}">
                         {{ config('app.name', 'White Cross Medical Clinic') }}
                     </a>

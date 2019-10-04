@@ -8,14 +8,11 @@ use App\User;
 
 class AdminAppointmentController extends Controller
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getAppointments()
     {
-        //
+        $appointments = appointment::all();
+
+        return json_encode(compact('appointments'));
     }
 
     /**

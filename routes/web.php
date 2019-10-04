@@ -21,6 +21,8 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
 
         Route::post('/restore/{id}', 'Admin_UserMGTController@restore')->name('admin_usermgt.restore');
         Route::resource('admin_usermgt', 'Admin_UserMGTController');
+        Route::resource('doctor_schedule', 'DoctorSchedController');
+        Route::get('getAppointments', 'AdminAppointmentController@getAppointments')->name('admin.getAppointments');
     });
     
     // PATIENT ROUTES

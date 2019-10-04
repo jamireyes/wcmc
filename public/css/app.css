@@ -10911,7 +10911,7 @@ body {
 }
 
 #MainNav .nav-link {
-  color: #03a9f4 !important;
+  color: #343a40 !important;
   text-shadow: 0 0 5px #fff;
 }
 
@@ -10934,12 +10934,20 @@ body {
   background-color: rgba(255, 255, 255, 0.25) !important;
   -webkit-backdrop-filter: blur(3px) !important;
           backdrop-filter: blur(3px) !important;
+  transition: background-color 0.3s ease-in-out !important;
+  border-radius: 0px !important;
+  border: 0px !important;
+  box-shadow: 0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15) !important;
 }
 
 .dropdown-menu a.dropdown-item:hover {
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(3, 169, 244, 0.4);
   background-color: #03a9f4;
   color: #FFFFFF;
+}
+
+.dropdown-menu .dropdown-divider {
+  border-top: 1px solid #bdbdbd !important;
 }
 
 #loadOverlay {
