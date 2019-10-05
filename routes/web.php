@@ -35,10 +35,12 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
     });
     // NURSE ROUTES
     Route::group(['middleware' => ['auth', 'role:NURSE']], function () {
-        Route::get('nurse/dashboard/{name}', 'NursePageController@dashboard')->name('nurse.appointments');
-        Route::get('patient/settings/{name}', 'NursePageController@settings')->name('nurse.settings');
-        Route::get('patient/appointments/{name}', 'NursePageController@appointments')->name('nurse.appointments');
+        Route::get('nurse/dashboard/{name}', 'NursePageController@dashboard')->name('nurse.dashboard');
+        Route::get('nurse/appointments/{name}', 'NursePageController@appointments')->name('nurse.appointments');
+        Route::get('nurse/settings/{name}', 'NursePageController@settings')->name('nurse.settings');
     });
+
+});
 
 
 // FOR TESTING [DO NOT TOUCH] //
