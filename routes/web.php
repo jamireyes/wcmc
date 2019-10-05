@@ -39,7 +39,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::get('nurse/appointments/{name}', 'NursePageController@appointment')->name('nurse.appointment');
         Route::get('nurse/billing/{name}', 'NursePageController@billing')->name('nurse.billing');
         Route::get('nurse/settings/{name}', 'NursePageController@settings')->name('nurse.settings');
-        
+        Route::get('nurse/UpdateSettings', 'NursePageController@UpdateSettings')->name('nurse.UpdateSettings');
     });
 
 });

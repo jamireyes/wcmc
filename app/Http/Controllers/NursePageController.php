@@ -33,7 +33,7 @@ class NursePageController extends Controller
         $items_2 = user::getEnumValues('sex');
         $user = user::find(Auth::user()->id);
 
-        return view('pages.nurse.settings', compact('user', 'items_1', 'items_2'));
+        return view('pages.nurse.setting', compact('user', 'items_1', 'items_2'));
     }
 
     public function UpdateSettings(Request $request)
