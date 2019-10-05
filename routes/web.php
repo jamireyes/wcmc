@@ -33,7 +33,12 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::get('patient/settings/{name}', 'PatientPageController@settings')->name('patient.settings');
         Route::post('patient/UpdateSettings', 'PatientPageController@UpdateSettings')->name('patient.UpdateSettings');
     });
-});
+    // NURSE ROUTES
+    Route::group(['middleware' => ['auth', 'role:NURSE']], function () {
+        Route::get('nurse/dashboard/{name}', 'NursePageController@dashboard')->name('nurse.appointments');
+        Route::get('patient/settings/{name}', 'NursePageController@settings')->name('nurse.settings');
+        Route::get('patient/appointments/{name}', 'NursePageController@appointments')->name('nurse.appointments');
+    });
 
 
 // FOR TESTING [DO NOT TOUCH] //
