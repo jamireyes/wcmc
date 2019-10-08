@@ -38,7 +38,7 @@ import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 
-Pusher.logToConsole = true; // Change to false for production
+// Pusher.logToConsole = true; // Change to false for production
 
 window.Echo = new Echo({
     broadcaster: 'pusher',

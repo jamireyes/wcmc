@@ -1,6 +1,6 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-<script src="{{ asset('vendor/material/js/core/bootstrap-material-design.min.js') }}"></script>
+{{-- <script src="{{ asset('vendor/material/js/core/bootstrap-material-design.min.js') }}"></script> --}}
 <script src="{{ asset('vendor/material/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/material/js/plugins/moment.min.js') }}"></script>
 <script src="{{ asset('vendor/material/js/plugins/sweetalert2.js') }}"></script>

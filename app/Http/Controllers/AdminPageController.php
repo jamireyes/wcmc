@@ -18,9 +18,10 @@ class AdminPageController extends Controller
 
     public function appointment()
     {
-        $appointments = appointment::all();
+        $doctors = user::where('role_id', 3)->get();
+        $schedules = doctor_schedule::all();
 
-        return view('pages.admin.appointment', compact('appointments'));
+        return view('pages.admin.appointment', compact('doctors', 'schedules'));
     }
 
     public function billing()
