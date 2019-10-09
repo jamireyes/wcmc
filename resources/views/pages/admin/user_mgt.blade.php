@@ -21,7 +21,7 @@
                                 <div class="table-responsive">
                                     <table id="user_mgt_table" class="table display">
                                         <thead>
-                                            <th>ID</th>
+                                            <th></th>
                                             <th>Full Name</th>
                                             <th>Username</th>
                                             <th>Email</th>
@@ -39,7 +39,7 @@
                                                     <td>{{$user->contact_no}}</td>
                                                     <td>{{$user->role->description}}</td>
                                                     <td>
-                                                        <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
+                                                        <a href="#" id="View_Button" data-user="{{ $user }}" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                         <a href="#" id="Edit_Button" data-user="{{ $user }}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
                                                         @if(Auth::user()->id != $user->id)
                                                             @if ($user->deleted_at == NULL)
@@ -81,11 +81,7 @@
                         <label for="role_id">Role</label>
                         <select name="role_id" id="role_id" class="form-control">
                             @foreach ($roles as $role)
-                                @if($user->role_id == $role->role_id)
-                                    <option value="{{ $role->role_id }}" selected>{{ $role->description }}</option>
-                                @else
-                                    <option value="{{ $role->role_id }}">{{ $role->description }}</option>
-                                @endif
+                                <option value="{{ $role->role_id }}">{{ $role->description }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -169,40 +165,43 @@
                     <tbody>
                         <tr>
                             <td>Username&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="username"></td>
                         </tr>
                         <tr>
                             <td>Full Name&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="fullname"></td>
                         </tr>
                         <tr>
                             <td>Email&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="email"></td>
                         </tr>
                         <tr>
                             <td>Contact No.&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="contact_no"></td>
                         </tr>
                         <tr>
                             <td>Sex&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="sex"></td>
                         </tr>
                         <tr>
                             <td>Birthday&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="birthday"></td>
                         </tr>
                         <tr>
                             <td>Citizenship&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="citizenship"></td>
                         </tr>
                         <tr>
                             <td>Civil Status&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
+                            <td class="civil_status"></td>
                         </tr>
                         <tr>
                             <td>Address&nbsp&nbsp&nbsp&nbsp</td>
-                            <td></td>
-                            <td></td>
+                            <td class="address_line_1"></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp&nbsp&nbsp&nbsp</td>
+                            <td class="address_line_2"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -251,7 +250,16 @@
 
         user_mgt_table.on('click', '#View_Button', function(){
             var user = $(this).data('user');
-            $('#ViewProfile').append();
+            $('.username').html(user.username);
+            $('.email').html(user.email);
+            $('.fullname').html(user.first_name+' '+user.middle_name+' '+user.last_name);
+            $('.contact_no').html('0'+user.contact_no);
+            $('.sex').html(user.sex);
+            $('.birthday').html(user.birthday);
+            $('.citizenship').html(user.citizenship);
+            $('.civil_status').html(user.civil_status);
+            $('.address_line_1').html(user.address_line_1);
+            $('.address_line_2').html(user.address_line_2);
         });
         
         $(function () {

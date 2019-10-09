@@ -49,9 +49,9 @@
                                                 <td>
                                                     <a href="#" id="Edit_Button" data-sched="{{ $sched }}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
                                                     @if ($sched->deleted_at == NULL)
-                                                    <a href="#" id="Delete_Button" data-id="{{ $sched->id }}" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                                        <a href="#" id="Delete_Button" data-id="{{ $sched->doctor_schedule_id }}" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                                     @else
-                                                    <a href="#" id="Restore_Button" data-id="{{ $sched->id }}" data-toggle="modal" data-target="#RestoreModal"><i class="fas fa-trash-restore primary"></i></a>
+                                                        <a href="#" id="Restore_Button" data-id="{{ $sched->doctor_schedule_id }}" data-toggle="modal" data-target="#RestoreModal"><i class="fas fa-trash-restore primary"></i></a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -182,74 +182,68 @@
                 <div class="modal-body">
                     <div class="form-group col-12 pt-4">
                         <label for="doctor_id">1. Choose a Doctor</label>
-                        <select name="doctor_id" class="form-control">
+                        <select id="doctor_id_edit" name="doctor_id" class="form-control">
                             @foreach ($doctors as $doctor)
-                                @if($sched->doctor_id == $doctor->id)
-                                    <option value="{{$doctor->id}}" selected>{{$doctor->first_name}} {{$doctor->middle_name}} {{$doctor->last_name}}</option>
-                                @else
-                                    <option value="{{$doctor->id}}">{{$doctor->first_name}} {{$doctor->middle_name}} {{$doctor->last_name}}</option>
-                                @endif
+                                <option value="{{$doctor->id}}">{{$doctor->first_name}} {{$doctor->middle_name}} {{$doctor->last_name}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-12 pt-4">
                         <label for="day">2. Choose the Day/s</label>
                         <div class="p-1 pt-2">
-                            @foreach ($days = explode(',', $sched->day) as $day)
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-radio form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="MON" @if($day == 'MON') {{'checked'}}>M
-                                    <span class="form-check-sign">
+                                    <input id="MON_edit" name="day" class="form-check-input" type="radio" value="MON">M
+                                    <span class="circle">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-radio form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="TUES" @elseif($day == 'TUES') {{'checked'}}>T
-                                    <span class="form-check-sign">
+                                    <input id="TUES_edit" name="day" class="form-check-input" type="radio" value="TUES">T
+                                    <span class="circle">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-radio form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="WED" @elseif($day == 'WED') {{'checked'}}>W
-                                    <span class="form-check-sign">
+                                    <input id="WED_edit" name="day" class="form-check-input" type="radio" value="WED">W
+                                    <span class="circle">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-radio form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="THUR" @elseif($day == 'THUR') {{'checked'}}>TH
-                                    <span class="form-check-sign">
+                                    <input id="THUR_edit" name="day" class="form-check-input" type="radio" value="THUR">TH
+                                    <span class="circle">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div class="form-check form-check-radio form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="FRI" @elseif($day == 'FRI') {{'checked'}} @endif>F
-                                    <span class="form-check-sign">
+                                    <input id="FRI_edit" name="day" class="form-check-input" type="radio" value="FRI">F
+                                    <span class="circle">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            @endforeach
                         </div>
                     </div>
                     <div class="form-group row py-4">
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="start_time">3. Start Time</label>
-                                <input type="time" name="start_time" class="form-control" value="">
+                                <input type="time" id="start_time_edit" name="start_time" class="form-control" value="">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="end_time">4. End Time</label>
-                                <input type="time" name="end_time" class="form-control" value="">
+                                <input type="time" id="end_time_edit" name="end_time" class="form-control" value="">
                             </div>
                         </div>
                     </div>
@@ -270,7 +264,6 @@
             <div class="modal-body text-center">
                 <i class="fa fa-exclamation-circle fa-3x text-danger pt-4" aria-hidden="true"></i>
                 <h3>Are you sure?</h3>
-                <p></p>
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
@@ -293,7 +286,6 @@
             <div class="modal-body text-center">
                 <i class="fa fa-exclamation-circle fa-3x text-primary pt-4" aria-hidden="true"></i>
                 <h3>Are you sure?</h3>
-                <p></p>
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
@@ -323,28 +315,33 @@
                 }
             ]
         });
+
+        $('#EditModal').on('hidden.bs.modal', function(){
+            $(':radio').prop("checked", false);
+        });
         
         schedule_table.on('click', '#Edit_Button', function(){
             var sched = $(this).data('sched');
             console.log(sched);
             var route = "{{route('doctor_schedule.update', '')}}/"+sched.doctor_schedule_id;
             $('#EditForm').attr('action', route);
-            $('doctor_id').val(sched.doctor_id);
-            $('day').val(sched.day);
-            $('start_time').val(sched.start_time);
-            $('end_time').val(sched.end_time);
+            $('#doctor_id_edit').val(sched.doctor_id);
+            $('#'+sched.day+'_edit').prop("checked", true);
+            $('#start_time_edit').val(sched.start_time);
+            $('#end_time_edit').val(sched.end_time);
         });
         
         schedule_table.on('click', '#Delete_Button', function(){
             var id = $(this).data('id');
-            // var route = "{{ route('admin_usermgt.destroy', '')}}/"+id;
-            $('#DeleteUserForm').attr('action', route);
+            var route = "{{ route('doctor_schedule.destroy', '')}}/"+id;
+            console.log(id);
+            $('#DeleteForm').attr('action', route);
         });
         
         schedule_table.on('click', '#Restore_Button', function(){
             var id = $(this).data('id');
-            // var route = "{{ route('admin_usermgt.restore', '')}}/"+id;
-            $('#RestoreUserForm').attr('action', route);
+            var route = "{{ route('doctor_schedule.restore', '')}}/"+id;
+            $('#RestoreForm').attr('action', route);
         });
 
         $(function () {
