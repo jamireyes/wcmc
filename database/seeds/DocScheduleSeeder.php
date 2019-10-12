@@ -16,7 +16,7 @@ class DocScheduleSeeder extends Seeder
         $data = [
             [
                 'doctor_id' => 4,
-                'day' => 'MON',     //"MON,WED,FRI",
+                'day' => "MON,WED,FRI",     //"MON,WED,FRI",
                 'start_time' => '8:00',
                 'end_time' => '12:00',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -24,36 +24,12 @@ class DocScheduleSeeder extends Seeder
             ],
             [
                 'doctor_id' => 4,
-                'day' => 'WED',
-                'start_time' => '8:00',
-                'end_time' => '12:00',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ],
-            [
-                'doctor_id' => 4,
-                'day' => 'FRI',
-                'start_time' => '8:00',
-                'end_time' => '12:00',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ],
-            [
-                'doctor_id' => 4,
-                'day' => 'TUES',
+                'day' => "TUES,THUR",
                 'start_time' => '13:00',
                 'end_time' => '17:00',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ],
-            [
-                'doctor_id' => 4,
-                'day' => 'THUR',
-                'start_time' => '13:00',
-                'end_time' => '17:00',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            ],
+            ]
         ];
         doctor_schedule::insert($data);
     }

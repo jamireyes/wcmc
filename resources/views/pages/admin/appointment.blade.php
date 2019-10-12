@@ -15,7 +15,7 @@
                                 <div class="card-header card-header-primary">
                                     <div class="d-flex justify-content-between w-100">
                                         <div>ENTER APPOINTMENT DETAILS</div>
-                                        <div><button type="submit" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
+                                        <div><button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -40,7 +40,7 @@
                                         <div class="col-lg-4 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
-                                                <select id="doctor_schedule_id" data-dependent="doctor_id" class="form-control" name="appointment_time">
+                                                <select id="doctor_schedule_id" class="form-control" name="appointment_time">
                                                 </select>
                                             </div>
                                         </div>
@@ -237,18 +237,17 @@
             });
         }
 
-        $('#AppointmentDetails').submit(function(e){
-            
-            $('#app_request_table').DataTable().destroy();
-            $('#app_approved_table').DataTable().destroy();
-            
-            e.preventDefault();
+        $('#submit_app_details').click(function(e){
             
             var doctor_id = $('#doctor_id').val();
             var appointment_date = $('#Select_Date_Input').val();
             var appointment_time = $('#doctor_schedule_id').val();
 
+            e.preventDefault();
+
             if(doctor_id != '' && appointment_date != '' && appointment_time != ''){
+                $('#app_request_table').DataTable().destroy();
+                $('#app_approved_table').DataTable().destroy();
                 request_dt(doctor_id, appointment_date, appointment_time);
                 approved_dt(doctor_id, appointment_date, appointment_time);
             }else{
@@ -289,7 +288,6 @@
                     },
                     success: function(output){
                         $('#doctor_schedule_id').html(output);
-                        console.log(output);
                     }
                 });
             }

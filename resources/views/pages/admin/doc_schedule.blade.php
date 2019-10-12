@@ -62,13 +62,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -143,16 +136,13 @@
                         </div>
                     </div>
                     <div class="form-group row py-4">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
-                                <label for="start_time">3. Start Time</label>
-                                <input type="time" name="start_time" class="form-control" value="">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="end_time">4. End Time</label>
-                                <input type="time" name="end_time" class="form-control" value="">
+                                <label>3. Time Schedule</label>
+                                <select name="time_schedule" id="time_schedule" class="form-control">
+                                    <option value="1">9:00 AM - 12:00 NN</option>
+                                    <option value="2">1:00 PM - 5:00 PM</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -234,16 +224,13 @@
                         </div>
                     </div>
                     <div class="form-group row py-4">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group">
-                                <label for="start_time">3. Start Time</label>
-                                <input type="time" id="start_time_edit" name="start_time" class="form-control" value="">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="end_time">4. End Time</label>
-                                <input type="time" id="end_time_edit" name="end_time" class="form-control" value="">
+                                <label>3. Time Schedule</label>
+                                <select name="time_schedule_edit" id="time_schedule_edit" class="form-control">
+                                    <option value="1">9:00 AM - 12:00 NN</option>
+                                    <option value="2">1:00 PM - 5:00 PM</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -327,6 +314,9 @@
             $('#EditForm').attr('action', route);
             $('#doctor_id_edit').val(sched.doctor_id);
             $('#'+sched.day+'_edit').prop("checked", true);
+            if(sched.start_time == '09:00:00'){
+                
+            }
             $('#start_time_edit').val(sched.start_time);
             $('#end_time_edit').val(sched.end_time);
         });
