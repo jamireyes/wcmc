@@ -7,40 +7,43 @@
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item {{ (Route::current()->getName() == 'dashboard') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('dashboard', ['name' => Auth::user()->username]) }}">
+            <li class="nav-item {{ (Route::current()->getName() == 'doctor.dashboard') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('doctor.dashboard', ['name' => Auth::user()->username]) }}">
                     <i class="material-icons">dashboard</i>
                     <p>DASHBOARD</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'appointment') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('appointment', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
+            
+            <li class="nav-item {{ (Route::current()->getName() == 'doctor.appointments') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('doctor.appointments', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-calendar"></i>
                     <p>APPOINTMENTS</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'user_mgt') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('user_mgt', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <p>USER MANAGEMENT</p>
+            <li class="nav-item {{ (Route::current()->getName() == 'doctor.patients') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('doctor.patients', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-user"></i>
+                    <p>PATIENT</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'billing') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('billing', ['name' => Auth::user()->username]) }}">
-                    <i class="material-icons">library_books</i>
-                    <p>BILL PAYMENTS</p>
+            <li class="nav-item {{ (Route::current()->getName() == 'doctor.billings') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('doctor.billings', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-paper-plane"></i>
+                    <p>BILLING</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'message') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('message', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                    <p>MESSAGES</p>
-                </a>
-            </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'setting') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('setting', ['name' => Auth::user()->username]) }}">
+            <li class="nav-item {{ (Route::current()->getName() == 'doctor.settings') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('doctor.settings', ['name' => Auth::user()->username]) }}">
                     <i class="fa fa-cog" aria-hidden="true"></i>
                     <p>SETTINGS</p>
+                </a>
+            </li>
+            <li class="nav-item logout">
+                <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p>LOGOUT</p>
                 </a>
             </li>
         </ul>

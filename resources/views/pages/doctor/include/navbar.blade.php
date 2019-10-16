@@ -12,7 +12,7 @@
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard', ['name' => Auth::user()->username]) }}">
+                    <a class="nav-link" href=" ">
                         <i class="material-icons text-secondary">dashboard</i>
                         <p class="d-lg-none d-md-block">
                             Stats
@@ -29,7 +29,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                         <a class="dropdown-item" href="#">Profile</a>
                         <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                        <a class="dropdown-item" href="{{ route('setting', ['name' => Auth::user()->username]) }}">Settings</a>
+                        <a class="dropdown-item" href=" ">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
