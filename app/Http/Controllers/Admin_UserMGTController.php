@@ -11,36 +11,6 @@ use Auth;
 
 class Admin_UserMGTController extends Controller
 {
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $data = User::find($id);
@@ -60,7 +30,7 @@ class Admin_UserMGTController extends Controller
         $data->bloodtype_id = $request->input('bloodtype_id');
         $data->save();
 
-        toastr()->info('User Profile Updated!', 'Notification');
+        toastr()->info('User Profile Updated!');
 
         return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username]);
     }
@@ -74,14 +44,16 @@ class Admin_UserMGTController extends Controller
     public function destroy($id)
     {
         $user = User::find($id)->delete();
-        toastr()->info('User Account Deleted!', 'Notification');
+        toastr()->info('User Account Deleted!');
+
         return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username]);
     }
 
     public function restore($id)
     {
         $user = User::withTrashed()->find($id)->restore();
-        toastr()->info('User Account Restored!', 'Notification');
+        toastr()->info('User Account Restored!');
+        
         return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username]);
     }
 }

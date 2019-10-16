@@ -15,31 +15,34 @@
                                 <div class="card-header card-header-primary">
                                     <div class="d-flex justify-content-between w-100">
                                         <div>ENTER APPOINTMENT DETAILS</div>
-                                        <div><button type="submit" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
+                                        <div><button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="form-group col-4">
-                                            <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
-                                            <select id="Select_Doctor_Input" name="doctor_id" class="form-control">
-                                                <option value="" disabled selected>Select a doctor...</option>
-                                                    @foreach ($doctors as $doctor)
-                                                        <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
-                                                    @endforeach
-                                            </select>
+                                        <div class="col-lg-4 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
+                                                <select id="doctor_id" name="doctor_id" class="form-control dynamic">
+                                                    <option value="" disabled selected>Select a doctor...</option>
+                                                        @foreach ($doctors as $doctor)
+                                                            <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
+                                                        @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                                            <input id="Select_Date_Input" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
+                                        <div class="col-lg-4 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
+                                                <input id="Select_Date_Input" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
+                                            </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
-                                            <select id="Select_Time_Input" class="form-control" name="appointment_time">
-                                                @foreach ($schedules as $schedule)
-                                                    <option value="{{ $schedule->doctor_schedule_id }}">{{ $schedule->day }} {{ Carbon\Carbon::parse($schedule->start_time)->format('g:i A') }} - {{ Carbon\Carbon::parse($schedule->end_time)->format('g:i A') }}</option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-lg-4 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
+                                                <select id="doctor_schedule_id" class="form-control" name="appointment_time">
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -52,35 +55,14 @@
                         <div class="card">
                             <div class="card-header card-header-primary">APPROVED APPOINTMENTS</div>
                             <div class="card-body">
-                                <h4>Current : <strong>Wilmar Zaragosa</strong></h4>
-                                <table class="table">
+                                <table id="app_approved_table" class="table display w-100">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Patient</th>
-                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Wilmar Zaragosa</td>
-                                            <td>
-                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                                <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Joshua Silao</td>
-                                            <td>
-                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                                <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
-                                                <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -89,15 +71,13 @@
                         <div class="card">
                             <div class="card-header card-header-warning">APPOINTMENT REQUESTS</div>
                             <div class="card-body">
-                                <table id="app_request_table" class="table display patient-table w-100">
+                                <table id="app_request_table" class="table display w-100">
                                     <thead>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Timestamp</th>
-                                        <th></th>
+                                        <th>Time</th>
+                                        <th>Action</th>
                                     </thead>
-                                    <tbody>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -109,7 +89,7 @@
 </div>
 
 {{-- Appointment Modal --}}
-<div class="modal fade" id="AppModal" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- <div class="modal fade" id="AppModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -127,7 +107,7 @@
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </span>
                             </div>
-                            <select id="Select_Doctor_Input" class="form-control">
+                            <select id="doctor_id" class="form-control">
                                 <option value="" disabled selected>Select a doctor...</option>
                             </select>
                         </div>
@@ -163,6 +143,26 @@
             </div>
         </div>
     </div>
+</div> --}}
+
+<!-- Approve Modal -->
+<div class="modal fade" id="ApproveModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="fas fa-question-circle fa-3x text-success pt-4" aria-hidden="true"></i>
+                <h3>Approve Appointment Request?</h3>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    <form id="ApproveForm">
+                        <button type="submit" class="btn btn-success">YES!</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">NO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -173,6 +173,7 @@
     $( document ).ready(function() {
         
         // PusherListener();
+        $.fn.dataTable.ext.errMode = 'none';
 
         function PusherListener() {
             Pusher.logToConsole = true;
@@ -188,8 +189,11 @@
             });
         }
 
-        function populate_datatables(doctor_id = '', appointment_date = '', appointment_time = ''){
-            var request_dataTable = $('#app_request_table').DataTable({
+        const request_dataTable = $('#app_request_table').DataTable();
+        const approved_dataTable = $('#app_approved_table').DataTable();
+
+        function request_dt(doctor_id = '', appointment_date = '', appointment_time = ''){
+            $('#app_request_table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -204,24 +208,88 @@
                 },
                 columns: [
                     { data: "appointment_id", name : "appointment_id"},
-                    { data: "patient_id", name: "patient_id" },
-                    { data: "created_at", name: "created_at" }
+                    { data: "fullname", name: "fullname" },
+                    { data: "appointment_date", name: "appointment_date" },
+                    { data: "Action", name: "Action" }
                 ]
             });
         }
 
-        $('#AppointmentDetails').submit(function(e){
-            e.preventDefault();
-            var doctor_id = $('#Select_Doctor_Input').val();
+        function approved_dt(doctor_id = '', appointment_date = '', appointment_time = ''){
+            $('#app_approved_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    type: "POST",
+                    url: "{{ route('appointment.getApprovedAppointments') }}",
+                    data: {
+                        '_token' : "{{csrf_token() }}",
+                        doctor_id: doctor_id, 
+                        appointment_date: appointment_date, 
+                        appointment_time: appointment_time
+                    }
+                },
+                columns: [
+                    { data: "appointment_id", name : "appointment_id"},
+                    { data: "fullname", name: "fullname" },
+                    { data: "Action", name: "Action" }
+                ]
+            });
+        }
+
+        $('#submit_app_details').click(function(e){
+            
+            var doctor_id = $('#doctor_id').val();
             var appointment_date = $('#Select_Date_Input').val();
-            var appointment_time = $('#Select_Time_Input').val();
+            var appointment_time = $('#doctor_schedule_id').val();
+
+            e.preventDefault();
 
             if(doctor_id != '' && appointment_date != '' && appointment_time != ''){
                 $('#app_request_table').DataTable().destroy();
-                populate_datatables(doctor_id, appointment_date, appointment_time);
+                $('#app_approved_table').DataTable().destroy();
+                request_dt(doctor_id, appointment_date, appointment_time);
+                approved_dt(doctor_id, appointment_date, appointment_time);
             }else{
-                // toastr()->warning('Kindly fill up all input fields!');
-                alert('Kindly fill up all input fields!');
+                toastr.warning('Kindly fill up all input fields!');
+            }
+        });
+
+        request_dataTable.on('click', '#ApproveBtn', function(){
+            var id = $(this).data('id');
+            var route = "{{ route('appointment.approve', '')}}/"+id;
+            $('#ApproveForm').submit(function(){
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: {'_token' : "{{csrf_token() }}"},
+                    success: function(){
+                        toastr.success('Appointment Approved!');
+                        $('#ApproveModal').modal('hide');
+                    },
+                    error: function(){
+                        toastr.error('Something went wrong :/', 'Error!');
+                    }
+                });
+            })
+        });
+
+        $('.dynamic').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $(this).val();
+
+                $.ajax({
+                    url: "{{ route('appointment.getDocSchedules') }}",
+                    method: "POST",
+                    data: {
+                        doctor_id: doctor_id,
+                        '_token' : "{{csrf_token() }}"
+                    },
+                    success: function(output){
+                        $('#doctor_schedule_id').html(output);
+                    }
+                });
             }
         });
 

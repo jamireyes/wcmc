@@ -25,6 +25,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('/restore/{id}', 'Admin_UserMGTController@restore')->name('admin_usermgt.restore');
             Route::resource('admin_usermgt', 'Admin_UserMGTController');
             Route::resource('doctor_schedule', 'DoctorSchedController');
+            Route::post('doctor_schedule/restore/{id}', 'DoctorSchedController@restore')->name('doctor_schedule.restore');
         });
 
         // PATIENT ROUTES
@@ -48,7 +49,9 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         // ADMIN & NURSE ROUTES
         Route::group(['middleware' => ['role:NURSE,ADMIN']], function () {
             Route::post('getAppointments', 'AppointmentController@getAppointments')->name('appointment.getAppointments');
-            // Route::get('getAppointments', 'AppointmentController@getAppointments')->name('appointment.getAppointments');
+            Route::post('getApprovedAppointments', 'AppointmentController@getApprovedAppointments')->name('appointment.getApprovedAppointments');
+            Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
+            Route::post('approve/{id}', 'AppointmentController@approve')->name('appointment.approve');
         });
 
         // DOCTOR ROUTES
