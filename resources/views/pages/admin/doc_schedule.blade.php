@@ -82,7 +82,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group col-12 pt-4">
-                        <label for="doctor_id">1. Choose a Doctor</label>
+                        <label for="doctor_id">1. Select a doctor</label>
                         <select name="doctor_id" class="form-control">
                             <option value="" disabled selected></option>
                             @foreach ($doctors as $doctor)
@@ -91,7 +91,7 @@
                         </select>
                     </div>
                     <div class="form-group col-12 pt-4">
-                        <label for="day">2. Choose the Day/s</label>
+                        <label for="day">2. Select day/s</label>
                         <div class="p-1 pt-2">
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
@@ -103,7 +103,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="TUES">T
+                                    <input name="day[]" class="form-check-input" type="checkbox" value="TUE">T
                                     <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
@@ -119,7 +119,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input name="day[]" class="form-check-input" type="checkbox" value="THUR">TH
+                                    <input name="day[]" class="form-check-input" type="checkbox" value="THU">TH
                                     <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
@@ -138,8 +138,9 @@
                     <div class="form-group row py-4">
                         <div class="col-12">
                             <div class="form-group">
-                                <label>3. Time Schedule</label>
+                                <label>3. Select time schedule</label>
                                 <select name="time_schedule" id="time_schedule" class="form-control">
+                                    <option value="" disabled selected> </option>
                                     <option value="1">9:00 AM - 12:00 NN</option>
                                     <option value="2">1:00 PM - 5:00 PM</option>
                                 </select>
@@ -181,42 +182,42 @@
                     <div class="form-group col-12 pt-4">
                         <label for="day">2. Choose the Day/s</label>
                         <div class="p-1 pt-2">
-                            <div class="form-check form-check-radio form-check-inline">
+                            <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input id="MON_edit" name="day" class="form-check-input" type="radio" value="MON">M
-                                    <span class="circle">
+                                    <input id="MON_edit" name="day[]" class="form-check-input" type="checkbox" value="MON">M
+                                    <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-radio form-check-inline">
+                            <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input id="TUES_edit" name="day" class="form-check-input" type="radio" value="TUES">T
-                                    <span class="circle">
+                                    <input id="TUE_edit" name="day[]" class="form-check-input" type="checkbox" value="TUE">T
+                                    <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-radio form-check-inline">
+                            <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input id="WED_edit" name="day" class="form-check-input" type="radio" value="WED">W
-                                    <span class="circle">
+                                    <input id="WED_edit" name="day[]" class="form-check-input" type="checkbox" value="WED">W
+                                    <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-radio form-check-inline">
+                            <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input id="THUR_edit" name="day" class="form-check-input" type="radio" value="THUR">TH
-                                    <span class="circle">
+                                    <input id="THU_edit" name="day[]" class="form-check-input" type="checkbox" value="THU">TH
+                                    <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-radio form-check-inline">
+                            <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input id="FRI_edit" name="day" class="form-check-input" type="radio" value="FRI">F
-                                    <span class="circle">
+                                    <input id="FRI_edit" name="day[]" class="form-check-input" type="checkbox" value="FRI">F
+                                    <span class="form-check-sign">
                                         <span class="check"></span>
                                     </span>
                                 </label>
@@ -303,22 +304,32 @@
             ]
         });
 
+        $('#AddModal').on('hidden.bs.modal', function(){
+            $('#AddForm').trigger("reset");
+        });
+
         $('#EditModal').on('hidden.bs.modal', function(){
-            $(':radio').prop("checked", false);
+            $(':checkbox').prop("checked", false);
         });
         
         schedule_table.on('click', '#Edit_Button', function(){
             var sched = $(this).data('sched');
-            console.log(sched);
             var route = "{{route('doctor_schedule.update', '')}}/"+sched.doctor_schedule_id;
+            var days = sched.day.split(',');
+
             $('#EditForm').attr('action', route);
             $('#doctor_id_edit').val(sched.doctor_id);
-            $('#'+sched.day+'_edit').prop("checked", true);
-            if(sched.start_time == '09:00:00'){
-                
+            
+            days.forEach(function(day){
+                $('#'+day+'_edit').prop("checked", true);
+            });
+
+            if(sched.start_time == '09:00:00' && sched.end_time == '12:00:00'){
+                $('#time_schedule_edit').val('1');
+            }else{
+                $('#time_schedule_edit').val('2');
             }
-            $('#start_time_edit').val(sched.start_time);
-            $('#end_time_edit').val(sched.end_time);
+            
         });
         
         schedule_table.on('click', '#Delete_Button', function(){

@@ -16,15 +16,15 @@ class DocScheduleSeeder extends Seeder
         $data = [
             [
                 'doctor_id' => 4,
-                'day' => "MON,WED,FRI",     //"MON,WED,FRI",
-                'start_time' => '8:00',
+                'day' => "MON,WED,FRI",
+                'start_time' => '9:00',
                 'end_time' => '12:00',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ],
             [
                 'doctor_id' => 4,
-                'day' => "TUES,THUR",
+                'day' => 'TUE,THU',
                 'start_time' => '13:00',
                 'end_time' => '17:00',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

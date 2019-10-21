@@ -13,8 +13,9 @@
                             <form id="AppointmentDetails" >
                                 @csrf
                                 <div class="card-header card-header-primary">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>ENTER APPOINTMENT DETAILS</div>
+                                    <div class="d-flex w-100">
+                                        <div class="mr-auto">ENTER APPOINTMENT DETAILS</div>
+                                        <div class="pr-2"><button type="button" data-toggle='modal' data-target='#AddAppointment' class="btn btn-secondary btn-sm m-0">ADD APPOINTMENT</button></div>
                                         <div><button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
                                     </div>
                                 </div>
@@ -34,7 +35,7 @@
                                         <div class="col-lg-4 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                                                <input id="Select_Date_Input" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
+                                                <input id="appointment_date" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-12 col-xs-12">
@@ -88,62 +89,45 @@
     </div>
 </div>
 
-{{-- Appointment Modal --}}
-{{-- <div class="modal fade" id="AppModal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- Add Appointment Modal -->
+<div class="modal fade" id="AddAppointment" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Enter Appointment Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Add Appointment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
             </div>
-            <div class="modal-body">
-                <div class="m-5">
-                    <div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-user" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            <select id="doctor_id" class="form-control">
-                                <option value="" disabled selected>Select a doctor...</option>
-                            </select>
-                        </div>
+            <form id="AddAppointmentForm">
+                <div class="modal-body p-5">
+                    <div class="form-group">
+                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
+                        <select id="mdl_doctor_id" class="form-control dynamic-modal">
+                            <option value="" disabled selected>Select a doctor...</option>
+                                @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
+                                @endforeach
+                        </select>
                     </div>
-                    <div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                            <input id="Select_Date_Input" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
+                        <input id="mdl_appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic-modal">
                     </div>
-                    <div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fas fa-clock"></i>
-                                </span>
-                            </div>
-                            <select class="form-control">
-                                <option>8:00 AM - 12:00 NN</option>
-                                <option>1:00 PM - 5:00 PM</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
+                        <select id="mdl_doctor_schedule_id" class="form-control">
+                        </select>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">SUBMIT</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
-</div> --}}
+</div>
 
 <!-- Approve Modal -->
 <div class="modal fade" id="ApproveModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -240,8 +224,9 @@
         $('#submit_app_details').click(function(e){
             
             var doctor_id = $('#doctor_id').val();
-            var appointment_date = $('#Select_Date_Input').val();
+            var appointment_date = $('#appointment_date').val();
             var appointment_time = $('#doctor_schedule_id').val();
+            console.log(appointment_time);
 
             e.preventDefault();
 
@@ -277,20 +262,51 @@
 
         $('.dynamic').change(function(){
             if($(this).val() != ''){
-                var doctor_id = $(this).val();
+                var doctor_id = $('#doctor_id').val();
+                var appointment_date = $('#appointment_date').val();
 
-                $.ajax({
-                    url: "{{ route('appointment.getDocSchedules') }}",
-                    method: "POST",
-                    data: {
-                        doctor_id: doctor_id,
-                        '_token' : "{{csrf_token() }}"
-                    },
-                    success: function(output){
-                        $('#doctor_schedule_id').html(output);
-                    }
-                });
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#doctor_schedule_id').html(output);
+                        }
+                    });
+                }
             }
+        });
+
+        $('.dynamic-modal').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $('#mdl_doctor_id').val();
+                var appointment_date = $('#mdl_appointment_date').val();
+
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#mdl_doctor_schedule_id').html(output);
+                        }
+                    });
+                }
+            }
+        });
+
+        $('#AddAppointmentForm').submit(function(e){
+            // e.preventDefault();
+            console.log($('#mdl_doctor_id').val());
         });
 
         $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {

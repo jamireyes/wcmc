@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <div class="col-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -57,7 +57,7 @@
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group row">
                             <div class="col-12">
