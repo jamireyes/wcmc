@@ -27,7 +27,7 @@
                                             <div class="card-body">
                                                 <table>
                                                     <tbody>
-                                                        <tr><td><h4>Dr. Jose Montesclaros</h4></td></tr>
+                                                        <tr><td><h4>Dr. Juan Santos Dela Cruz</h4></td></tr>
                                                         <tr><td>Date:&nbsp;&nbsp;&nbsp;&nbsp;Auguest 30, 2019</td></tr>
                                                         <tr><td>Time:&nbsp;&nbsp;&nbsp;&nbsp;11:00 AM</td></tr>
                                                     </tbody>
@@ -51,7 +51,7 @@
                                                             <tr>
                                                                 <td>1</td>
                                                                 <td>08/30/2019 11:00 AM</td>
-                                                                <td>Dr. Jose Montesclaros</td>
+                                                                <td>Dr. Juan Santos Dela Cruz</td>
                                                                 <td class="text-primary">
                                                                     <span class="badge badge-pill badge-success">Done</span>
                                                                 </td>
@@ -59,7 +59,7 @@
                                                             <tr>
                                                                 <td>2</td>
                                                                 <td>09/4/2019 2:00 PM</td>
-                                                                <td>Dr. Jollibee McAdoo</td>
+                                                                <td>Dr. Fernando Concepcion Villaflores</td>
                                                                 <td class="text-primary">
                                                                     <span class="badge badge-pill badge-warning">Pending</span>
                                                                 </td>
@@ -67,7 +67,7 @@
                                                             <tr>
                                                                 <td>3</td>
                                                                 <td>08/24/2019 10:00 AM</td>
-                                                                <td>Dr. Jose Montesclaros</td>
+                                                                <td>Dr. Maria Napoles Josefina</td>
                                                                 <td class="text-primary">
                                                                     <span class="badge badge-pill badge-danger">Cancelled</span>
                                                                 </td>
@@ -75,7 +75,7 @@
                                                             <tr>
                                                                 <td>3</td>
                                                                 <td>08/24/2019 10:00 AM</td>
-                                                                <td>Dr. Jose Montesclaros</td>
+                                                                <td>Dr. Juan Santos Dela Cruz</td>
                                                                 <td class="text-primary">
                                                                     <span class="badge badge-pill badge-primary">Approved</span>
                                                                 </td>
@@ -83,7 +83,7 @@
                                                             <tr>
                                                                 <td>3</td>
                                                                 <td>08/24/2019 10:00 AM</td>
-                                                                <td>Dr. Jose Montesclaros</td>
+                                                                <td>Dr. Maria Napoles Josefina</td>
                                                                 <td class="text-primary">
                                                                     <span class="badge badge-pill badge-secondary">Ongoing</span>
                                                                 </td>
@@ -118,10 +118,36 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Select Doctor</label>
                     <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect1">
-                        <option>Dr. Jose Montesclaros</option>
-                        <option>Dr. Jollibee McAdoo</option>
+                        <option>Juan Santos Dela Cruz</option>
+                        <option>Fernando Concepcion Villaflores</option>
+                        <option>Maria Napoles Josefina</option>
                     </select>
-                </div><br>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="MedicalServices">Choose Services</label>
+                    <form action="" method="post">
+                    <div class="row">
+                        <div class="column1">
+                        <input type="checkbox" name="MedServ1" value="Checkup"> Medical Check-Up <br>
+                        <input type="checkbox" name="MedServ2" value="MedCert"> Medical Certificate <br>
+                        <input type="checkbox" name="MedServ3" value="DrugTest"> Drug Testing <br>
+                        <input type="checkbox" name="MedServ4" value="ChestXray"> Chest X-Ray <br>
+                        <input type="checkbox" name="MedServ5" value="BloodTyping"> Blood Typing <br>
+                        <input type="checkbox" name="MedServ6" value="PregnancyTest"> Pregnancy Test <br>
+                        </div>
+                        <div class="column2">
+                        <input type="checkbox" name="MedServ7" value="BloodSugarTest"> Blood Sugar Test <br>
+                        <input type="checkbox" name="MedServ8" value="HepAtest"> Hepatitis A Test <br>
+                        <input type="checkbox" name="MedServ9" value="HepBtest"> Hepatitis B Test <br>
+                        <input type="checkbox" name="MedServ10" value="CBCtest"> CBC Test <br>
+                        <input type="checkbox" name="MedServ11" value="Urinalysis"> Urinalysis <br>
+                        <input type="checkbox" name="MedServ12" value="StoolExam"> Stool Exam <br>
+                        </div>
+                    </div>  
+                    </form>
+                </div>
+                <br>
                 <div class="form-group">
                     <label class="label-control">Select Date</label>
                     <input type="date" class="form-control" >

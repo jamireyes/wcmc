@@ -30,7 +30,7 @@
                                                 <tr>
                                                     <td>15101378</td>
                                                     <td>08/30/2019</td>
-                                                    <td>Dr. Jose Montesclaros</td>
+                                                    <td>Dr. Maria Napoles Josefina</td>
                                                     <td>Urinalysis</td>
                                                     <td>Php 80.00</td>
                                                     <td>
@@ -40,7 +40,7 @@
                                                 <tr>
                                                     <td>14101048</td>
                                                     <td>09/22/2019</td>
-                                                    <td>Dr. Jollibee McAdoo</td>
+                                                    <td>Dr. Juan Santos Dela Cruz</td>
                                                     <td>Chest X-ray</td>
                                                     <td>Php 230.00</td>
                                                     <td>
@@ -63,12 +63,30 @@
 <div class="modal fade" id="BillingModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Receipt</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title">Receipt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Username</td>
+                                </tr>
+                                <tr>
+                                    <td>Username</td>
+                                </tr>
+                                <tr>
+                                    <td>Username</td>
+                                </tr>
+                                <tr>
+                                    <td>Username</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
         </div>
     </div>
 </div>         
