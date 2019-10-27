@@ -14,8 +14,8 @@ class AddFkUserVitalSigns extends Migration
     public function up()
     {
         Schema::table('user_vital_signs', function (Blueprint $table) {
-            $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('staff_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('patient_id')->references('id')->on('Users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('staff_id')->references('id')->on('Users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('vital_sign_id')->references('vital_sign_id')->on('vital_signs')->onDelete('cascade')->onUpdate('cascade');
 
         });

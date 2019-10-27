@@ -43,6 +43,12 @@
                     <p>MESSAGES</p>
                 </a>
             </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'admin.service') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.services', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <p>MEDICAL SERVICES</p>
+                </a>
+            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.setting') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.setting', ['name' => Auth::user()->username]) }}">
                     <i class="fa fa-cog" aria-hidden="true"></i>

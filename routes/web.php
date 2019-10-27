@@ -3,6 +3,7 @@
 use App\Events\AppointmentStatus;
 
 Route::get('/', 'HomeController@index')->name('home');
+// Route::get('admin/settings/{name}', 'AdminPageController@setting')->name('admin.setting');
 
 Route::group(['middleware' => 'preventBackHistory'], function() {
     
@@ -21,7 +22,10 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::get('admin/bill_payments/{name}', 'AdminPageController@billing')->name('admin.billing');
             Route::get('admin/messages/{name}', 'AdminPageController@message')->name('admin.message');
             Route::get('admin/settings/{name}', 'AdminPageController@setting')->name('admin.setting');
+            Route::get('admin/services/{name}', 'AdminPageController@service')->name('admin.services');
 
+
+            Route::resource('admin_service', 'Admin_ServiceController');
             Route::post('/restore/{id}', 'Admin_UserMGTController@restore')->name('admin_usermgt.restore');
             Route::resource('admin_usermgt', 'Admin_UserMGTController');
             Route::resource('doctor_schedule', 'DoctorSchedController');

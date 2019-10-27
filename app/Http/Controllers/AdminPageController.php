@@ -7,6 +7,7 @@ use App\user;
 use App\role;
 use App\doctor_schedule;
 use App\appointment;
+use App\medical_service;
 use Auth;
 
 class AdminPageController extends Controller
@@ -27,6 +28,12 @@ class AdminPageController extends Controller
     public function billing()
     {
         return view('pages.admin.billing');
+    }
+
+    public function service()
+    {
+        $services = medical_service::all();
+        return view('pages.admin.medical_service')->with('services', $services);
     }
 
     public function user_mgt()

@@ -14,7 +14,7 @@ class AddFkDocSched extends Migration
     public function up()
     {
         Schema::table('doctor_schedules', function (Blueprint $table) {
-            $table->foreign('doctor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('doctor_id')->references('id')->on('Users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
