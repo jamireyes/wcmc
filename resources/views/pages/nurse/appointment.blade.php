@@ -14,7 +14,8 @@
                                 <div class="d-flex justify-content-between">
                                     <div></div>
                                     <div>APPROVED APPOINTMENTS</div>
-                                    <div><a href="#" data-toggle="modal" data-target="#AppModal"><i class="fa fa-calendar text-white" aria-hidden="true"></i></a></div>
+                                    <div><a href="{{ route('register') }}"><i class="fas fa-user-plus text-white"></i></a> <a><a> <a href="#" data-toggle="modal" data-target="#AppModal"><i class="fa fa-calendar text-white" aria-hidden="true"></i></a></div>
+                                    
                                 </div>
                             </div>
                             <div class="card-body">
