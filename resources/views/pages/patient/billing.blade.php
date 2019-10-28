@@ -21,8 +21,9 @@
                                                     <th>Bill No.</th>
                                                     <th>Date</th>
                                                     <th>Doctor</th>
-                                                    <th>Description</th>
+                                                    <th>Services</th>
                                                     <th>Total</th>
+                                                    <th>Status</th>
                                                     <th>View</th>
                                                 </tr>
                                             </thead>
@@ -33,6 +34,9 @@
                                                     <td>Dr. Maria Napoles Josefina</td>
                                                     <td>Urinalysis</td>
                                                     <td>Php 80.00</td>
+                                                    <td class="text-primary">
+                                                        <span class="badge badge-pill badge-success">PAID</span>
+                                                    </td>
                                                     <td>
                                                         <a href="#" data-toggle="modal" data-target="#BillingModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
                                                     </td>
@@ -41,8 +45,11 @@
                                                     <td>14101048</td>
                                                     <td>09/22/2019</td>
                                                     <td>Dr. Juan Santos Dela Cruz</td>
-                                                    <td>Chest X-ray</td>
+                                                    <td>Chest X-ray, Medical Check-up</td>
                                                     <td>Php 230.00</td>
+                                                    <td class="text-primary">
+                                                                    <span class="badge badge-pill badge-danger">NOT PAID!</span>
+                                                    </td>
                                                     <td>
                                                         <a href="#" data-toggle="modal" data-target="#BillingModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
                                                     </td>

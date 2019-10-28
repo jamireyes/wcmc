@@ -17,7 +17,9 @@
                                         <tr>
                                             <th>OR No.</th>
                                             <th>Payment Date</th>
+                                            <th>Patient Name</th>
                                             <th>Total Amount</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -25,7 +27,11 @@
                                         <tr>
                                             <td>14106645</td>
                                             <td>July 18, 2019</td>
+                                            <th>Patient Name</th>
                                             <td>PHP 450.00</td>
+                                            <td class="text-primary">
+                                                        <span class="badge badge-pill badge-success">PAID</span>
+                                            </td>
                                             <td>
                                                 <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                 <a href="#" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
@@ -35,7 +41,11 @@
                                         <tr>
                                             <td>15101716</td>
                                             <td>July 19, 2019</td>
+                                            <th>Patient Name</th>
                                             <td>PHP 500.00</td>
+                                            <td class="text-primary">
+                                                <span class="badge badge-pill badge-danger">NOT PAID!</span>
+                                            </td>
                                             <td>
                                                 <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                 <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
@@ -45,7 +55,11 @@
                                         <tr>
                                             <td>15107788</td>
                                             <td>July 20, 2019</td>
+                                            <th>Patient Name</th>
                                             <td>PHP 1000.00</td>
+                                            <td class="text-primary">
+                                                        <span class="badge badge-pill badge-success">PAID</span>
+                                            </td>
                                             <td>
                                                 <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                 <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>

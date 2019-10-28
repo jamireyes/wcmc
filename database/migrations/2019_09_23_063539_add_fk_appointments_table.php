@@ -15,8 +15,8 @@ class AddFkAppointmentsTable extends Migration
     {
         Schema::table('appointments', function (Blueprint $table) {
             $table->foreign('doctor_schedule_id')->references('doctor_schedule_id')->on('doctor_schedules')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('nurse_id')->references('id')->on('Users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('patient_id')->references('id')->on('Users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('nurse_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('patient_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

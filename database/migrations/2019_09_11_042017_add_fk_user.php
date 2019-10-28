@@ -13,7 +13,7 @@ class AddFkUser extends Migration
      */
     public function up()
     {
-        Schema::table('Users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->foreign('role_id')->references('role_id')->on('roles');
             $table->foreign('bloodtype_id')->references('bloodtype_id')->on('bloodtypes')->onDelete('cascade')->onUpdate('cascade');
         });
