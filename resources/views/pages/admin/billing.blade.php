@@ -27,7 +27,7 @@
                                         <tr>
                                             <td>14106645</td>
                                             <td>July 18, 2019</td>
-                                            <th>Patient Name</th>
+                                            <th>Wilmar Zaragosa</th>
                                             <td>PHP 450.00</td>
                                             <td class="text-primary">
                                                         <span class="badge badge-pill badge-success">PAID</span>
@@ -41,7 +41,7 @@
                                         <tr>
                                             <td>15101716</td>
                                             <td>July 19, 2019</td>
-                                            <th>Patient Name</th>
+                                            <th>Joshua Silao</th>
                                             <td>PHP 500.00</td>
                                             <td class="text-primary">
                                                 <span class="badge badge-pill badge-danger">NOT PAID!</span>
@@ -55,7 +55,7 @@
                                         <tr>
                                             <td>15107788</td>
                                             <td>July 20, 2019</td>
-                                            <th>Patient Name</th>
+                                            <th>Jami Reyes</th>
                                             <td>PHP 1000.00</td>
                                             <td class="text-primary">
                                                         <span class="badge badge-pill badge-success">PAID</span>
