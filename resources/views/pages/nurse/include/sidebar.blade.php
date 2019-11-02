@@ -19,6 +19,12 @@
                     <p>APPOINTMENTS</p>
                 </a>
             </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'nurse.patient_records') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('nurse.patient_records', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <p>PATIENT RECORDS</p>
+                </a>
+            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'nurse.billing') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('nurse.billing', ['name' => Auth::user()->username]) }}">
                     <i class="material-icons">library_books</i>

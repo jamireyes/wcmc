@@ -45,6 +45,8 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::group(['middleware' => 'role:NURSE'], function () {
             Route::get('nurse/dashboard/{name}', 'NursePageController@dashboard')->name('nurse.dashboard');
             Route::get('nurse/appointments/{name}', 'NursePageController@appointment')->name('nurse.appointment');
+            Route::get('nurse/patient_records/{name}', 'NursePageController@patientRecords')->name('nurse.patient_records');
+            Route::post('nurse/patient_records/add_new', 'NursePageController@addPatientRecords')->name('nurse.add_patient_records');
             Route::get('nurse/billing/{name}', 'NursePageController@billing')->name('nurse.billing');
             Route::get('nurse/settings/{name}', 'NursePageController@settings')->name('nurse.settings');
             Route::get('nurse/UpdateSettings', 'NursePageController@UpdateSettings')->name('nurse.UpdateSettings');
