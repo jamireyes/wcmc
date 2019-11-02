@@ -22,6 +22,12 @@
                                     <div class="row">
                                         <div class="form-group col-4">
                                             <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
+                                            <select id="Select_Doctor_Input" name="doctor_id" class="form-control">
+                                                <option value="" disabled selected>Select a doctor...</option>
+                                                    @foreach ($doctors as $doctor)
+                                                        <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
+                                                    @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group col-4">
                                             <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
@@ -29,6 +35,10 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
+                                            <select id="Select_Time_Input" class="form-control" name="appointment_time">
+                                                @foreach ($schedules as $schedule)
+                                                    <option value="{{ $schedule->doctor_schedule_id }}">{{ $schedule->day }} {{ Carbon\Carbon::parse($schedule->start_time)->format('g:i A') }} - {{ Carbon\Carbon::parse($schedule->end_time)->format('g:i A') }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -52,8 +62,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        </tr>
+                                        @foreach($appointments as $appointment)
+                                            @if($appointment->status == "APPROVED")
+                                                <tr>
+                                                    <td>{{$appointment->appointment_id}}</td>
+                                                    <td>{{$appointment->last_name}}, {{$appointment->first_name}} {{$appointment->middle_name}}</td>
+                                                    <td>{{$appointment->day}} {{$appointment->start_time}} {{$appointment->end_time}}</td>
+                                                    <td><button type="button" class="btn btn-danger">CANCEL</button></td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -68,9 +86,19 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Timestamp</th>
-                                        <th></th>
+                                        <th>Action</th>
                                     </thead>
                                     <tbody>
+                                        @foreach($appointments as $appointment)
+                                            @if($appointment->status == "PENDING")
+                                                <tr>
+                                                    <td>{{$appointment->appointment_id}}</td>
+                                                    <td>{{$appointment->last_name}}, {{$appointment->first_name}} {{$appointment->middle_name}}</td>
+                                                    <td>{{$appointment->day}} {{$appointment->start_time}} {{$appointment->end_time}}</td>
+                                                    <td><button type="button" class="btn btn-primary">Approve</button></td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
