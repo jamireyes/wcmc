@@ -13,6 +13,7 @@
         </div>
 
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{{ asset('vendor/fontawesome/css/all.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         @toastr_css
@@ -52,24 +53,21 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->username }} <span class="caret"></span>
+                                        {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }} {{ Auth::user()->last_name }} <span class="caret"></span>
                                     </a>
             
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         @auth
                                             @if(Auth::user()->role->description == 'ADMIN')
                                                 <a class="dropdown-item" href="{{ route('admin.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
-                                                <div class="dropdown-divider"></div>
                                             @elseif(Auth::user()->role->description == 'PATIENT')
                                                 <a class="dropdown-item" href="{{ route('patient.appointments', ['name' => Auth::user()->username]) }}">Account</a>
-                                                <div class="dropdown-divider"></div>
                                             @elseif(Auth::user()->role->description == 'DOCTOR')
-                                                {{-- <a class="dropdown-item" href="{{ route('', ['name' => Auth::user()->username]) }}">Dashboard</a>
-                                                <div class="dropdown-divider"></div> --}}
+                                                <a class="dropdown-item" href="{{ route('doctor.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
                                             @elseif(Auth::user()->role->description == 'NURSE')
-                                                {{-- <a class="dropdown-item" href="{{ route('', ['name' => Auth::user()->username]) }}">Account</a>
-                                                <div class="dropdown-divider"></div> --}}
+                                                <a class="dropdown-item" href="{{ route('nurse.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
                                             @endif
+                                            <div class="dropdown-divider"></div>
                                         @endauth
 
                                         <a class="dropdown-item" href="{{ route('logout') }}"

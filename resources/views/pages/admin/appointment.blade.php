@@ -35,7 +35,7 @@
                                         <div class="col-lg-4 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                                 <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                                                <input id="appointment_date" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic">
+                                                <input id="appointment_date" name="appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-12 col-xs-12">
@@ -95,12 +95,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Appointment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form id="AddAppointmentForm">
                 <div class="modal-body p-5">
+                    <div class="form-group">
+                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Patient's Name</label>
+                        <select id="mdl_patient_id" class="form-control">
+                            <option value="" disabled selected>Select a patient...</option>
+                                @foreach ($patients as $patient)
+                                    <option value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->middle_name }} {{ $patient->last_name }}</option>
+                                @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
                         <select id="mdl_doctor_id" class="form-control dynamic-modal">
@@ -112,7 +121,7 @@
                     </div>
                     <div class="form-group">
                         <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                        <input id="mdl_appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic-modal">
+                        <input id="mdl_appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic-modal">
                     </div>
                     <div class="form-group">
                         <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
@@ -134,13 +143,53 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <i class="fas fa-question-circle fa-3x text-success pt-4" aria-hidden="true"></i>
+                <i class="fas fa-question-circle fa-3x text-primary pt-4" aria-hidden="true"></i>
                 <h3>Approve Appointment Request?</h3>
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
                     <form id="ApproveForm">
+                        <button type="submit" class="btn btn-primary">YES!</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">NO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DONE Modal -->
+<div class="modal fade" id="DoneModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="fas fa-question-circle fa-3x text-success pt-4" aria-hidden="true"></i>
+                <h3>Appointment Complete?</h3>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    <form id="DoneForm">
                         <button type="submit" class="btn btn-success">YES!</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">NO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CANCEL Modal -->
+<div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="fas fa-times-circle fa-3x text-danger pt-4"></i>
+                <h3>Cancel Appointment?</h3>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    <form id="CancelForm">
+                        <button type="submit" class="btn btn-danger">YES!</button>
                         <button type="button" class="btn btn-dark" data-dismiss="modal">NO</button>
                     </form>
                 </div>
@@ -156,7 +205,7 @@
 <script>
     $( document ).ready(function() {
         
-        // PusherListener();
+        PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
 
         function PusherListener() {
@@ -175,6 +224,18 @@
 
         const request_dataTable = $('#app_request_table').DataTable();
         const approved_dataTable = $('#app_approved_table').DataTable();
+
+        function refresh_dt(){
+            
+            var doctor_id = "{{Session::get('doctor_id')}}";
+            var appointment_date = "{{Session::get('appointment_date')}}";
+            var appointment_time = "{{Session::get('appointment_time')}}";
+
+            $('#app_request_table').DataTable().destroy();
+            $('#app_approved_table').DataTable().destroy();
+            request_dt(doctor_id, appointment_date, appointment_time);
+            approved_dt(doctor_id, appointment_date, appointment_time);
+        };
 
         function request_dt(doctor_id = '', appointment_date = '', appointment_time = ''){
             $('#app_request_table').DataTable({
@@ -226,13 +287,14 @@
             var doctor_id = $('#doctor_id').val();
             var appointment_date = $('#appointment_date').val();
             var appointment_time = $('#doctor_schedule_id').val();
-            console.log(appointment_time);
 
             e.preventDefault();
 
             if(doctor_id != '' && appointment_date != '' && appointment_time != ''){
+                
                 $('#app_request_table').DataTable().destroy();
                 $('#app_approved_table').DataTable().destroy();
+
                 request_dt(doctor_id, appointment_date, appointment_time);
                 approved_dt(doctor_id, appointment_date, appointment_time);
             }else{
@@ -250,8 +312,9 @@
                     url: route,
                     data: {'_token' : "{{csrf_token() }}"},
                     success: function(){
-                        toastr.success('Appointment Approved!');
+                        toastr.info('Appointment Approved!');
                         $('#ApproveModal').modal('hide');
+                        refresh_dt();
                     },
                     error: function(){
                         toastr.error('Something went wrong :/', 'Error!');
@@ -259,6 +322,50 @@
                 });
             })
         });
+
+        request_dataTable.on('click', '#CancelBtn', function(){
+            var id = $(this).data('id');
+            var route = "{{ route('appointment.cancel', '')}}/"+id;
+            $('#CancelForm').submit(function(){
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: {'_token' : "{{csrf_token() }}"},
+                    success: function(){
+                        toastr.warning('Appointment Cancelled!');
+                        $('#CancelModal').modal('hide');
+                        refresh_dt();
+                    },
+                    error: function(){
+                        toastr.error('Something went wrong :/', 'Error!');
+                    }
+                });
+            })
+        });
+
+        approved_dataTable.on('click', '#DoneBtn', function(){
+            var id = $(this).data('id');
+            var route = "{{ route('appointment.done', '')}}/"+id;
+            $('#DoneForm').submit(function(){
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: {'_token' : "{{csrf_token() }}"},
+                    success: function(){
+                        toastr.success('Appointment Complete!');
+                        $('#DoneModal').modal('hide');
+                        refresh_dt();
+                    },
+                    error: function(){
+                        toastr.error('Something went wrong :/', 'Error!');
+                    }
+                });
+            })
+        });
+
+
 
         $('.dynamic').change(function(){
             if($(this).val() != ''){
@@ -305,8 +412,30 @@
         });
 
         $('#AddAppointmentForm').submit(function(e){
-            // e.preventDefault();
-            console.log($('#mdl_doctor_id').val());
+            e.preventDefault();
+            var doctor_schedule_id = $('#mdl_doctor_schedule_id').val();
+            var patient_id = $('#mdl_patient_id').val();
+            var appointment_date = $('#mdl_appointment_date').val();
+
+            $.ajax({
+                url: "{{ route('appointment.store') }}",
+                method: "POST",
+                data: {
+                    doctor_schedule_id: doctor_schedule_id,
+                    appointment_date: appointment_date,
+                    patient_id: patient_id, 
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(response){
+                    $('#AddAppointment').modal('hide');
+                    if(response.type == "success"){
+                        toastr.success(response.message);
+                        refresh_dt();
+                    }else{
+                        toastr.error(response.message);
+                    }
+                }
+            });
         });
 
         $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {

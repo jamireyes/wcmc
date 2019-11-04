@@ -17,7 +17,7 @@ class AppointmentSeeder extends Seeder
             [
                 'appointment_date' => Carbon::now()->format('Y-m-d'),
                 'doctor_schedule_id' => 1,
-                'nurse_id' => 2,
+                'staff_id' => 2,
                 'patient_id' => 3,
                 'status' => 'PENDING',
                 'created_at' => Carbon::now(),

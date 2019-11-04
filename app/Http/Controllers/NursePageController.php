@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\appointment;
-use App\medical_history;
+use App\user;
+use App\role;
 use App\doctor_schedule;
-use App\User;
+use App\appointment;
 use Auth;
 
 
@@ -19,14 +19,11 @@ class NursePageController extends Controller
 
     public function appointment()
     {
-        // $appointments = appointment::all();
         $doctors = user::where('role_id', 3)->get();
+        $patients = user::where('role_id', 2)->get();
         $schedules = doctor_schedule::all();
-        $appointments = appointment::
-                        join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
-                        ->join('users', 'users.id', '=', 'appointments.patient_id')
-                        ->get();
-        return view('pages.nurse.appointment', compact('doctors', 'schedules', 'appointments'));
+
+        return view('pages.nurse.appointment', compact('doctors', 'patients', 'schedules'));
     }
 
     public function billing()
