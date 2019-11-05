@@ -10,30 +10,6 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <form id="AppointmentDetails" >
-                                @csrf
-                                <div class="card-header card-header-primary">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>ENTER APPOINTMENT DETAILS</div>
-                                        <div><button type="submit" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="form-group col-4">
-                                            <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                                            <input id="Select_Date_Input" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -48,11 +24,27 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Patient</th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <tr>
+                                            <td>1</td>
+                                            <td>Wilmar Zaragosa</td>
+                                            <td>
+                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
+                                                <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
                                         <tr>
+                                            <td>2</td>
+                                            <td>Joshua Silao</td>
+                                            <td>
+                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
+                                                <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -68,9 +60,29 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Timestamp</th>
-                                        <th></th>
+                                        <th>Action</th>
                                     </thead>
                                     <tbody>
+                                    <tr>
+                                            <td>1</td>
+                                            <td>Rj Villafranca</td>
+                                            <td>08/24/2019 10:00 AM</td>
+                                            <td>
+                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
+                                                <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jami Reyes</td>
+                                            <td>08/24/2019 10:00 AM</td>
+                                            <td>
+                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                <a href="#"><i class="fas fa-ban text-danger mx-1"></i></a>
+                                                <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

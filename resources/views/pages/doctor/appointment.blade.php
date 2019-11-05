@@ -10,40 +10,6 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <form id="AppointmentDetails" >
-                                @csrf
-                                <div class="card-header card-header-primary">
-                                    <div class="d-flex justify-content-between w-100">
-                                        <div>ENTER APPOINTMENT DETAILS</div>
-                                        <div><button type="submit" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="form-group col-4">
-                                            <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
-                                            <select id="Select_Doctor_Input" name="doctor_id" class="form-control">
-                                                <option value="" disabled selected>Select a doctor...</option>
-                                                    @foreach ($doctors as $doctor)
-                                                        <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
-                                                    @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                                            <input id="Select_Date_Input" name="appointment_date" type="date" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
-                                            <select id="Select_Time_Input" class="form-control" name="appointment_time">
-                                                @foreach ($schedules as $schedule)
-                                                    <option value="{{ $schedule->doctor_schedule_id }}">{{ $schedule->day }} {{ Carbon\Carbon::parse($schedule->start_time)->format('g:i A') }} - {{ Carbon\Carbon::parse($schedule->end_time)->format('g:i A') }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -80,23 +46,6 @@
                                                 <a href="#"><i class="fa fa-check-circle text-success mx-1" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header card-header-warning">APPOINTMENT REQUESTS</div>
-                            <div class="card-body">
-                                <table id="app_request_table" class="table display patient-table w-100">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Timestamp</th>
-                                        <th></th>
-                                    </thead>
-                                    <tbody>
                                     </tbody>
                                 </table>
                             </div>
