@@ -21,7 +21,7 @@
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'nurse.patient_records') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('nurse.patient_records', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <i class="fas fa-poll-h" aria-hidden="true"></i>
                     <p>PATIENT RECORDS</p>
                 </a>
             </li>
@@ -40,3 +40,4 @@
         </ul>
     </div>
 </div>
+

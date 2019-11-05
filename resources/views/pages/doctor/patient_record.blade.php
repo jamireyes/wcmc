@@ -52,7 +52,7 @@
                                         @endif
                                     @endforeach
                                     <td>
-                                    
+                                   
                                     <!-- MAO NI ANG MODAL -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -79,7 +79,7 @@
                                                     <label for="inputAddress">Details</label>
                                                     <input id="description" type="text" class="form-control" id="inputAddress" placeholder="" readonly>
                                                 </div>
-                                                {{-- <div class="form-row">
+                                                <!-- {{-- <div class="form-row">
                                                 <div class="form-group col-md-2">
                                                     <label for="inputCity">Gender</label>
                                                     <input type="text" class="form-control" id="inputCity" >
@@ -120,7 +120,7 @@
                                                 <button type="submit" class="btn btn-primary">CANCEL</button>
                                                 </div>
                                                 </div>
-                                                </div> --}}
+                                                </div> --}} -->
                                             </form>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
             </div>
         </div>
     </div> 
-
+    
     <script>
         function displayToModal(patient) {
             document.getElementById('first_name').value = patient.first_name;

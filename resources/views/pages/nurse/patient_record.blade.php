@@ -4,62 +4,57 @@
 <div class="wrapper">
     @include('pages.nurse.include.sidebar')
     <div class="main-panel">      
-        @include('pages.nurse.include.navbar')  
-        <div class="row mt-5">
-            {{-- <div class="col-md-6"> --}}
-            <div class="container">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">PATIENT LIST</h4>
-                        <div class="col-4">
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                    <div class="ripple-container"></div>
-                                </button>
+        @include('pages.nurse.include.navbar') 
+        <div class="content mt-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <div class="d-flex justify-content-between">
+                                    <div></div>
+                                    <div>USER MANAGEMENT</div>
+                                    <div><a href="{{ route('register') }}"><i class="fas fa-user-plus text-white"></i></a></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="user_mgt_table" class="table display">
+                                        <thead>
+                                            <th>Full Name</th>
+                                            <th></th>
+                                            <th>Action</th>
+                                        </thead>
+                                            <tbody>
+                                                    @foreach($patients as $patient)
+                                                    <tr>
+                                                    <!-- {{-- @if(Auth::user()->id == $patient->_id) --}} -->
+                                                        <td>
+                                                            {{$patient->first_name}} {{$patient->last_name}}
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            <i class="fas fa-eye text-success mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">                                 
+                                                            </i>
+                                                            <i class="fas fa-edit text-warning mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">                                 
+                                                            </i>
+                                                            <i class="fas fa-plus text-primary mx-1" onclick="addModal({{ $patient }})" data-toggle="modal" data-target="#AddModal">                                 
+                                                            </i>                                         
+                                                        </td>
+                                                    <!-- {{-- @endif --}} -->
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                 </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary">
-                            <th>
-                                NAME
-                            </th>
-                            <th>
-                                ACTION
-                            </th>
-                            
-                        </thead>
-                        <tbody>
-                                <tr>
-                                    @foreach($patients as $patient)
-                                        {{-- @if(Auth::user()->id == $patient->_id) --}}
-                                            <td>
-                                                {{$patient->first_name}} {{$patient->last_name}}
-                                            </td>
-                                            <td>
-                                                <i class="fas fa-eye text-success mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">                                 
-                                                </i>
-                                                <i class="fas fa-edit text-warning mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">                                 
-                                                </i>
-                                                <i class="fas fa-plus text-primary mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#AddModal">                                 
-                                                </i>
-
-                    
-                                            </td>
-                                        {{-- @endif --}}
-                                    @endforeach
-                                    <td>
-                                    
-                                    <!-- MAO NI ANG MODAL PARA SA VIEW-->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <!-- MODAL FOR THE VIEW-->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -179,7 +174,7 @@
             document.getElementById('description').value = patient.description;
         }
 
-        function displayToModal(patient) {
+        function addModal(patient) {
             document.getElementById('user_id').value = patient.id;
         }
 
