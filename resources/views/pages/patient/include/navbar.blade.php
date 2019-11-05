@@ -12,11 +12,8 @@
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.dashboard', ['name' => Auth::user()->username]) }}">
-                        <i class="material-icons text-secondary">dashboard</i>
-                        <p class="d-lg-none d-md-block">
-                            Stats
-                        </p>
+                    <a class="nav-link" href="{{ route('patient.appointments', ['name' => Auth::user()->username]) }}">
+                        <i class="fa fa-calendar fa-xs text-secondary" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="nav-item dropdown">

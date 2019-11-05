@@ -15,7 +15,7 @@
                     <a class="nav-link" href="{{ route('admin.dashboard', ['name' => Auth::user()->username]) }}">
                         <i class="material-icons text-secondary">dashboard</i>
                         <p class="d-lg-none d-md-block">
-                            Stats
+                            DASHBOARD
                         </p>
                     </a>
                 </li>
@@ -23,7 +23,7 @@
                     <a class="nav-link" href="#" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons text-secondary">person</i>
                         <p class="d-lg-none d-md-block">
-                            Account
+                            ACCOUNT
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">

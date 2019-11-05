@@ -27,6 +27,16 @@ class DoctorPageController extends Controller
     {
         return view('pages.doctor.patient');
     }
+    public function patientRecords()
+    {
+        $patients = appointment:: join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
+        ->join('users', 'users.id', '=', 'appointments.patient_id')
+        ->join('medical_histories', 'medical_histories.user_id', '=', 'users.id')
+        ->join('user_vital_signs', 'user_vital_signs.patient_id', '=', 'users.id')        
+        ->get();
+                    
+        return view('pages.doctor.patient_record', compact('patients'));
+    }
     public function billings()
     {
         return view('pages.doctor.billing');

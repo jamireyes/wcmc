@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.schedule') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.schedule', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <i class="fas fa-user-md"></i>
                     <p>DOCTOR'S SCHEDULE</p>
                 </a>
             </li>
@@ -37,16 +37,16 @@
                     <p>BILL PAYMENTS</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'admin.message') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.message', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                    <p>MESSAGES</p>
-                </a>
-            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.service') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.services', ['name' => Auth::user()->username]) }}">
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                     <p>MEDICAL SERVICES</p>
+                </a>
+            </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'admin.message') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.message', ['name' => Auth::user()->username]) }}">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    <p>MESSAGES</p>
                 </a>
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.setting') ? 'active' : '' }}">

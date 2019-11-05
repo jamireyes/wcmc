@@ -29,7 +29,6 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -39,6 +38,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['role:NURSE,ADMIN']);
     }
 
     /**
@@ -75,8 +75,23 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function showRegistrationForm(){
+    public function showRegistrationForm()
+    {
         $roles = role::all();
         return view('auth.register', compact('roles'));
+    }
+
+    protected function redirectTo() 
+    {
+        if (Auth::check()) {
+            $username = Auth::user()->username;
+            if (Auth::user()->role->description == 'ADMIN') {
+                $route = '/admin/dashboard'.'/'.$username;
+            } elseif (Auth::user()->role->description == 'NURSE') {
+                $route = '/nurse/dashboard'.'/'.$username;
+            }
+        }
+
+        return $route; 
     }
 }

@@ -13,6 +13,7 @@
         </div>
 
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{{ asset('vendor/fontawesome/css/all.css') }}" rel="stylesheet">
         <link href="{{ asset('css/material-dashboard.css') }}" rel="stylesheet">
         @toastr_css
