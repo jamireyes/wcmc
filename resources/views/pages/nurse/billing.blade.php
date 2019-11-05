@@ -16,7 +16,7 @@
                                     <thead>
                                         <tr>
                                             <th>OR No.</th>
-                                            <th>Payment Date</th>
+                                           
                                             <th>Total Amount</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -25,40 +25,40 @@
                                     <tbody>
                                         <tr>
                                             <td>14106645</td>
-                                            <td>July 18, 2019</td>
+                                            
                                             <td>PHP 450.00</td>
                                             <td class="text-primary">
                                                         <span class="badge badge-pill badge-success">PAID</span>
                                              </td>
                                             <td>
                                                 <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                                <a href="#" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                
                                                 <a href="#" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>15101716</td>
-                                            <td>July 19, 2019</td>
+                                           
                                             <td>PHP 500.00</td>
                                             <td class="text-primary">
                                                 <span class="badge badge-pill badge-danger">NOT PAID!</span>
                                             </td>
                                             <td>
                                                 <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                                
                                                 <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>15107788</td>
-                                            <td>July 20, 2019</td>
+                                          
                                             <td>PHP 1000.00</td>
                                             <td class="text-primary">
                                                 <span class="badge badge-pill badge-danger">NOT PAID!</span>
                                             </td>
                                             <td>
                                                 <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
+                                               
                                                 <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
@@ -124,25 +124,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Bill Transactions</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
