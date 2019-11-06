@@ -11,6 +11,8 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
     Route::group(['middleware' => 'auth'], function () {
         
         Route::post('/ChangePassword', 'ChangePasswordController@changePassword')->name('ChangePassword');
+        Route::post('getMedicalHistory', 'PatientRecordController@getMedicalHistory')->name('getMedicalHistory');
+        Route::post('getVitalSigns', 'PatientRecordController@getVitalSigns')->name('getVitalSigns');
 
         // ADMIN ROUTES
         Route::group(['middleware' => 'role:ADMIN'], function () {
@@ -68,7 +70,6 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::group(['middleware' => 'role:DOCTOR'], function () {
             Route::get('doctor/dashboard/{name}', 'DoctorPageController@dashboard')->name('doctor.dashboard');
             Route::get('doctor/appointments/{name}', 'DoctorPageController@appointments')->name('doctor.appointments');
-            Route::get('doctor/patients/{name}', 'DoctorPageController@patients')->name('doctor.patients');
             Route::get('doctor/patient_records/{name}', 'DoctorPageController@patientRecords')->name('doctor.patient_records');
             Route::get('doctor/billings/{name}', 'DoctorPageController@billings')->name('doctor.billings');
             Route::get('doctor/settings/{name}', 'DoctorPageController@settings')->name('doctor.settings');

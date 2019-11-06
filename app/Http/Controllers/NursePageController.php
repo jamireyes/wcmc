@@ -7,6 +7,7 @@ use App\user;
 use App\role;
 use App\doctor_schedule;
 use App\appointment;
+use App\user_vital_signs;
 use Auth;
 
 

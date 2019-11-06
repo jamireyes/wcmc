@@ -5,95 +5,161 @@
     @include('pages.doctor.include.sidebar')
     <div class="main-panel">      
         @include('pages.doctor.include.navbar')  
-        <div class="row mt-5">
-            {{-- <div class="col-md-6"> --}}
+        <div class="content">
             <div class="container-fluid">
-                <div class="card">
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title ">PATIENT RECORDS</h4>
-                        <div class="col-4">
-                            <div class="input-group no-border">
-                                <input type="text" value="" class="form-control" placeholder="Search...">
-                                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                    <div class="ripple-container"></div>
-                                </button>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <form id="patient_details">
+                                @csrf
+                                <div class="card-header card-header-primary">
+                                    <div class="d-flex w-100">
+                                        <div class="mr-auto">ENTER PATIENT NAME</div>
+                                        <div></div>
+                                        <div><button type="submit" id="submit_patient" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Patient's Name</label>
+                                        <select id="patient_id" name="patient_id" class="form-control">
+                                            <option value="" disabled selected>Select a patient...</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <div class="d-flex justify-content-between">
+                                    <div></div>
+                                    <div>MEDICAL HISTORY</div>
+                                    <div></div>
+                                </div></div>
+                            <div class="card-body">
+                                <table id="medical_history_table" class="table display table-striped">
+                                    <thead>
+                                        <th style="font-size: 1em;">Description</th>
+                                        <th style="font-size: 1em;">Created At</th>
+                                        <th style="font-size: 1em;">Last Update</th>
+                                        <th style="font-size: 1em;">Action</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <div class="d-flex justify-content-between">
+                                    <div></div>
+                                    <div>VITAL SIGNS</div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="vital_signs_table" class="table display table-striped">
+                                    <thead>
+                                        <th style="font-size: 1em;">Doctor</th>
+                                        <th style="font-size: 1em;">Description</th>
+                                        <th style="font-size: 1em;">Value</th>
+                                        <th style="font-size: 1em;">Created At</th>
+                                        <th style="font-size: 1em;">Last Update</th>
+                                        <th style="font-size: 1em;">Action</th>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary">
-                            <th>
-                                NAME
-                            </th>
-                            <th>
-                                ACTION
-                            </th>
-                            
-                        </thead>
-                        <tbody>
-                                <tr>
-                                    @foreach($patients as $patient)
-                                        @if(Auth::user()->id == $patient->doctor_id)
-                                            <td>
-                                                {{$patient->first_name}} {{$patient->last_name}}
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">
-                                                    VIEW
-                                                </button>
-                                            </td>
-                                        @endif
-                                    @endforeach
-                                    <td>
-                                   
-                                    <!-- MAO NI ANG MODAL -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Patient Record</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            <form>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputEmail4">First Name</label>
-                                                        <input id="first_name" type="text" class="form-control" id="inputEmail4" placeholder="" readonly>
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputPassword4">Last Name</label>
-                                                        <input id="last_name" type="text" class="form-control" id="inputPassword4" placeholder="" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="inputAddress">Details</label>
-                                                    <input id="description" type="text" class="form-control" id="inputAddress" placeholder="" readonly>
-                                                </div>                                              
-                                    </td>
-                                </tr>        
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div> 
+</div>
+@endsection
 
-    <script>
-        function displayToModal(patient) {
-            document.getElementById('first_name').value = patient.first_name;
-            document.getElementById('last_name').value = patient.last_name;
-            document.getElementById('description').value = patient.description;
+@section('script')
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+<script>
+    $( document ).ready(function() {
+
+        $('#medical_history_table').DataTable();
+        $('#vital_signs_table').DataTable();
+
+        $('#submit_patient').click(function(e){
+            e.preventDefault();
+            
+            var patient_id = $('#patient_id').val();
+            console.log(patient_id);
+            
+            if( patient_id != '' ){
+                $('#medical_history_table').DataTable().destroy();
+                $('#vital_signs_table').DataTable().destroy();
+
+                getMedicalHistory(patient_id);
+                getVitalSigns(patient_id);
+            }else{
+                toastr.warning('Missing entries!');
+            }
+            
+        });
+
+        function getMedicalHistory(patient_id) {
+            $('#medical_history_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    type: "POST",
+                    url: "{{ route('getMedicalHistory') }}",
+                    data: {
+                        '_token' : "{{csrf_token() }}",
+                        patient_id: patient_id
+                    }
+                },
+                columns: [
+                    { data: "description", name: "description" },
+                    { data: "created_at", name: "created_at" },
+                    { data: "updated_at", name: "updated_at" },
+                    { data: "Action", name: "Action" }
+                ]
+            });
         }
-    </script>
 
+        function getVitalSigns(patient_id) {
+            $('#vital_signs_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    type: "POST",
+                    url: "{{ route('getVitalSigns') }}",
+                    data: {
+                        '_token' : "{{csrf_token() }}",
+                        patient_id: patient_id
+                    }
+                },
+                columns: [
+                    { data: "fullname", name: "fullname" },
+                    { data: "name", name: "name" },
+                    { data: "value", name: "value" },
+                    { data: "created_at", name: "created_at" },
+                    { data: "updated_at", name: "updated_at" },
+                    { data: "Action", name: "Action" }
+                ]
+            });
+        }
+
+        // function displayToModal(patient) {
+        //     $('first_name').val(patient.first_name);
+        //     $('last_name').val(patient.last_name);
+        //     $('description').val(patient.description);
+        // }
+    });
+</script>
 @endsection
