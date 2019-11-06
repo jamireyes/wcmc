@@ -10,7 +10,7 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header card-header-primary">
-                        <h4 class="card-title ">PATIENT LIST</h4>
+                        <h4 class="card-title ">PATIENT RECORDS</h4>
                         <div class="col-4">
                             <div class="input-group no-border">
                                 <input type="text" value="" class="form-control" placeholder="Search...">
@@ -78,55 +78,7 @@
                                                 <div class="form-group">
                                                     <label for="inputAddress">Details</label>
                                                     <input id="description" type="text" class="form-control" id="inputAddress" placeholder="" readonly>
-                                                </div>
-                                                <!-- {{-- <div class="form-row">
-                                                <div class="form-group col-md-2">
-                                                    <label for="inputCity">Gender</label>
-                                                    <input type="text" class="form-control" id="inputCity" >
-                                                </div>
-                                                </div>
-                                                <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputCity">Birthday</label>
-                                                    <input type="date" class="form-control" id="inputCity">
-                                                </div>
-                                                </div>
-                                                <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputCity">Mobile No.</label>
-                                                    <input type="number" class="form-control" id="inputCity">
-                                                </div>
-                                                </div>
-                                                <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputCity">E-Mail</label>
-                                                    <input type="email" class="form-control" id="inputCity">
-                                                </div>
-                                                </div>
-                                                <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputCity">Civil Status</label>
-                                                    <input type="text" class="form-control" id="inputCity">
-                                                </div>
-                                                </div>
-                                                <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputCity">Allergies</label>
-                                                    <input type="text" class="form-control" id="inputCity">
-                                                </div>
-                                                </div>
-                                                <div>
-                                                <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
-                                                <button type="submit" class="btn btn-primary">CANCEL</button>
-                                                </div>
-                                                </div>
-                                                </div> --}} -->
-                                            </form>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                        {{-- <button type="button" class="btn btn-danger">DELETE</button> --}}
+                                                </div>                                              
                                     </td>
                                 </tr>        
                         </tbody>
@@ -135,7 +87,7 @@
             </div>
         </div>
     </div> 
-    
+
     <script>
         function displayToModal(patient) {
             document.getElementById('first_name').value = patient.first_name;
