@@ -238,3 +238,8 @@
 </div>
 
 @endsection
+
+@section('script')
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+    
+@endsection

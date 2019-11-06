@@ -131,25 +131,43 @@ class AppointmentController extends Controller
     public function approve($id)
     {
         $appointment = appointment::find($id);
+        $user = user::find($appointment->patient_id);
         $appointment->status = 'APPROVED';
         $appointment->staff_id = Auth::user()->id;
         $appointment->save();
+
+        $type = 'info';
+        $title = 'Notification!';
+        $message = 'Your appointment has been approved!';
+        event(new AppointmentStatus($type, $title, $message, $user));
     }
 
     public function done($id)
     {
         $appointment = appointment::find($id);
+        $user = user::find($appointment->patient_id);
         $appointment->status = 'DONE';
         $appointment->staff_id = Auth::user()->id;
         $appointment->save();
+
+        $type = 'success';
+        $title = 'Successful!';
+        $message = 'Your appointment has been completed!';
+        event(new AppointmentStatus($type, $title, $message, $user));
     }
 
     public function cancel($id)
     {
         $appointment = appointment::find($id);
+        $user = user::find($appointment->patient_id);
         $appointment->status = 'CANCELLED';
         $appointment->staff_id = Auth::user()->id;
         $appointment->save();
+
+        $type = 'warning';
+        $title = 'Notification!';
+        $message = 'Your appointment has been cancelled!';
+        event(new AppointmentStatus($type, $title, $message, $user));
     }
 
     public function store(Request $request)
@@ -226,6 +244,13 @@ class AppointmentController extends Controller
         }
 
         return compact('message', 'type');
+    }
+
+    public function getPatient($id)
+    {
+        $user = user::find($id);
+        
+        return compact('user');
     }
 
     public function show($id)

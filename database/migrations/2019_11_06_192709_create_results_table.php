@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserVitalSignsTable extends Migration
+class CreateResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateUserVitalSignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_vital_signs', function (Blueprint $table) {
+        Schema::create('results', function (Blueprint $table) {
+            $table->bigIncrements('result_id');
             $table->bigInteger('patient_id')->unsigned()->index();
-            $table->bigInteger('staff_id')->unsigned()->index();
-            $table->bigInteger('vital_sign_id')->unsigned()->index();
-            $table->string('value');
+            $table->string('description');
+            $table->string('file_path');
+            $table->enum('status', ['READY', 'CLAIMED']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +31,6 @@ class CreateUserVitalSignsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_vital_signs');
+        Schema::dropIfExists('results');
     }
 }

@@ -79,6 +79,7 @@
 
 
 @section('script')
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
 <script>
         $( document ).ready(function() {
             const ResultPatient = $('#Results_Patient').DataTable({
