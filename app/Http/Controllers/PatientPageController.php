@@ -10,7 +10,9 @@ class PatientPageController extends Controller
 {
     public function appointments()
     {
-        return view('pages.patient.appointments');
+        $doctors = user::all()->where('role_id', 3);
+
+        return view('pages.patient.appointments', compact('doctors'));
     }
     public function billing()
     {

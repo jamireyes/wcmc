@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AppointmentStatus;
+use App\Events\PatientStaff;
 use Yajra\Datatables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -251,6 +252,44 @@ class AppointmentController extends Controller
         $user = user::find($id);
         
         return compact('user');
+    }
+
+    public function requestAppointment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'doctor_schedule_id' => 'required',
+            'appointment_date' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $message = 'Missing Entries';
+            $type = 'warning';
+        } else {
+            $query = DB::table('appointments')
+                ->where('doctor_schedule_id', $request->input('doctor_schedule_id'))
+                ->where('appointment_date', $request->input('appointment_date'))
+                ->where('patient_id', Auth::user()->id)
+                ->whereNotIn('status', ['DONE', 'CANCELLED']);
+
+            if ($query->doesntExist()) {
+                $data = new appointment;
+                $data->appointment_date = $request->input('appointment_date');
+                $data->doctor_schedule_id = $request->input('doctor_schedule_id');
+                $data->patient_id = Auth::user()->id;
+                $data->status = 'PENDING';
+                $data->save();
+
+                $message = "Appointment successfully created by".Auth::user()->first_name.' '.Auth::user()->last_name;
+                $type = "success";
+
+                event(new PatientStaff($type, 'Notification!', $message));
+            } else {
+                $message = "Appointment exists!";
+                $type = "error";
+            }
+        }
+
+        return compact('message', 'type');
     }
 
     public function show($id)

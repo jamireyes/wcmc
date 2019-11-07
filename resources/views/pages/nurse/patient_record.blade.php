@@ -175,11 +175,35 @@
     
     $( document ).ready(function(){
 
+        PusherListener();
+        $.fn.dataTable.ext.errMode = 'none';
+
+        function PusherListener() {
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('89973cf8f98acc38053a', {
+                cluster: 'ap1',
+                'useTLS': false,
+            });
+            
+            var channel = pusher.subscribe('PatientStaff.2');
+            channel.bind('PatientStaff', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
+            });
+        }
+
         const patient_record_table = $('#patient_record_table').DataTable();
 
         patient_record_table.on('click', '#ViewBtn', function(){
             var data = $(this).data('data');
-            console.log(data);
             $('#view_username').val(data.username);
             $('#view_email').val(data.email);
             $('#view_first_name').val(data.first_name);

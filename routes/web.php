@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\AppointmentStatus;
+use App\Events\PatientStaff;
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -13,6 +14,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('/ChangePassword', 'ChangePasswordController@changePassword')->name('ChangePassword');
         Route::post('getMedicalHistory', 'PatientRecordController@getMedicalHistory')->name('getMedicalHistory');
         Route::post('getVitalSigns', 'PatientRecordController@getVitalSigns')->name('getVitalSigns');
+        Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
 
         // ADMIN ROUTES
         Route::group(['middleware' => 'role:ADMIN'], function () {
@@ -41,6 +43,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('patient/UpdateSettings', 'PatientPageController@UpdateSettings')->name('patient.UpdateSettings');
             Route::get('patient/getPatientAppointments', 'AppointmentController@getPatientAppointments')->name('patient.getPatientAppointments');
             Route::get('patient/getPatientApproved', 'AppointmentController@getPatientApproved')->name('patient.getPatientApproved');
+            Route::post('patient/requestAppointment', 'AppointmentController@requestAppointment')->name('patient.requestAppointment');
         });
         
         // NURSE ROUTES
@@ -58,7 +61,6 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::group(['middleware' => ['role:NURSE,ADMIN']], function () {
             Route::post('getAppointments', 'AppointmentController@getAppointments')->name('appointment.getAppointments');
             Route::post('getApprovedAppointments', 'AppointmentController@getApprovedAppointments')->name('appointment.getApprovedAppointments');
-            Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
             Route::post('approve/{id}', 'AppointmentController@approve')->name('appointment.approve');
             Route::post('done/{id}', 'AppointmentController@done')->name('appointment.done');
             Route::post('cancel/{id}', 'AppointmentController@cancel')->name('appointment.cancel');
@@ -86,11 +88,15 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
     // Event Trigger []
     Route::get('event', function(){
         // $user = Auth::user();
-        $user = App\User::find(3);
-        $title = 'Appointment Request!';
-        $message = $user->first_name.' '.$user->last_name.' '.'has sent a request.';
+        // $user = App\User::find(3);
+        // $title = 'Appointment Request!';
+        // $message = $user->first_name.' '.$user->last_name.' '.'has sent a request.';
 
-        event(new AppointmentStatus($title, $message, $user));
+        // event(new AppointmentStatus($title, $message, $user));
+        $message = "Appointment successfully created by".Auth::user()->first_name.' '.Auth::user()->last_name;
+        $type = "success";
+
+        event(new PatientStaff($type, 'Notification!', $message));
         
         return 'Event Sent!';
     });

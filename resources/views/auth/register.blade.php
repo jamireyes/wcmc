@@ -176,13 +176,13 @@
                             <div class="col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label>Bloodtype</label>
-                                    <select name="bloodtype" class="form-control @error('bloodtype') is-invalid @enderror" required>
+                                    <select name="bloodtype_id" class="form-control @error('bloodtype_id') is-invalid @enderror" required>
                                         @foreach ($bloodtypes as $bloodtype)
                                             <option value="{{ $bloodtype->bloodtype_id }}">{{ $bloodtype->description }}</option>
                                         @endforeach
                                     </select>
 
-                                    @error('bloodtype')
+                                    @error('bloodtype_id')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
