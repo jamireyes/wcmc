@@ -9,6 +9,7 @@ use App\doctor_schedule;
 use App\appointment;
 use App\medical_service;
 use Auth;
+use DB;
 
 class AdminPageController extends Controller
 {
@@ -27,7 +28,15 @@ class AdminPageController extends Controller
 
     public function billing()
     {
-        return view('pages.admin.billing');
+        $bill = DB::table('services_availed')
+        ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
+        ->join('Users as s', 's.id', '=', 'services_availed.staff_id')
+        ->join('medical_services', 'medical_services.medical_service_id', '=', 'services_availed.medical_service_id')
+        ->where('services_availed.patient_id', '=', Auth::User()->id)  
+        ->select('p.first_name as name')
+        ->get();
+
+        return view('pages.admin.billing')->with('bills', $bill);
     }
 
     public function service()

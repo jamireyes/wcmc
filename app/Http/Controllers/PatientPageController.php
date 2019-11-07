@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\services_availed;
 use Auth;
+use DB;
 
 class PatientPageController extends Controller
 {
@@ -14,7 +16,13 @@ class PatientPageController extends Controller
     }
     public function billing()
     {
-        return view('pages.patient.billing');
+        $bill = DB::table('services_availed')
+        ->join('Users as d', 'd.id', '=', 'services_availed.staff_id')
+        ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
+        ->select('services_availed.services_availed_id as id', 'd.username as doctor', 'description', 'services_availed.updated_at as date')
+        ->where('p.id', '=', AUTH::user()->id)
+        ->get();
+        return view('pages.patient.billing')->with('bills', $bill);
     }
     public function results()
     {

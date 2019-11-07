@@ -27,26 +27,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>15101378</td>
-                                                    <td>08/30/2019</td>
-                                                    <td>Dr. Maria Napoles Josefina</td>
-                                                    <td>Urinalysis</td>
-                                                    <td>Php 80.00</td>
-                                                    <td>
-                                                        <a href="#" data-toggle="modal" data-target="#BillingModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>14101048</td>
-                                                    <td>09/22/2019</td>
-                                                    <td>Dr. Juan Santos Dela Cruz</td>
-                                                    <td>Chest X-ray</td>
-                                                    <td>Php 230.00</td>
-                                                    <td>
-                                                        <a href="#" data-toggle="modal" data-target="#BillingModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
-                                                    </td>
-                                                </tr>
+                                                @if(count($bills))         
+                                                    @foreach($bills as $bill)
+                                                    <tr>
+                                                        <td>{{ $bill->id}}</td>
+                                                        <td>{{ $bill->date }}</td>
+                                                        <td>{{ $bill->doctor }}</td>
+                                                        <td>{{ $bill->description }}</td>
+                                                        <td>Php 230.00</td>
+                                                        <td>
+                                                            <a href="#" data-toggle="modal" data-target="#BillingModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
+                                                        </td>
+                                                    </tr> 
+                                                    @endforeach
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
