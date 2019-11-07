@@ -39,7 +39,7 @@
                                                     <td>{{$user->contact_no}}</td>
                                                     <td>{{$user->role->description}}</td>
                                                     <td>
-                                                        <a href="#" id="View_Button" data-user="{{ $user }}" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
+                                                        <a href="#" id="View_Button" data-user="{{ $user }}" data-bloodtype="{{ $user->bloodtype->description }}" data-role="{{ $user->role->description }}" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                         <a href="#" id="Edit_Button" data-user="{{ $user }}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
                                                         @if(Auth::user()->id != $user->id)
                                                             @if ($user->deleted_at == NULL)
@@ -76,26 +76,120 @@
             <form id="EditUserForm" method="POST">
                 @method('PUT')
                 @csrf
-                <div class="modal-body">
-                    <div class="form-group col-12">
-                        <label for="role_id">Role</label>
-                        <select name="role_id" id="role_id" class="form-control">
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->role_id }}">{{ $role->description }}</option>
-                            @endforeach
-                        </select>
+                <div class="modal-body p-5">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="role_id">Role</label>
+                                <select name="role_id" id="role_id" class="form-control">
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->role_id }}">{{ $role->description }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input id="username" type="text" class="form-control" value="">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-12">
-                        <label for="email">E-Mail</label>
-                        <input type="email" name="email" id="email" class="form-control" value="">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input id="first_name" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Middle Name</label>
+                                <input id="middle_name" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input id="last_name" type="text" class="form-control" value="">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-12">
-                        <label for="username">Username</label>
-                        <input type="text" name="username" id="username" class="form-control" value="">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input id="email" type="email" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Contact No.</label>
+                                <input id="contact_no" type="text" class="form-control" value="">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group col-12">
-                        <label for="contact_no">Contact No.</label>
-                        <input type="text" name="contact_no" id="contact_no" class="form-control" value="">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Sex</label>
+                                <select id="sex" class="form-control">
+                                    @foreach ($sexs as $sex)
+                                        <option value="{{$sex}}">{{$sex}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Civil Status</label>
+                                <select id="civil_status" class="form-control">
+                                    @foreach ($civil_statuses as $civil_status)
+                                        <option value="{{$civil_status}}">{{$civil_status}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Bloodtype</label>
+                                <select id="bloodtype_id" class="form-control">
+                                    @foreach ($bloodtypes as $bloodtype)
+                                        <option value="{{$bloodtype->bloodtype_id}}">{{$bloodtype->description}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Birthday</label>
+                                <input id="birthday" type="date" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Citizenship</label>
+                                <input id="citizenship" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label >Adress Line 1</label>
+                                <input id="address_line_1" type="text" class="form-control" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label>Adress Line 2</label>
+                                <input id="address_line_2" type="text" class="form-control" value="">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -153,58 +247,111 @@
 </div>
 
 <!-- View Modal -->
-
 <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body p-5">
-                <div class="text-center w-100 mb-5">
+                <div class="text-center w-100 mb-2">
                     <i class="fas fa-user-circle fa-5x text-primary" aria-hidden="true"></i>
                 </div>
-                <table id="ViewProfile">
-                    <tbody>
-                        <tr>
-                            <td>Username&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="username"></td>
-                        </tr>
-                        <tr>
-                            <td>Full Name&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="fullname"></td>
-                        </tr>
-                        <tr>
-                            <td>Email&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="email"></td>
-                        </tr>
-                        <tr>
-                            <td>Contact No.&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="contact_no"></td>
-                        </tr>
-                        <tr>
-                            <td>Sex&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="sex"></td>
-                        </tr>
-                        <tr>
-                            <td>Birthday&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="birthday"></td>
-                        </tr>
-                        <tr>
-                            <td>Citizenship&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="citizenship"></td>
-                        </tr>
-                        <tr>
-                            <td>Civil Status&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="civil_status"></td>
-                        </tr>
-                        <tr>
-                            <td>Address&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="address_line_1"></td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="address_line_2"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Role</label>
+                            <input id="view_role" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input id="view_username" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input id="view_first_name" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input id="view_middle_name" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input id="view_last_name" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input id="view_email" type="email" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Contact No.</label>
+                            <input id="view_contact_no" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Sex</label>
+                            <input id="view_sex" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Civil Status</label>
+                            <input id="view_civil_status" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Bloodtype</label>
+                            <input id="view_bloodtype" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Birthday</label>
+                            <input id="view_birthday" type="date" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Citizenship</label>
+                            <input id="view_citizenship" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label >Adress Line 1</label>
+                            <input id="view_address_line_1" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Adress Line 2</label>
+                            <input id="view_address_line_2" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
@@ -216,7 +363,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('script')
@@ -231,9 +377,19 @@
             var route = "{{route('admin_usermgt.update', '')}}/"+user.id;
             $('#EditUserForm').attr('action', route);
             $('#role_id').val(user.role_id);
-            $('#contact_no').val(user.contact_no);
-            $('#email').val(user.email);
             $('#username').val(user.username);
+            $('#email').val(user.email);
+            $('#first_name').val(user.first_name);
+            $('#last_name').val(user.last_name);
+            $('#middle_name').val(user.middle_name);
+            $('#contact_no').val('0'+user.contact_no);
+            $('#sex').val(user.sex);
+            $('#birthday').val(user.birthday);
+            $('#citizenship').val(user.citizenship);
+            $('#civil_status').val(user.civil_status);
+            $('#bloodtype_id').val(user.bloodtype_id);
+            $('#address_line_1').val(user.address_line_1);
+            $('#address_line_2').val(user.address_line_2);
         });
 
         user_mgt_table.on('click', '#Delete_Button', function(){
@@ -250,16 +406,23 @@
 
         user_mgt_table.on('click', '#View_Button', function(){
             var user = $(this).data('user');
-            $('.username').html(user.username);
-            $('.email').html(user.email);
-            $('.fullname').html(user.first_name+' '+user.middle_name+' '+user.last_name);
-            $('.contact_no').html('0'+user.contact_no);
-            $('.sex').html(user.sex);
-            $('.birthday').html(user.birthday);
-            $('.citizenship').html(user.citizenship);
-            $('.civil_status').html(user.civil_status);
-            $('.address_line_1').html(user.address_line_1);
-            $('.address_line_2').html(user.address_line_2);
+            var bloodtype = $(this).data('bloodtype');
+            var role = $(this).data('role');
+
+            $('#view_role').val(role);
+            $('#view_username').val(user.username);
+            $('#view_email').val(user.email);
+            $('#view_first_name').val(user.first_name);
+            $('#view_last_name').val(user.last_name);
+            $('#view_middle_name').val(user.middle_name);
+            $('#view_contact_no').val('0'+user.contact_no);
+            $('#view_sex').val(user.sex);
+            $('#view_birthday').val(user.birthday);
+            $('#view_citizenship').val(user.citizenship);
+            $('#view_civil_status').val(user.civil_status);
+            $('#view_bloodtype').val(bloodtype);
+            $('#view_address_line_1').val(user.address_line_1);
+            $('#view_address_line_2').val(user.address_line_2);
         });
         
         $(function () {

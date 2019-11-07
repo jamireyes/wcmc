@@ -19,7 +19,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="user_mgt_table" class="table display">
+                                    <table id="medical_service_table" class="table display">
                                         <thead>
                                             <!-- <th></th> -->
                                             <th>Description</th>
@@ -234,6 +234,9 @@
 <script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
 <script>
     $( document ).ready(function() {
+        
+        $('#medical_service_table').DataTable();
+        
         $(document).on('click', '#Add_Button', function(){
             // var service = $(this).data('service');
             // var route = "{{route('admin_service.update', '')}}/"+service.medical_service_id;

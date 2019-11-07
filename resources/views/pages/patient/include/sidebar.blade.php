@@ -31,6 +31,14 @@
                     <p>SETTINGS</p>
                 </a>
             </li>
+            <li class="nav-item logout">
+                <a class="nav-link" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <p>LOGOUT</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

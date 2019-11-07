@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\role;
+use App\bloodtype;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,7 +54,7 @@ class RegisterController extends Controller
             'contact_no' => ['required'],
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required'],
             'first_name' => ['required'],
             'last_name' => ['required'],
@@ -64,7 +65,7 @@ class RegisterController extends Controller
             'civil_status' => ['required'],
             'address_line_1' => ['required'],
             'address_line_2' => ['required'],
-            'bloodtype_id' => ['required']
+            'bloodtype' => ['required']
         ]);
     }
 
@@ -80,7 +81,7 @@ class RegisterController extends Controller
             'contact_no' => $data['contact_no'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => Hash::make($data['last_name'].'1234'),
             'role_id' => $data['role_id'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -91,7 +92,7 @@ class RegisterController extends Controller
             'civil_status' => $data['civil_status'],
             'address_line_1' => $data['address_line_1'],
             'address_line_2' => $data['address_line_2'],
-            'bloodtype_id' => $data['bloodtype_id']
+            'bloodtype' => $data['bloodtype']
         ]);
     }
 
@@ -100,8 +101,9 @@ class RegisterController extends Controller
         $roles = role::all();
         $items_1 = user::getEnumValues('civil_status');
         $items_2 = user::getEnumValues('sex');
+        $bloodtypes = bloodtype::all();
 
-        return view('auth.register', compact('roles', 'items_1', 'items_2'));
+        return view('auth.register', compact('roles', 'items_1', 'items_2', 'bloodtypes'));
     }
 
     protected function redirectTo() 
