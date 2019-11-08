@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\user;
+use App\role;
+use App\doctor_schedule;
 use App\appointment;
-use App\User;
+use App\user_vital_signs;
 use Auth;
+use DB;
 
 
 class NursePageController extends Controller
@@ -17,14 +21,45 @@ class NursePageController extends Controller
 
     public function appointment()
     {
-        // $appointments = appointment::all();
+        $doctors = user::where('role_id', 3)->get();
+        $patients = user::where('role_id', 2)->get();
+        $schedules = doctor_schedule::all();
 
-        return view('pages.nurse.appointment');
+        return view('pages.nurse.appointment', compact('doctors', 'patients', 'schedules'));
     }
 
     public function billing()
     {
-        return view('pages.nurse.billing');
+        $bill = DB::table('services_availed')
+        ->join('Users as s', 's.id', '=', 'services_availed.staff_id')
+        ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
+        ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
+        ->select('services_availed.services_availed_id as id', 's.first_name as patientfname', 's.middle_name as patientmname', 's.first_name as patientlname', 'services_availed.description', 'services_availed.updated_at as date', 'status', 'ms.rate as total')
+        ->where('s.id', '=', AUTH::user()->id)
+        ->get();
+
+        return view('pages.nurse.billing')->with('bills', $bill);
+    }
+
+    public function patientRecords()
+    {
+        $patients = appointment:: join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
+        ->join('users', 'users.id', '=', 'appointments.patient_id')
+        ->join('medical_histories', 'medical_histories.user_id', '=', 'users.id')
+        ->join('user_vital_signs', 'user_vital_signs.patient_id', '=', 'users.id')        
+        ->get();
+                    
+        return view('pages.nurse.patient_record', compact('patients'));
+    }
+
+    public function addPatientRecords(Request $request){
+        
+        $medical_history = New medical_history;
+        $medical_history->user_id = $request->input('user_id');
+        $medical_history->description = $request->input('description');
+        $medical_history->save();
+        
+        return back();
     }
 
     public function settings()

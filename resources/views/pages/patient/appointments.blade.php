@@ -10,92 +10,33 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-7 col-md-7">
                         <div class="card">
                             <div class="card-header card-header-primary">
                                 <div class="d-flex justify-content-between">
-                                    <div>APPOINTMENTS</div>
+                                    <div>APPOINTMENT HISTORY</div>
                                     <div>
-                                        <a href="#" data-toggle="modal" data-target="#RequestApp"><i class="fas fa-calendar-plus text-white"></i></a>
+                                        <a href="#" class="btn btn-secondary btn-sm m-0" data-toggle="modal" data-target="#RequestApp">REQUEST APPOINTMENT</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-5 col-md-5">
-                                        <div class="card bg-primary">
-                                            <div class="card-body">
-                                                <table>
-                                                    <tbody>
-                                                        <tr><td><h4>Dr. Juan Santos Dela Cruz</h4></td></tr>
-                                                        <tr><td>Date:&nbsp;&nbsp;&nbsp;&nbsp;Auguest 30, 2019</td></tr>
-                                                        <tr><td>Time:&nbsp;&nbsp;&nbsp;&nbsp;11:00 AM</td></tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 col-md-7">
-                                        <div class="card">
-                                            <div class="card-header">Appointment History</div>
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table id="AppHistory" class="table display nowrap">
-                                                        <thead class=" text-primary">
-                                                            <th></th>
-                                                            <th>Date & Time</th>
-                                                            <th>Doctor</th>
-                                                            <th>Status</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>08/30/2019 11:00 AM</td>
-                                                                <td>Dr. Juan Santos Dela Cruz</td>
-                                                                <td class="text-primary">
-                                                                    <span class="badge badge-pill badge-success">Done</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>09/4/2019 2:00 PM</td>
-                                                                <td>Dr. Fernando Concepcion Villaflores</td>
-                                                                <td class="text-primary">
-                                                                    <span class="badge badge-pill badge-warning">Pending</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>08/24/2019 10:00 AM</td>
-                                                                <td>Dr. Maria Napoles Josefina</td>
-                                                                <td class="text-primary">
-                                                                    <span class="badge badge-pill badge-danger">Cancelled</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>08/24/2019 10:00 AM</td>
-                                                                <td>Dr. Juan Santos Dela Cruz</td>
-                                                                <td class="text-primary">
-                                                                    <span class="badge badge-pill badge-primary">Approved</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>08/24/2019 10:00 AM</td>
-                                                                <td>Dr. Maria Napoles Josefina</td>
-                                                                <td class="text-primary">
-                                                                    <span class="badge badge-pill badge-secondary">Ongoing</span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table id="AppHistory" class="table display nowrap">
+                                        <thead class="text-primary">
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Doctor</th>
+                                            <th>Status</th>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div id="ApprovedList" style="overflow:auto; height:450px;">
+                        
                         </div>
                     </div>
                 </div>
@@ -104,84 +45,82 @@
     </div>
 </div>
 
-<!--modals-->
-<div class="modal fade" id="RequestApp" tabindex="-1" role="dialog" aria-labelledby="RequestAppLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Request Appointment</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Select Doctor</label>
-                    <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect1">
-                        <option>Juan Santos Dela Cruz</option>
-                        <option>Fernando Concepcion Villaflores</option>
-                        <option>Maria Napoles Josefina</option>
-                    </select>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="MedicalServices">Choose Services</label>
-                    <form action="" method="post">
-                    <div class="row">
-                        <div class="column1">
-                        <input type="checkbox" name="MedServ1" value="Checkup"> Medical Check-Up <br>
-                        <input type="checkbox" name="MedServ2" value="MedCert"> Medical Certificate <br>
-                        <input type="checkbox" name="MedServ3" value="DrugTest"> Drug Testing <br>
-                        <input type="checkbox" name="MedServ4" value="ChestXray"> Chest X-Ray <br>
-                        <input type="checkbox" name="MedServ5" value="BloodTyping"> Blood Typing <br>
-                        <input type="checkbox" name="MedServ6" value="PregnancyTest"> Pregnancy Test <br>
-                        </div>
-                        <div class="column2">
-                        <input type="checkbox" name="MedServ7" value="BloodSugarTest"> Blood Sugar Test <br>
-                        <input type="checkbox" name="MedServ8" value="HepAtest"> Hepatitis A Test <br>
-                        <input type="checkbox" name="MedServ9" value="HepBtest"> Hepatitis B Test <br>
-                        <input type="checkbox" name="MedServ10" value="CBCtest"> CBC Test <br>
-                        <input type="checkbox" name="MedServ11" value="Urinalysis"> Urinalysis <br>
-                        <input type="checkbox" name="MedServ12" value="StoolExam"> Stool Exam <br>
-                        </div>
-                    </div>  
-                    </form>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label class="label-control">Select Date</label>
-                    <input type="date" class="form-control" >
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect3">Time</label>
-                    <select class="form-control " data-style="btn btn-link" id="exampleFormControlSelect3">
-                        <option>10:00-11:00 AM</option>
-                        <option>11:00-12:00 AM</option>
-                        <option>1:00-2:00 PM</option>
-                        <option>2:00-3:00 PM</option>
-                        <option>3:00-4:00 PM</option>
-                        <option>4:00-5:00 PM</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--end modals-->
-
 @endsection
 
 @section('script')
-    <script>
-        $( document ).ready(function() {
-            const AppHistory = $('#AppHistory').DataTable({
-                
+<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+<script>
+    $( document ).ready(function() {
+        
+        PusherListener();
+        $.fn.dataTable.ext.errMode = 'none';
+
+        function PusherListener() {
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('89973cf8f98acc38053a', {
+                cluster: 'ap1',
+                'useTLS': false,
             });
+            
+            var channel = pusher.subscribe('AppointmentStatus.'+{{Auth::user()->role_id}}+'.'+{{Auth::user()->id}});
+            channel.bind('AppointmentStatus', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
+            });
+        }
+
+        var AppHistory = $('#AppHistory').DataTable({
+            processing: false,
+            serverSide: true,
+            ajax: {
+                type: "GET",
+                url: "{{ route('patient.getPatientAppointments') }}",
+            },
+            columns: [
+                { data: "date", name: "date"},
+                { data: "time", name: "time"},
+                { data: "doctor", name: "doctor"},
+                { data: "Status", name: "Status"}
+            ]
         });
-    </script>
+
+        function getApprovedAppointments(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('patient.getPatientApproved') }}",
+                success: function(response){
+                    
+                    $('#ApprovedList').empty();
+                    
+                    for(var x = 0; response.appointments.length > 0; x++){
+                        var html = "<div class='card bg-primary'>";
+                        html += "<div class='card-body'><table><tbody>";
+                        html += "<tr><td><h4>"+response.appointments[x].doctor+"</h4></td></tr>";
+                        html += "<tr><td>Date:&nbsp;&nbsp;&nbsp;&nbsp;"+response.appointments[x].date+"</td></tr>";
+                        html += "<tr><td>Time:&nbsp;&nbsp;&nbsp;&nbsp;"+response.appointments[x].time+"</td></tr>";
+                        $('#ApprovedList').prepend(html);
+                    }
+
+                },
+                error: function(){
+                    toastr.error('Something went wrong :/', 'Error!');
+                }
+            });
+        }
+
+        setInterval(function(){
+            AppHistory.ajax.reload(null, false);
+            getApprovedAppointments();
+        }, 1000);
+        
+    });
+</script>
 @endsection

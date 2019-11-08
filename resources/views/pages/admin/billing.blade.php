@@ -17,41 +17,36 @@
                                         <tr>
                                             <th>OR No.</th>
                                             <th>Payment Date</th>
+                                            <th>Patient Name</th>
                                             <th>Total Amount</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(count($bills))
+                                            @foreach($bills as $bill)
                                         <tr>
-                                            <td>14106645</td>
-                                            <td>July 18, 2019</td>
-                                            <td>PHP 450.00</td>
+                                            <td>{{ $bill->id }}</td>
+                                            <td>{{ $bill->date }}</td>
+                                            <th>{{ $bill->patientfname }} {{ $bill->patientmname }} {{ $bill->patientlname }}</th>
+                                            <td>{{ $bill->total }}</td>
+                                            <td class="text-primary">
+                                            @if( $bill->status == "PAID" )
+                                                <span class="badge badge-pill badge-success">PAID</span>
+                                            @elseif( $bill->status = "UNPAID")
+                                                <span class="badge badge-pill badge-danger">NOT PAID!</span>
+                                            @endif
+                                            </td>
                                             <td>
                                                 <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
                                                 <a href="#" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
                                                 <a href="#" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>15101716</td>
-                                            <td>July 19, 2019</td>
-                                            <td>PHP 500.00</td>
-                                            <td>
-                                                <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                                <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>15107788</td>
-                                            <td>July 20, 2019</td>
-                                            <td>PHP 1000.00</td>
-                                            <td>
-                                                <a href="#"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                                <a href="#"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                                <a href="#"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
+                                            @endforeach
+                                        @endif
+
                                     </tbody>
                                 </table>
                             </div>
@@ -144,8 +139,10 @@
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
-                    <button type="button" class="btn btn-danger">YES, DELETE IT!</button>
+                <form action="{{ route('admin_billing.destroy','1') }}">
+                    <button type="submit" class="btn btn-danger">YES, DELETE IT!</button>
                     <button type="button" class="btn btn-dark" data-dismiss="modal">NO, KEEP IT</button>
+                </form>
                 </div>
             </div>
         </div>

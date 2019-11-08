@@ -29,7 +29,6 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -39,6 +38,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['role:NURSE,ADMIN']);
     }
 
     /**
@@ -55,6 +55,16 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required'],
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'middle_name' => ['required'],
+            'sex' => ['required'],
+            'birthday' => ['required'],
+            'citizenship' => ['required'],
+            'civil_status' => ['required'],
+            'address_line_1' => ['required'],
+            'address_line_2' => ['required'],
+            'bloodtype_id' => ['required']
         ]);
     }
 
@@ -71,12 +81,40 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => $data['role_id']
+            'role_id' => $data['role_id'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'middle_name' => $data['middle_name'],
+            'sex' => $data['sex'],
+            'birthday' => $data['birthday'],
+            'citizenship' => $data['citizenship'],
+            'civil_status' => $data['civil_status'],
+            'address_line_1' => $data['address_line_1'],
+            'address_line_2' => $data['address_line_2'],
+            'bloodtype_id' => $data['bloodtype_id']
         ]);
     }
 
-    public function showRegistrationForm(){
+    public function showRegistrationForm()
+    {
         $roles = role::all();
-        return view('auth.register', compact('roles'));
+        $items_1 = user::getEnumValues('civil_status');
+        $items_2 = user::getEnumValues('sex');
+
+        return view('auth.register', compact('roles', 'items_1', 'items_2'));
+    }
+
+    protected function redirectTo() 
+    {
+        if (Auth::check()) {
+            $username = Auth::user()->username;
+            if (Auth::user()->role->description == 'ADMIN') {
+                $route = '/admin/dashboard'.'/'.$username;
+            } elseif (Auth::user()->role->description == 'NURSE') {
+                $route = '/nurse/dashboard'.'/'.$username;
+            }
+        }
+
+        return $route; 
     }
 }

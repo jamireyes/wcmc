@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\medical_service;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $data = medical_service::all();
+
+        return view('home', compact('data'));
     }
 }

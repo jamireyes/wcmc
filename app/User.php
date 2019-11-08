@@ -72,6 +72,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\doctor_schedule', 'doctor_schedule_id', 'doctor_schedule_id');
     }
+
+    public function medical_history()
+    {
+        return $this->belongsTo('App\medical_history', 'medical_history_id', 'medical_history_id');
+    }
     
     public static function getEnumValues($column)
     {

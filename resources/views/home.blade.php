@@ -13,6 +13,7 @@
         </div>
 
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{{ asset('vendor/fontawesome/css/all.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         @toastr_css
@@ -52,24 +53,21 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->username }} <span class="caret"></span>
+                                        {{ Auth::user()->first_name }} {{ Auth::user()->middle_name }} {{ Auth::user()->last_name }} <span class="caret"></span>
                                     </a>
             
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         @auth
                                             @if(Auth::user()->role->description == 'ADMIN')
                                                 <a class="dropdown-item" href="{{ route('admin.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
-                                                <div class="dropdown-divider"></div>
                                             @elseif(Auth::user()->role->description == 'PATIENT')
                                                 <a class="dropdown-item" href="{{ route('patient.appointments', ['name' => Auth::user()->username]) }}">Account</a>
-                                                <div class="dropdown-divider"></div>
                                             @elseif(Auth::user()->role->description == 'DOCTOR')
-                                                {{-- <a class="dropdown-item" href="{{ route('', ['name' => Auth::user()->username]) }}">Dashboard</a>
-                                                <div class="dropdown-divider"></div> --}}
+                                                <a class="dropdown-item" href="{{ route('doctor.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
                                             @elseif(Auth::user()->role->description == 'NURSE')
-                                                {{-- <a class="dropdown-item" href="{{ route('', ['name' => Auth::user()->username]) }}">Account</a>
-                                                <div class="dropdown-divider"></div> --}}
+                                                <a class="dropdown-item" href="{{ route('nurse.dashboard', ['name' => Auth::user()->username]) }}">Account</a>
                                             @endif
+                                            <div class="dropdown-divider"></div>
                                         @endauth
 
                                         <a class="dropdown-item" href="{{ route('logout') }}"
@@ -152,105 +150,17 @@
                         <span class="fas fa-briefcase-medical fa-3x"></span>
                         <h3 class="pt-1 pb-3">Medical Services</h3>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Medical<br>Check-Up</h4>
-                                    <p class="card-category text-primary">PHP 250</p>
+                    <div class="d-flex flex-wrap w-100">
+                        @foreach ($data as $row)
+                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-3">
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{$row->description}}</h6>
+                                        <p class="card-category text-primary">PHP {{$row->rate}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Medical<br>Certificate</h4>
-                                    <p class="card-category text-primary">PHP 250</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Drug<br>Testing</h4>
-                                    <p class="card-category text-primary">PHP 300</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title"> Chest<br>X-Ray</h4>
-                                    <p class="card-category text-primary">PHP 230</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Blood<br>Typing</h4>
-                                    <p class="card-category text-primary">PHP 150</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Pregnancy<br>Test</h4>
-                                    <p class="card-category text-primary">PHP 100</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Blood Sugar<br>Test</h4>
-                                    <p class="card-category text-primary">PHP 80</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Hepatitis A<br>Test</h4>
-                                    <p class="card-category text-primary">PHP 500</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Hepatitis B<br>Test</h4>
-                                    <p class="card-category text-primary">PHP 250</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">CBC Test<br>&nbsp</h4>
-                                    <p class="card-category text-primary">PHP 120</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Urinalysis<br>&nbsp</h4>
-                                    <p class="card-category text-primary">PHP 80</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-xs-6">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <h6 class="card-title">Stool Exam<br>&nbsp</h4>
-                                    <p class="card-category text-primary">PHP 80</p>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </section>
                 <hr class="featurette-divider">
@@ -307,7 +217,7 @@
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <script>
             $( document ).ready(function() {
-        
+
                 $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
                     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
                     var target = $(this.hash);

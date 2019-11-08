@@ -15,12 +15,14 @@ class AppointmentStatus implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $type;
     public $title;
     public $message;
     public $user;
 
-    public function __construct($title, $message, User $user)
+    public function __construct($type, $title, $message, User $user)
     {
+        $this->type = $type;
         $this->title = $title;
         $this->message = $message;
         $this->user = $user;
@@ -28,7 +30,7 @@ class AppointmentStatus implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['AppointmentStatus.' .$this->user->role_id];
+        return ['AppointmentStatus.'.$this->user->role_id.'.'.$this->user->id];
     }
 
     public function broadcastAs()
