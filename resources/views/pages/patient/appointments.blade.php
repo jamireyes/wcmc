@@ -4,9 +4,7 @@
 <div class="wrapper ">
     @include('pages.patient.include.sidebar')
     <div class="main-panel">
-        <!-- Navbar -->
         @include('pages.patient.include.navbar')
-        <!-- End Navbar -->
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -16,7 +14,7 @@
                                 <div class="d-flex justify-content-between">
                                     <div>APPOINTMENT HISTORY</div>
                                     <div>
-                                        <a href="#" class="btn btn-secondary btn-sm m-0" data-toggle="modal" data-target="#RequestApp">REQUEST APPOINTMENT</a>
+                                        <a href="#" class="btn btn-secondary btn-sm m-0" data-toggle="modal" data-target="#RequestAppointment">REQUEST APPOINTMENT</a>
                                     </div>
                                 </div>
                             </div>
@@ -45,14 +43,55 @@
     </div>
 </div>
 
+<!-- Request Appointment Modal -->
+<div class="modal fade" id="RequestAppointment" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request Appointment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="RequestAppForm" method="POST">
+                <div class="modal-body p-5">
+                    <div class="form-group">
+                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
+                        <select id="mdl_doctor_id" class="form-control dynamic-add">
+                            <option value="" disabled selected>Select a doctor...</option>
+                                @foreach ($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
+                        <input id="mdl_appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic-add">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
+                        <select id="mdl_doctor_schedule_id" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')
-<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+{{-- <script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script> --}}
 <script>
     $( document ).ready(function() {
         
         PusherListener();
+        getApprovedAppointments();
         $.fn.dataTable.ext.errMode = 'none';
 
         function PusherListener() {
@@ -121,6 +160,59 @@
             getApprovedAppointments();
         }, 1000);
         
+        $('.dynamic-add').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $('#mdl_doctor_id').val();
+                var appointment_date = $('#mdl_appointment_date').val();
+
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#mdl_doctor_schedule_id').html(output);
+                        }
+                    });
+                }
+            }
+        });
+
+        $('#RequestAppForm').submit(function(e){
+            e.preventDefault();
+
+            var doctor_schedule_id = $('#mdl_doctor_schedule_id').val();
+            var appointment_date = $('#mdl_appointment_date').val();
+            
+            $.ajax({
+                type: "POST",
+                url: "{{ route('patient.requestAppointment') }}",
+                data: {
+                    doctor_schedule_id: doctor_schedule_id,
+                    appointment_date: appointment_date,
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(response){
+                    $('#RequestAppointment').modal('hide');
+                    if(response.type == 'success'){
+                        toastr.info('Appointment Request Sent!');
+                    }else if(response.type == 'error'){
+                        toastr.error(response.message);
+                    }else if(response.type == 'warning'){
+                        toastr.warning(response.message);
+                    }
+                },
+                error: function(){
+                    $('#RequestAppointment').modal('hide');
+                    toastr.error('Something went wrong :/', 'Error!');
+                }
+            });
+        });
+
     });
 </script>
 @endsection

@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\role;
+use App\bloodtype;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -51,10 +55,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'contact_no' => ['required'],
-            'username' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_id' => ['required'],
             'first_name' => ['required'],
             'last_name' => ['required'],
             'middle_name' => ['required'],
@@ -76,12 +78,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $password = $data['last_name'].'1234';
+        
+        if(Auth::user()->role_id == 4){
+            $role = 2;
+        }elseif(Auth::user()->role_id == 1){
+            $role = $data['role_id'];
+        }
+
         return User::create([
             'contact_no' => $data['contact_no'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role_id' => $data['role_id'],
+            'password' => Hash::make($password),
+            'role_id' => $role,
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'middle_name' => $data['middle_name'],
@@ -100,8 +110,17 @@ class RegisterController extends Controller
         $roles = role::all();
         $items_1 = user::getEnumValues('civil_status');
         $items_2 = user::getEnumValues('sex');
+        $bloodtypes = bloodtype::all();
 
-        return view('auth.register', compact('roles', 'items_1', 'items_2'));
+        return view('auth.register', compact('roles', 'items_1', 'items_2', 'bloodtypes'));
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        
+        return $this->registered($request, $user)?: redirect($this->redirectPath());
     }
 
     protected function redirectTo() 

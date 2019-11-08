@@ -252,9 +252,17 @@
                 'useTLS': false,
             });
             
-            var channel = pusher.subscribe('AppointmentStatus.2');
-            channel.bind('AppointmentStatus', function(data) {
-                toastr.warning(data.message, data.title);
+            var channel = pusher.subscribe('PatientStaff.2');
+            channel.bind('PatientStaff', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
             });
         }
 
@@ -266,8 +274,6 @@
             var doctor_id = $('#doctor_id').val();
             var appointment_date = $('#appointment_date').val();
             var doctor_schedule_id = $('#doctor_schedule_id').val();
-
-            console.log(doctor_id, appointment_date, doctor_schedule_id);
 
             $('#app_request_table').DataTable().destroy();
             $('#app_approved_table').DataTable().destroy();

@@ -141,7 +141,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label>Sex</label>
                                     <select name="sex" class="form-control @error('sex') is-invalid @enderror" required>
@@ -157,7 +157,41 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label>Civil Status</label>
+                                    <select name="civil_status" class="form-control @error('civil_status') is-invalid @enderror" required>
+                                        @foreach ($items_1 as $item_1)
+                                            <option value="{{ $item_1 }}">{{ $item_1 }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('civil_status')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label>Bloodtype</label>
+                                    <select name="bloodtype_id" class="form-control @error('bloodtype_id') is-invalid @enderror" required>
+                                        @foreach ($bloodtypes as $bloodtype)
+                                            <option value="{{ $bloodtype->bloodtype_id }}">{{ $bloodtype->description }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('bloodtype_id')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label>Birthday</label>
                                     <input name="birthday" type="date" class="form-control @error('birthday') is-invalid @enderror" required>
@@ -169,28 +203,12 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label>Citizenship</label>
                                     <input name="citizenship" type="text" class="form-control @error('citizenship') is-invalid @enderror" required>
 
                                     @error('citizenship')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label>Civil Status</label>
-                                    <select name="civil_status" class="form-control @error('civil_status') is-invalid @enderror" required>
-                                        @foreach ($items_1 as $item_1)
-                                            <option value="{{ $item_1 }}">{{ $item_1 }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('civil_status')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

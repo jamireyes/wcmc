@@ -21,66 +21,28 @@
                                 <div class="table-responsive">
                                     <table id="patient_record_table" class="table display">
                                         <thead>
-                                            <th>Full Name</th>
                                             <th></th>
+                                            <th>Full Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Contact No.</th>
+                                            <th>Role</th>
                                             <th>Action</th>
                                         </thead>
                                         <tbody>
                                             @foreach($patients as $patient)
                                             <tr>
+                                                <td>{{$patient->id}}</td>
+                                                <td>{{$patient->first_name}} {{$patient->last_name}}</td>
+                                                <td>{{$patient->username}}</td>
+                                                <td>{{$patient->email}}</td>
+                                                <td>{{$patient->contact_no}}</td>
+                                                <td>{{$patient->role->description}}</td>
                                                 <td>
-                                                    {{$patient->first_name}} {{$patient->last_name}}
-                                                </td>
-                                                <td>                                                       
-                                                </td>
-                                                <td>
-                                                    <i class="fas fa-eye text-success mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">                                 
-                                                    </i>
-                                                    <i class="fas fa-edit text-warning mx-1" onclick="displayToModal({{ $patient }})" data-toggle="modal" data-target="#exampleModal">                                 
-                                                    </i>
-                                                    <i class="fas fa-plus text-primary mx-1" onclick="addModal({{ $patient }})" data-toggle="modal" data-target="#AddModal">                                 
-                                                    </i>                                         
+                                                    <a href="#" id="ViewBtn" data-data="{{$patient}}" data-toggle="modal" data-target="#ViewModal"><i class="fas fa-eye text-primary mx-1"></i></a>
+                                                    <a href="#" id="EditBtn" data-data="{{$patient}}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>                                       
                                                 </td>
                                             </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <div class="d-flex justify-content-between">
-                                    <div></div>
-                                    <div>VITAL SIGNS</div>
-                                    <div></div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="" class="table display">
-                                        <thead>
-                                            <th>Full Name</th>
-                                            <th>Description</th>
-                                            <th>Value</th>
-                                            <th>Created At</th>
-                                            <th>Last Update</th>
-                                            <th>Action</th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($vitals as $vital)
-                                                <td>{{$vital->patient->first_name}} {{$vital->patient->middle_name}} {{$vital->patient->last_name}}</td>
-                                                <td>{{$vital->vital_sign->description}}</td>
-                                                <td>{{$vital->value}}</td>
-                                                <td>{{$vital->created_at}}</td>
-                                                <td>{{$vital->updated_at}}</td>
-                                                <td>
-                                                    <a data-toggle="modal" data-target="#"></a>
-                                                </td>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -94,65 +56,113 @@
     </div>
 </div>     
 
-<!-- MAO NI ANG MODAL PARA SA VIEW-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- View Modal -->
+<div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Patient Record</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">First Name</label>
-                            <input id="first_name" type="text" class="form-control" id="inputEmail4" placeholder="" readonly>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4">Last Name</label>
-                            <input id="last_name" type="text" class="form-control" id="inputPassword4" placeholder="" readonly>
+            <div class="modal-body p-5">
+                <div class="text-center w-100 mb-5">
+                    <i class="fas fa-user-circle fa-5x text-primary" aria-hidden="true"></i>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input id="view_username" type="text" class="form-control disabled" value="" disabled>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress">Medical History</label>
-                        <input id="description" type="text" class="form-control" id="inputAddress" placeholder="" readonly>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- MODAL PARA SA ADD --}}
-<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Record</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="/nurse/patient_records/add_new">
-                    {{ csrf_field() }}
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4">Patient ID</label>
-                            <input id="user_id" type="text" class="form-control" id="inputEmail4" placeholder="" name="user_id" readonly>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input id="view_first_name" type="text" class="form-control disabled" value="" disabled>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress">Medical History</label>
-                        <input id="description" type="text" class="form-control" id="inputAddress" placeholder="" name="description">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input id="view_middle_name" type="text" class="form-control disabled" value="" disabled>
+                        </div>
                     </div>
-                    <div class="form-group">
-                    <a href="" type="submit"> <button class="btn btn-primary" > Submit  </button> </a>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input id="view_last_name" type="text" class="form-control disabled" value="" disabled>
+                        </div>
                     </div>
-                </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input id="view_email" type="email" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Contact No.</label>
+                            <input id="view_contact_no" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Sex</label>
+                            <input id="view_sex" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Civil Status</label>
+                            <input id="view_civil_status" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Bloodtype</label>
+                            <input id="view_bloodtype" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Birthday</label>
+                            <input id="view_birthday" type="date" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Citizenship</label>
+                            <input id="view_citizenship" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label >Adress Line 1</label>
+                            <input id="view_address_line_1" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label>Adress Line 2</label>
+                            <input id="view_address_line_2" type="text" class="form-control disabled" value="" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    <div>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -165,16 +175,49 @@
     
     $( document ).ready(function(){
 
-        $('#patient_record_table').DataTable();
-        function displayToModal(patient) {
-            document.getElementById('first_name').value = patient.first_name;
-            document.getElementById('last_name').value = patient.last_name;
-            document.getElementById('description').value = patient.description;
+        PusherListener();
+        $.fn.dataTable.ext.errMode = 'none';
+
+        function PusherListener() {
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('89973cf8f98acc38053a', {
+                cluster: 'ap1',
+                'useTLS': false,
+            });
+            
+            var channel = pusher.subscribe('PatientStaff.2');
+            channel.bind('PatientStaff', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
+            });
         }
 
-        function addModal(patient) {
-            document.getElementById('user_id').value = patient.id;
-        }
+        const patient_record_table = $('#patient_record_table').DataTable();
+
+        patient_record_table.on('click', '#ViewBtn', function(){
+            var data = $(this).data('data');
+            $('#view_username').val(data.username);
+            $('#view_email').val(data.email);
+            $('#view_first_name').val(data.first_name);
+            $('#view_last_name').val(data.last_name);
+            $('#view_middle_name').val(data.middle_name);
+            $('#view_contact_no').val('0'+data.contact_no);
+            $('#view_sex').val(data.sex);
+            $('#view_birthday').val(data.birthday);
+            $('#view_citizenship').val(data.citizenship);
+            $('#view_civil_status').val(data.civil_status);
+            $('#view_bloodtype').val(data.bloodtype);
+            $('#view_address_line_1').val(data.address_line_1);
+            $('#view_address_line_2').val(data.address_line_2);
+        });
     });
 </script>
 @endsection

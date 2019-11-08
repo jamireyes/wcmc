@@ -74,31 +74,18 @@
                 <table class="table table-bordered" style="font-size: 13px;">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            
                             <th>DESCRIPTION</th>
                             <th>PRICE</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
+                            
                             <td>MEDICAL CHECK-UP</td>
                             <td>PHP 250.00</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>CBC TEST</td>
-                            <td>PHP 120.00</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>URINALYSIS</td>
-                            <td>PHP 80.00</td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">GRAND TOTAL</th>
-                            <th class="text-primary">PHP 450.00</th>
-                        </tr>
+                       
                     </tbody>
                 </table>
             </div>

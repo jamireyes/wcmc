@@ -8,6 +8,7 @@ use App\role;
 use App\doctor_schedule;
 use App\appointment;
 use App\medical_service;
+use App\bloodtype;
 use Auth;
 use DB;
 
@@ -48,9 +49,12 @@ class AdminPageController extends Controller
     public function user_mgt()
     {
         $users = user::withTrashed()->get();
+        $sexs = user::getEnumValues('sex');
+        $civil_statuses = user::getEnumValues('civil_status');
         $roles = role::all();
-
-        return view('pages.admin.user_mgt', compact('users', 'roles'));
+        $bloodtypes = bloodtype::all();
+       
+        return view('pages.admin.user_mgt', compact('users', 'roles', 'bloodtypes', 'sexs', 'civil_statuses'));
     }
 
     public function doc_schedule()
