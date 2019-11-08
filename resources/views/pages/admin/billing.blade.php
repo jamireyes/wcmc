@@ -15,38 +15,30 @@
                                 <table id="bill_transactions" class="table">
                                     <thead>
                                         <tr>
-                                            <th>OR No.</th>
+                                            <th>#</th>
                                             <th>Payment Date</th>
                                             <th>Patient Name</th>
                                             <th>Total Amount</th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if(count($bills))
-                                            @foreach($bills as $bill)
-                                        <tr>
-                                            <td>{{ $bill->id }}</td>
-                                            <td>{{ $bill->date }}</td>
-                                            <th>{{ $bill->patientfname }} {{ $bill->patientmname }} {{ $bill->patientlname }}</th>
-                                            <td>{{ $bill->total }}</td>
-                                            <td class="text-primary">
-                                            @if( $bill->status == "PAID" )
-                                                <span class="badge badge-pill badge-success">PAID</span>
-                                            @elseif( $bill->status = "UNPAID")
-                                                <span class="badge badge-pill badge-danger">NOT PAID!</span>
-                                            @endif
-                                            </td>
-                                            <td>
-                                                <a href="#" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a>
-                                                <a href="#" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                                <a href="#" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                            </td>
-                                        </tr>
-                                            @endforeach
-                                        @endif
-
+                                        @foreach($bills as $bill)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $bill->created_at }}</td>
+                                                <th>{{ $bill->patientfname }} {{ $bill->patientmname }} {{ $bill->patientlname }}</th>
+                                                <td>{{ $bill->total }}</td>
+                                                <td>
+                                                    <a id="ViewBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-total="{{$bill->total}}" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-secondary" aria-hidden="true"></i></a>
+                                                    @if($bill->deleted_at == NULL)
+                                                        <a id="DeleteBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                                    @else
+                                                        <a id="RestoreBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-toggle="modal" data-target="#RestoreModal"><i class="fas fa-trash-restore text-primary"></i></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -65,7 +57,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Bill No. 14106645</h5>
+                <h5 class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -74,24 +66,14 @@
                 <table class="table table-bordered" style="font-size: 13px;">
                     <thead>
                         <tr>
-                            
                             <th>DESCRIPTION</th>
-                            <th>PRICE</th>
+                            <th>RATE</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            
-                            <td>MEDICAL CHECK-UP</td>
-                            <td>PHP 250.00</td>
-                        </tr>
-                       
+                    <tbody id="View_MS">
                     </tbody>
                 </table>
             </div>
-            {{-- <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div> --}}
         </div>
     </div>
 </div>
@@ -126,10 +108,32 @@
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
-                <form action="{{ route('admin_billing.destroy','1') }}">
-                    <button type="submit" class="btn btn-danger">YES, DELETE IT!</button>
+                    <input type="hidden" id="del_id" value="">
+                    <input type="hidden" id="del_date" value="">
+                    <button id="DelSubmit" type="button" class="btn btn-danger">YES, DELETE IT!</button>
                     <button type="button" class="btn btn-dark" data-dismiss="modal">NO, KEEP IT</button>
-                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Restore Modal -->
+<div class="modal fade" id="RestoreModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="fa fa-exclamation-circle fa-3x text-primary pt-4" aria-hidden="true"></i>
+                <h3>Are you sure?</h3>
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    @csrf
+                    <input type="hidden" id="restore_id" value="">
+                    <input type="hidden" id="restore_date" value="">
+                    <button id="RestoreSubmit" type="button" class="btn btn-primary">YES, RESTORE IT!</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">NO, LEAVE IT</button>
                 </div>
             </div>
         </div>
@@ -156,6 +160,97 @@
         var channel = pusher.subscribe('AppointmentStatus.2');
         channel.bind('AppointmentStatus', function(data) {
             toastr.info(data.message, 'Notification');
+        });
+
+        const bill_transactions = $('#bill_transactions').DataTable();
+        
+        bill_transactions.on('click', '#ViewBtn', function(){
+            var id = $(this).data('id');
+            var date = $(this).data('date');
+            var total = $(this).data('total');
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('billing.getMedicalService') }}",
+                data: {
+                    patient_id: id,
+                    created_at: date,
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(response){
+                    var html = "<tr><th class='text-primary text-right'>GRAND TOTAL</th><th class='text-primary'>"+total+"</th></tr>";
+                    $('#View_MS').empty();
+                    $('#View_MS').append(response);
+                    $('#View_MS').append(html);
+                },
+                error: function() {
+                    toastr.error('Error');
+                }
+            });
+        });
+
+        bill_transactions.on('click', '#DeleteBtn', function(){
+            var id = $(this).data('id');
+            var date = $(this).data('date');
+
+            $('#del_id').val(id);
+            $('#del_date').val(date);
+        });
+
+        $('#DelSubmit').click(function(){
+            var id = $('#del_id').val();
+            var date = $('#del_date').val();
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('billing.destroy') }}",
+                data: {
+                    patient_id: id,
+                    created_at: date,
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(response){
+                    toastr.info(response);
+                    window.location.reload();
+                },
+                error: function() {
+                    toastr.error('Error');
+                }
+            });
+        })
+
+        bill_transactions.on('click', '#RestoreBtn', function(){
+            var id = $(this).data('id');
+            var date = $(this).data('date');
+            
+            $('#restore_id').val(id);
+            $('#restore_date').val(date);
+        });
+
+        $('#RestoreSubmit').click(function(){
+            var id = $('#restore_id').val();
+            var date = $('#restore_date').val();
+            
+            $.ajax({
+                type: "POST",
+                url: "{{ route('billing.restore') }}",
+                data: {
+                    patient_id: id,
+                    created_at: date,
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(response){
+                    toastr.info(response);
+                    window.location.reload();
+                },
+                error: function() {
+                    toastr.error('Error');
+                }
+            });
+        });
+
+        $('#ViewModal').on('hidden.bs.modal', function () {
+            $('#View_MS').empty();
         });
     });
 </script>

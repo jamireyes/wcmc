@@ -18,8 +18,6 @@ class CreateServicesAvailedsTable extends Migration
             $table->bigInteger('medical_service_id')->unsigned()->index();
             $table->bigInteger('patient_id')->unsigned()->index();
             $table->bigInteger('staff_id')->unsigned()->index();
-            $table->string('description');
-            $table->enum('status', ['PAID', 'UNPAID']);
             $table->timestamps();
             $table->softDeletes();
         });

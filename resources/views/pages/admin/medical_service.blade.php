@@ -235,49 +235,21 @@
 <script>
     $( document ).ready(function() {
         
-        $('#medical_service_table').DataTable();
-        
-        $(document).on('click', '#Add_Button', function(){
-            // var service = $(this).data('service');
-            // var route = "{{route('admin_service.update', '')}}/"+service.medical_service_id;
-            // $('#EditForm').attr('action', route);
-            // $('#description').val(service.description);
-            // $('#rate').val(service.rate);
-        });
+        var medical_service_table = $('#medical_service_table').DataTable();
 
-        $(document).on('click', '#Edit_Button', function(){
+        medical_service_table.on('click', '#Edit_Button', function(){
             var service = $(this).data('service');
             var route = "{{route('admin_service.update', '')}}/"+service.medical_service_id;
             $('#EditForm').attr('action', route);
-            $('#Edit_decription').val(service.description);
+            $('#Edit_description').val(service.description);
             $('#Edit_rate').val(service.rate);
         });
 
-        $(document).on('click', '#Delete_Button', function(){
+        medical_service_table.on('click', '#Delete_Button', function(){
             var service = $(this).data('id');
             var route = "{{route('admin_service.destroy', '')}}/"+service;
             $('#DeleteForm').attr('action', route);
         });
-
-        // user_mgt_table.on('click', '#Restore_Button', function(){
-        //     var id = $(this).data('id');
-        //     var route = "{{ route('admin_usermgt.restore', '')}}/"+id;
-        //     $('#RestoreUserForm').attr('action', route);
-        // });
-
-        // user_mgt_table.on('click', '#View_Button', function(){
-        //     var user = $(this).data('user');
-        //     $('.username').html(user.username);
-        //     $('.email').html(user.email);
-        //     $('.fullname').html(user.first_name+' '+user.middle_name+' '+user.last_name);
-        //     $('.contact_no').html('0'+user.contact_no);
-        //     $('.sex').html(user.sex);
-        //     $('.birthday').html(user.birthday);
-        //     $('.citizenship').html(user.citizenship);
-        //     $('.civil_status').html(user.civil_status);
-        //     $('.address_line_1').html(user.address_line_1);
-        //     $('.address_line_2').html(user.address_line_2);
-        // });
         
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()

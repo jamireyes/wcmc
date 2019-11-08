@@ -13,26 +13,11 @@ class Admin_ServiceController extends Controller
         return view('pages.admin.medical_services')->with('services', $services);
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $service = new medical_service($request->all());
         $service->save();
         return redirect()->back();
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
     }
 
     public function update(Request $request, $id)
@@ -48,7 +33,6 @@ class Admin_ServiceController extends Controller
             $message = "false";
         }
 
-        // return $service;
         return $message ? redirect()->back()->with("message", "Successfully Updated") 
                         : redirect()->back()->with("message", "Failure to Update") ;
     }
@@ -66,9 +50,6 @@ class Admin_ServiceController extends Controller
             $message = "false";
         }
 
-        // return $message;
-
-        toastr()->success('Doctor schedule added!');
         return $message ? redirect()->back()->with("message", "Successfully Deleted") 
                         : redirect()->back()->with("message", "Failure to Delete") ;
             

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\doctor_schedule;
 use App\appointment;
 use App\User;
+use App\medical_service;
 use Response;
 use Carbon\Carbon;
 use Auth;

@@ -24,19 +24,28 @@ class AdminPageController extends Controller
         $doctors = user::where('role_id', 3)->get();
         $patients = user::where('role_id', 2)->get();
         $schedules = doctor_schedule::all();
+        $medical_services = medical_service::all();
 
-        return view('pages.admin.appointment', compact('doctors', 'patients', 'schedules'));
+        return view('pages.admin.appointment', compact('doctors', 'patients', 'schedules', 'medical_services'));
     }
 
     public function billing()
     {
-        $bill = DB::table('services_availed')
-        ->join('Users as d', 'd.id', '=', 'services_availed.staff_id')
-        ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
-        ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
-        ->select('services_availed.services_availed_id as id',  'p.first_name as patientfname', 'p.middle_name as patientmname', 'p.last_name as patientlname', 'services_availed.description', 'services_availed.updated_at as date', 'status', 'ms.rate as total')
-        ->get();
+        // $bill = DB::table('services_availed')
+        // ->join('Users as d', 'd.id', '=', 'services_availed.staff_id')
+        // ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
+        // ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
+        // ->select('services_availed.services_availed_id as id',  'p.first_name as patientfname', 'p.middle_name as patientmname', 'p.last_name as patientlname', 'services_availed.updated_at as date', 'ms.rate as total')
+        // ->get();
 
+        $bill = DB::table('services_availed')
+            ->select(DB::raw("SUM(ms.rate) as total"), 'patient_id', 'p.first_name as patientfname', 'p.middle_name as patientmname', 'p.last_name as patientlname', 'services_availed.created_at', 'services_availed.deleted_at')
+            ->join('Users as d', 'd.id', '=', 'services_availed.staff_id')
+            ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
+            ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
+            ->groupBy(['created_at', 'deleted_at', 'patient_id', 'p.first_name', 'p.middle_name', 'p.last_name'])
+            ->get();
+        
         return view('pages.admin.billing')->with('bills', $bill);
     }
 

@@ -51,13 +51,7 @@ class Admin_UserMGTController extends Controller
 
         return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username]);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
         $user = User::find($id)->delete();
