@@ -40,8 +40,8 @@ class AdminPageController extends Controller
 
         $bill = DB::table('services_availed')
             ->select(DB::raw("SUM(ms.rate) as total"), 'patient_id', 'p.first_name as patientfname', 'p.middle_name as patientmname', 'p.last_name as patientlname', 'services_availed.created_at', 'services_availed.deleted_at')
-            ->join('Users as d', 'd.id', '=', 'services_availed.staff_id')
-            ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
+            ->join('users as d', 'd.id', '=', 'services_availed.staff_id')
+            ->join('users as p', 'p.id', '=', 'services_availed.patient_id')
             ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
             ->groupBy(['created_at', 'deleted_at', 'patient_id', 'p.first_name', 'p.middle_name', 'p.last_name'])
             ->get();
