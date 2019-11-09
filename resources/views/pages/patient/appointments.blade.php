@@ -89,9 +89,8 @@
 {{-- <script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script> --}}
 <script>
     $( document ).ready(function() {
-        
+
         PusherListener();
-        getApprovedAppointments();
         $.fn.dataTable.ext.errMode = 'none';
 
         function PusherListener() {
@@ -148,9 +147,6 @@
                         $('#ApprovedList').prepend(html);
                     }
 
-                },
-                error: function(){
-                    toastr.error('Something went wrong :/', 'Error!');
                 }
             });
         }

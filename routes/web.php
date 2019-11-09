@@ -14,6 +14,8 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('/ChangePassword', 'ChangePasswordController@changePassword')->name('ChangePassword');
         Route::post('getMedicalHistory', 'PatientRecordController@getMedicalHistory')->name('getMedicalHistory');
         Route::post('getVitalSigns', 'PatientRecordController@getVitalSigns')->name('getVitalSigns');
+        Route::post('storeMedicalHistory', 'PatientRecordController@storeMedicalHistory')->name('storeMedicalHistory');
+        Route::post('storeVitalSigns', 'PatientRecordController@storeVitalSigns')->name('storeVitalSigns');
         Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
 
         // ADMIN ROUTES
@@ -64,6 +66,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('getApprovedAppointments', 'AppointmentController@getApprovedAppointments')->name('appointment.getApprovedAppointments');
             Route::post('approve/{id}', 'AppointmentController@approve')->name('appointment.approve');
             Route::post('done/{id}', 'AppointmentController@done')->name('appointment.done');
+            Route::post('ongoing/{id}', 'AppointmentController@ongoing')->name('appointment.ongoing');
             Route::post('cancel/{id}', 'AppointmentController@cancel')->name('appointment.cancel');
             Route::post('reschedule', 'AppointmentController@reschedule')->name('appointment.reschedule');
             Route::resource('appointment', 'AppointmentController');

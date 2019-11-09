@@ -78,7 +78,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $password = $data['last_name'].'1234';
+        $password = strtolower($data['last_name'].'1234');
         
         if(Auth::user()->role_id == 4){
             $role = 2;
@@ -92,15 +92,15 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($password),
             'role_id' => $role,
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'middle_name' => $data['middle_name'],
+            'first_name' => strtoupper($data['first_name']),
+            'last_name' => strtoupper($data['last_name']),
+            'middle_name' => strtoupper($data['middle_name']),
             'sex' => $data['sex'],
             'birthday' => $data['birthday'],
-            'citizenship' => $data['citizenship'],
+            'citizenship' => strtoupper($data['citizenship']),
             'civil_status' => $data['civil_status'],
-            'address_line_1' => $data['address_line_1'],
-            'address_line_2' => $data['address_line_2'],
+            'address_line_1' => strtoupper($data['address_line_1']),
+            'address_line_2' => strtoupper($data['address_line_2']),
             'bloodtype_id' => $data['bloodtype_id']
         ]);
     }

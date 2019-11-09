@@ -85,18 +85,26 @@ class AppointmentController extends Controller
     public function getApprovedAppointments(Request $request)
     {                
         $appointments = DB::table('appointments')
-            ->select(DB::raw("concat(users.first_name, ' ', users.middle_name, ' ', users.last_name) as fullname"), 'appointments.appointment_id', 'appointments.appointment_date', 'appointments.doctor_schedule_id')
+            ->select(DB::raw("concat(users.first_name, ' ', users.middle_name, ' ', users.last_name) as fullname"), 'appointments.appointment_id', 'appointments.appointment_date', 'appointments.doctor_schedule_id', 'appointments.status')
             ->join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
             ->join('users', 'users.id', '=', 'appointments.patient_id')
             ->where('doctor_schedules.doctor_id', $request->input('doctor_id'))
             ->where('doctor_schedules.doctor_schedule_id', $request->input('appointment_time'))
             ->where('appointment_date', $request->input('appointment_date'))
-            ->where('status', 'APPROVED')
+            ->whereIn('status', ['APPROVED', 'ONGOING'])
             ->get();
         
         return datatables()->of($appointments)
             ->addColumn('Action', function($appointment){
-                return "<a id='DoneBtn' data-id=".$appointment->appointment_id." data-toggle='modal' data-target='#DoneModal'><i class='fas fa-check-circle text-success pr-1' aria-hidden='true'></i></a><a id='EditBtn' data-id=".$appointment->appointment_id." data-patient=".json_encode($appointment->fullname)." data-date=".$appointment->appointment_date." data-time=".$appointment->doctor_schedule_id." data-toggle='modal' data-target='#EditModal'><i class='fas fa-edit text-warning'></i></a>";
+                if($appointment->status == 'APPROVED'){
+                    $result = "<a id='OngoingBtn' data-id=".$appointment->appointment_id." data-toggle='modal' data-target='#OngoingModal'><i class='fas fa-arrow-alt-circle-right text-info pr-1'></i></a>";
+                    $result .= "<a id='EditBtn' data-id=".$appointment->appointment_id." data-patient=".json_encode($appointment->fullname)." data-date=".$appointment->appointment_date." data-time=".$appointment->doctor_schedule_id." data-toggle='modal' data-target='#EditModal'><i class='fas fa-edit text-warning'></i></a>";
+                }elseif($appointment->status == 'ONGOING'){
+                    $result = "<a id='DoneBtn' data-id=".$appointment->appointment_id." data-toggle='modal' data-target='#DoneModal'><i class='fas fa-check-circle text-success pr-1' aria-hidden='true'></i></a>";
+                    $result .= "<a id='EditBtn' data-id=".$appointment->appointment_id." data-patient=".json_encode($appointment->fullname)." data-date=".$appointment->appointment_date." data-time=".$appointment->doctor_schedule_id." data-toggle='modal' data-target='#EditModal'><i class='fas fa-edit text-warning'></i></a>";
+                }
+                
+                return $result;
             })
             ->rawColumns(['Action'])
             ->make(true);
@@ -158,6 +166,32 @@ class AppointmentController extends Controller
         event(new AppointmentStatus($type, $title, $message, $user));
     }
 
+    public function ongoing($id)
+    {
+        $appointment = appointment::find($id);
+        $appointment_date = $appointment->appointment_date;
+        $doctor_schedule_id = $appointment->doctor_schedule_id;
+
+        $query = DB::table('appointments')
+            ->where('appointment_date', $appointment_date)
+            ->where('doctor_schedule_id', $doctor_schedule_id)
+            ->where('status', 'ONGOING');
+
+        if ($query->doesntExist()) {
+            $user = user::find($appointment->patient_id);
+            $appointment->status = 'ONGOING';
+            $appointment->staff_id = Auth::user()->id;
+            $appointment->save();
+
+            event(new AppointmentStatus('info', 'Notification!', 'Your appointment is now ongoing!', $user));
+            $doctor_sched = doctor_schedules::find($doctor_schedule_id);
+            $doctor = user::find($doctor_sched->doctor_id);
+            event(new NurseDoctor('info', 'Notification!', 'You have a new ongoing appointment!', $doctor));
+        }
+
+        return compact('');
+    }
+
     public function cancel($id)
     {
         $appointment = appointment::find($id);
@@ -201,7 +235,7 @@ class AppointmentController extends Controller
                 $message = "Appointment successfully created!";
                 $type = "success";
 
-                event(new AppointmentStatus('Notification!', $message, Auth::user()));
+                event(new AppointmentStatus('info', 'Notification!', $message, Auth::user()));
             } else {
                 $message = "Appointment exists!";
                 $type = "error";
@@ -236,6 +270,10 @@ class AppointmentController extends Controller
 
                 $message = 'Appointment has been rescheduled!';
                 $type = 'success';
+
+                $user = User::find($app->patient_id);
+                $message1 = 'Your appointment has been rescheduled!';
+                event(new AppointmentStatus('info', 'Notification!', $message1, $user));
             } else {
                 $message = 'Appointment conflicts with an existing record!';
                 $type = "error";
@@ -280,10 +318,10 @@ class AppointmentController extends Controller
                 $data->status = 'PENDING';
                 $data->save();
 
-                $message = "Appointment successfully created by".Auth::user()->first_name.' '.Auth::user()->last_name;
+                $message = "Appointment successfully created by ".Auth::user()->first_name.' '.Auth::user()->last_name;
                 $type = "success";
 
-                event(new PatientStaff($type, 'Notification!', $message));
+                event(new PatientStaff('info', 'Notification!', $message));
             } else {
                 $message = "Appointment exists!";
                 $type = "error";
@@ -291,25 +329,5 @@ class AppointmentController extends Controller
         }
 
         return compact('message', 'type');
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

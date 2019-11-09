@@ -18,8 +18,8 @@
                                         <div class="pr-2">
                                             <button type="button" data-toggle='modal' data-target='#AddBillModal' class="btn btn-secondary btn-sm m-0">Add Bill</button>
                                             <button type="button" data-toggle='modal' data-target='#AddAppointment' class="btn btn-secondary btn-sm m-0">ADD APPOINTMENT</button>
+                                            <button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button>
                                         </div>
-                                        <div><button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -129,6 +129,42 @@
                     <div class="form-group">
                         <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
                         <select id="mdl_doctor_schedule_id" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Appointment Modal -->
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Appointment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="EditAppointmentForm">
+                @csrf
+                <div class="modal-body p-5">
+                    <div class="form-group">
+                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Patient's Name</label>
+                        <input id="edit_patient_name" class="form-control disabled" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
+                        <input id="edit_appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic-edit">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
+                        <select id="edit_appointment_time" class="form-control">
                         </select>
                     </div>
                 </div>
@@ -285,9 +321,17 @@
                 'useTLS': false,
             });
             
-            var channel = pusher.subscribe('AppointmentStatus.2');
-            channel.bind('AppointmentStatus', function(data) {
-                toastr.warning(data.message, data.title);
+            var channel = pusher.subscribe('PatientStaff.2');
+            channel.bind('PatientStaff', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
             });
         }
 
@@ -434,7 +478,31 @@
             })
         });
 
+        approved_dataTable.on('click', '#EditBtn', function(){
+            var doctor_id = $('#doctor_id').val();
+            var patient = $(this).data('patient');
+            var date = $(this).data('date');
+            var time = $(this).data('time');
 
+            $('#edit_patient_name').val(patient);
+            $('#edit_appointment_date').val(date);
+
+            if( doctor_id != '' && date != ''){
+                $.ajax({
+                    url: "{{ route('appointment.getDocSchedules') }}",
+                    method: "POST",
+                    data: {
+                        doctor_id: doctor_id,
+                        appointment_date: date, 
+                        '_token' : "{{csrf_token() }}"
+                    },
+                    success: function(output){
+                        $('#edit_appointment_time').html(output);
+                        $('#edit_appointment_time').val(time);
+                    }
+                });
+            }
+        });
 
         $('.dynamic').change(function(){
             if($(this).val() != ''){
@@ -545,6 +613,59 @@
                     toastr.info(response);
                 }
             });
+        });
+
+        $('.dynamic-edit').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $('#doctor_id').val();
+                var appointment_date = $('#edit_appointment_date').val();
+
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#edit_appointment_time').html(output);
+                        }
+                    });
+                }
+            }
+        });
+
+        $('#EditAppointmentForm').submit(function(e){
+            e.preventDefault();
+            
+            var id = $('#EditBtn').data('id');
+            var date = $('#edit_appointment_date').val();
+            var time = $('#edit_appointment_time').val();
+
+            if(id != '' && date != '' && time != ''){
+                $.ajax({
+                    url: "{{ route('appointment.reschedule') }}",
+                    method: "POST",
+                    data: {
+                        appointment_id: id,
+                        appointment_date: date,
+                        appointment_time: time,
+                        '_token' : "{{csrf_token() }}"
+                    },
+                    success: function(response){
+                        if(response.type == "success"){
+                            toastr.success(response.message);
+                            refresh_dt();
+                        }else{
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            }
+
+            $('#EditModal').modal('hide');
         });
 
         $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {

@@ -8,6 +8,7 @@ use App\role;
 use App\doctor_schedule;
 use App\appointment;
 use App\user_vital_signs;
+use App\medical_service;
 use Auth;
 use DB;
 
@@ -24,8 +25,9 @@ class NursePageController extends Controller
         $doctors = user::where('role_id', 3)->get();
         $patients = user::where('role_id', 2)->get();
         $schedules = doctor_schedule::all();
+        $medical_services = medical_service::all();
 
-        return view('pages.nurse.appointment', compact('doctors', 'patients', 'schedules'));
+        return view('pages.nurse.appointment', compact('doctors', 'patients', 'schedules', 'medical_services'));
     }
 
     public function billing()

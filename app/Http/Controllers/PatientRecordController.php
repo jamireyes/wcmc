@@ -47,4 +47,87 @@ class PatientRecordController extends Controller
             ->rawColumns(['Action'])
             ->make(true);
     }
+
+    public function storeMedicalHistory(Request $request)
+    {
+        $data = new medical_history;
+        $data->user_id = $request->input('user_id');
+        $data->description = $request->input('description');
+        $data->save();
+    }
+
+    public function storeVitalSigns(Request $request)
+    {
+        $p_id = $request->input('patient_id');
+        $temperature = $request->input('temperature');
+        $respiratory_rate = $request->input('respiratory_rate');
+        $pulse_rate = $request->input('pulse_rate');
+        $blood_pressure = $request->input('blood_pressure');
+        $height = $request->input('height');
+        $weight = $request->input('weight');
+        $last_menstrual_period = $request->input('last_menstrual_period');
+
+        if($request->has('temperature')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 1;
+            $data->value = $temperature;
+            $data->save();
+        }
+
+        if($request->has('respiratory_rate')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 2;
+            $data->value = $respiratory_rate;
+            $data->save();
+        }
+
+        if($request->has('pulse_rate')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 3;
+            $data->value = $pulse_rate;
+            $data->save();
+        }
+
+        if($request->has('blood_pressure')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 4;
+            $data->value = $blood_pressure;
+            $data->save();
+        }
+
+        if($request->has('height')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 5;
+            $data->value = $height;
+            $data->save();
+        }
+
+        if($request->has('weight')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 6;
+            $data->value = $weight;
+            $data->save();
+        }
+
+        if($request->has('last_menstrual_period')){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 7;
+            $data->value = $last_menstrual_period;
+            $data->save();
+        }
+    }
 }
