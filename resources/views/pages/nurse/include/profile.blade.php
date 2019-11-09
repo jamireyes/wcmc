@@ -9,7 +9,7 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Username</label>
-                            <input id="view_username" type="text" class="form-control disabled" value="{{Auth::user()->username}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->username}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -17,19 +17,19 @@
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input id="view_first_name" type="text" class="form-control disabled" value="{{Auth::user()->first_name}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->first_name}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Middle Name</label>
-                            <input id="view_middle_name" type="text" class="form-control disabled" value="{{Auth::user()->middle_name}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->middle_name}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input id="view_last_name" type="text" class="form-control disabled" value="{{Auth::user()->last_name}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->last_name}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -37,13 +37,13 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input id="view_email" type="email" class="form-control disabled" value="{{Auth::user()->email}}" disabled>
+                            <input type="email" class="form-control disabled" value="{{Auth::user()->email}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Contact No.</label>
-                            <input id="view_contact_no" type="text" class="form-control disabled" value="{{Auth::user()->contact_no}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->contact_no}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -51,19 +51,19 @@
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Sex</label>
-                            <input id="view_sex" type="text" class="form-control disabled" value="{{Auth::user()->sex}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->sex}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Civil Status</label>
-                            <input id="view_civil_status" type="text" class="form-control disabled" value="{{Auth::user()->civil_status}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->civil_status}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Bloodtype</label>
-                            <input id="view_bloodtype" type="text" class="form-control disabled" value="{{Auth::user()->bloodtype->description}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->bloodtype->description}}" disabled>
                         </div>
                     </div>
                 </div>
