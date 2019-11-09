@@ -18,6 +18,7 @@ class CreateServicesAvailedsTable extends Migration
             $table->bigInteger('medical_service_id')->unsigned()->index();
             $table->bigInteger('patient_id')->unsigned()->index();
             $table->bigInteger('staff_id')->unsigned()->index();
+            $table->decimal('discount', 2, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

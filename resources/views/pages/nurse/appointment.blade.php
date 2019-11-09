@@ -259,10 +259,10 @@
 
 <!-- ADD BILL Modal -->
 <div class="modal fade" id="AddBillModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Bill</h5>
+                <h5 class="modal-title">Add Bill Payment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -279,25 +279,48 @@
                                     @endforeach
                             </select>
                         </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input id="bill_discount" class="form-check-input" type="checkbox" value=".20">
+                                Patient Discount
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-row w-100">
-                                    <div class="pr-2">
-                                        <button id="add_row" type="button" class="btn btn-primary btn-sm">+</button>
-                                    </div>
                                     <div class="w-100">
-                                        <select class='form-control' id='medical_service'>
-                                            <option value=''disabled selected>Select Medical Service</option>
-                                            @foreach($medical_services as $medical_service)
-                                                <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="form-group">
+                                            <select class='form-control' id='medical_service'>
+                                                <option value=''disabled selected>Select Medical Service</option>
+                                                @foreach($medical_services as $medical_service)
+                                                    <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div id='doctor_input' class='form-group'>
+                                            <select id='bill_doctor_id' class='form-control'>
+                                                <option value='' disabled selected>Select Doctor</option>
+                                                    @foreach ($doctors as $doctor)
+                                                        <option value='{{ $doctor->id }}'>{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
+                                                    @endforeach
+                                            </select>
+                                        </div>
+                                        <button id="add_row" type="button" class="btn btn-primary btn-sm btn-block">+</button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
                                 <table id='medical_serv_bill' class="table display">
                                     <thead>
                                         <tr>
@@ -634,10 +657,10 @@
 
         $('#Checkout').click(function(){
             var bill_patient_id = $('#bill_patient_id').val();
+            var bill_doctor_id = $('#bill_doctor_id').val();
+            var discount = $('#bill_discount').val();
             var ary = [];
             $('#medical_serv_bill tbody tr').each(function (a, b) {
-                // var description = $('.attrDes', b).text();
-                // var rate = $('.attrRate', b).text();
                 var id = $('.attrDes', b).data('id');
                 ary.push({ id: id });
             });
@@ -648,10 +671,13 @@
                 data: {
                     medical_services: JSON.stringify(ary),
                     patient_id: bill_patient_id,
+                    doctor_id: bill_doctor_id,
+                    discount: discount,
                     '_token' : "{{csrf_token() }}"
                 },
-                success: function(response){
-                    toastr.info(response);
+                success: function(){
+                    $('#AddBillModal').modal('hide');
+                    toastr.info('Payment has been made!');
                 }
             });
         });

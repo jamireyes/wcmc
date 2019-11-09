@@ -21,7 +21,12 @@ class BillingController extends Controller
             $data = new services_availed;
             $data->medical_service_id = $medical_service->id;
             $data->patient_id = $request->input('patient_id');
-            $data->staff_id = Auth::user()->id;
+            $data->discount = $request->input('discount');
+            if($medical_service->id == 1){
+                $data->staff_id = $request->input('doctor_id');
+            }else{
+                $data->staff_id = Auth::user()->id;
+            }
             $data->save();
         }
     }
