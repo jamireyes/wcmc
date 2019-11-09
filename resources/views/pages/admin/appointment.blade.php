@@ -259,6 +259,15 @@
                                     @endforeach
                             </select>
                         </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input id="bill_discount" class="form-check-input" type="checkbox" value=".20">
+                                Patient Discount
+                                <span class="form-check-sign">
+                                    <span class="check"></span>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">

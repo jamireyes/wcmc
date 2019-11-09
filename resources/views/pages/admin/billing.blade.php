@@ -15,9 +15,10 @@
                                 <table id="bill_transactions" class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th></th>
                                             <th>Payment Date</th>
                                             <th>Patient Name</th>
+                                            <th>Discount</th>
                                             <th>Total Amount</th>
                                             <th>Action</th>
                                         </tr>
@@ -27,10 +28,11 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $bill->created_at }}</td>
-                                                <th>{{ $bill->patientfname }} {{ $bill->patientmname }} {{ $bill->patientlname }}</th>
-                                                <td>{{ $bill->total }}</td>
+                                                <td>{{ $bill->patientfname }} {{ $bill->patientmname }} {{ $bill->patientlname }}</td>
+                                                <td>@if ($bill->discount != NULL) 20% @endif</td>
+                                                <td>@if ($bill->discount == NULL) PHP {{ $bill->total }} @else PHP {{ $bill->total - ($bill->total * $bill->discount) }}.00 @endif</td>
                                                 <td>
-                                                    <a id="ViewBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-total="{{$bill->total}}" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-secondary" aria-hidden="true"></i></a>
+                                                    <a id="ViewBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-total="@if ($bill->discount == NULL){{ $bill->total }} @else {{ $bill->total - ($bill->total * $bill->discount) }}.00 @endif" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-secondary" aria-hidden="true"></i></a>
                                                     @if($bill->deleted_at == NULL)
                                                         <a id="DeleteBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                                     @else
@@ -50,9 +52,7 @@
     </div>
 </div>
 
-
-{{-- Modal --}}
-
+{{-- View Modal --}}
 <div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -150,17 +150,30 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
 
-        Pusher.logToConsole = true;
+        PusherListener();
+        $.fn.dataTable.ext.errMode = 'none';
 
-        var pusher = new Pusher('89973cf8f98acc38053a', {
-            cluster: 'ap1',
-            'useTLS': false,
-        });
-        
-        var channel = pusher.subscribe('AppointmentStatus.2');
-        channel.bind('AppointmentStatus', function(data) {
-            toastr.info(data.message, 'Notification');
-        });
+        function PusherListener() {
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('89973cf8f98acc38053a', {
+                cluster: 'ap1',
+                'useTLS': false,
+            });
+            
+            var channel = pusher.subscribe('PatientStaff.2');
+            channel.bind('PatientStaff', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
+            });
+        }
 
         const bill_transactions = $('#bill_transactions').DataTable();
         
@@ -168,7 +181,7 @@
             var id = $(this).data('id');
             var date = $(this).data('date');
             var total = $(this).data('total');
-
+            
             $.ajax({
                 type: "POST",
                 url: "{{ route('billing.getMedicalService') }}",

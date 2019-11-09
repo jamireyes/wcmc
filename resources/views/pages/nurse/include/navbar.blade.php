@@ -46,3 +46,5 @@
         </div>
     </div>
 </nav>
+
+@include('pages.nurse.include.profile')

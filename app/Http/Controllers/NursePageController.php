@@ -33,12 +33,12 @@ class NursePageController extends Controller
     public function billing()
     {
         $bill = DB::table('services_availed')
-        ->join('Users as s', 's.id', '=', 'services_availed.staff_id')
-        ->join('Users as p', 'p.id', '=', 'services_availed.patient_id')
-        ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
-        ->select('services_availed.services_availed_id as id', 's.first_name as patientfname', 's.middle_name as patientmname', 's.first_name as patientlname', 'services_availed.description', 'services_availed.updated_at as date', 'status', 'ms.rate as total')
-        ->where('s.id', '=', AUTH::user()->id)
-        ->get();
+            ->select(DB::raw("SUM(ms.rate) as total"), 'patient_id', 'p.first_name as patientfname', 'p.middle_name as patientmname', 'p.last_name as patientlname', 'services_availed.created_at', 'services_availed.deleted_at', 'services_availed.discount')
+            ->join('users as d', 'd.id', '=', 'services_availed.staff_id')
+            ->join('users as p', 'p.id', '=', 'services_availed.patient_id')
+            ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
+            ->groupBy(['created_at', 'deleted_at', 'patient_id', 'p.first_name', 'p.middle_name', 'p.last_name', 'discount'])
+            ->get();
 
         return view('pages.nurse.billing')->with('bills', $bill);
     }
