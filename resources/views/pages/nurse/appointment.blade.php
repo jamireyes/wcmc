@@ -658,7 +658,13 @@
         $('#Checkout').click(function(){
             var bill_patient_id = $('#bill_patient_id').val();
             var bill_doctor_id = $('#bill_doctor_id').val();
-            var discount = $('#bill_discount').val();
+            var discount;
+            
+            if($('#bill_discount').prop('checked') == true){
+                discount = $('#bill_discount').val();
+            }else{
+                discount = null;
+            }
             var ary = [];
             $('#medical_serv_bill tbody tr').each(function (a, b) {
                 var id = $('.attrDes', b).data('id');

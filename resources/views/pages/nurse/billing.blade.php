@@ -30,7 +30,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $bill->created_at }}</td>
                                                     <td>{{ $bill->patientfname }} {{ $bill->patientmname }} {{ $bill->patientlname }}</td>
-                                                    <td>@if ($bill->discount != NULL) 20% @endif</td>
+                                                    <td>@if ($bill->discount == NULL)  @else 20% @endif</td>
                                                     <td>@if ($bill->discount == NULL) PHP {{ $bill->total }} @else PHP {{ $bill->total - ($bill->total * $bill->discount) }}.00 @endif</td>
                                                     <td>
                                                         <a id="ViewBtn" data-id="{{$bill->patient_id}}" data-date="{{$bill->created_at}}" data-total="@if ($bill->discount == NULL){{ $bill->total }} @else {{ $bill->total - ($bill->total * $bill->discount) }}.00 @endif" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-secondary" aria-hidden="true"></i></a>
