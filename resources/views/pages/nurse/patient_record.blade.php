@@ -13,7 +13,7 @@
                             <div class="card-header card-header-primary">
                                 <div class="d-flex justify-content-between">
                                     <div></div>
-                                    <div>PATIENT RECORDS</div>
+                                    <div>PATIENT LIST</div>
                                     <div></div>
                                 </div>
                             </div>
@@ -39,8 +39,7 @@
                                                 <td>0{{$patient->contact_no}}</td>
                                                 <td>{{$patient->role->description}}</td>
                                                 <td>
-                                                    <a href="#" id="ViewBtn" data-data="{{$patient}}" data-toggle="modal" data-target="#ViewModal"><i class="fas fa-eye text-primary mx-1"></i></a>
-                                                    <a href="#" id="EditBtn" data-data="{{$patient}}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>                                       
+                                                    <a href="#" id="ViewBtn" data-data="{{$patient}}" data-toggle="modal" data-target="#ViewModal"><i class="fas fa-eye text-primary mx-1"></i></a>                                                          
                                                 </td>
                                             </tr>
                                             @endforeach
