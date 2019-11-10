@@ -154,12 +154,6 @@
                 ]
             });
         }
-
-        // function displayToModal(patient) {
-        //     $('first_name').val(patient.first_name);
-        //     $('last_name').val(patient.last_name);
-        //     $('description').val(patient.description);
-        // }
     });
 </script>
 @endsection

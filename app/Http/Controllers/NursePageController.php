@@ -46,25 +46,9 @@ class NursePageController extends Controller
     public function patientRecords()
     {
         $patients = user::all()->where('role_id', 2);
-        
-        // appointment:: join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
-        // ->join('users', 'users.id', '=', 'appointments.patient_id')
-        // ->join('medical_histories', 'medical_histories.user_id', '=', 'users.id')
-        // ->join('user_vital_signs', 'user_vital_signs.patient_id', '=', 'users.id')        
-        // ->get();
                     
         return view('pages.nurse.patient_record', compact('patients'));
     }
-
-    // public function addPatientRecords(Request $request){
-        
-    //     $medical_history = New medical_history;
-    //     $medical_history->user_id = $request->input('user_id');
-    //     $medical_history->description = $request->input('description');
-    //     $medical_history->save();
-        
-    //     return back();
-    // }
 
     public function settings()
     {

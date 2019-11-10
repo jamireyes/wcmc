@@ -14,8 +14,14 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('/ChangePassword', 'ChangePasswordController@changePassword')->name('ChangePassword');
         Route::post('getMedicalHistory', 'PatientRecordController@getMedicalHistory')->name('getMedicalHistory');
         Route::post('getVitalSigns', 'PatientRecordController@getVitalSigns')->name('getVitalSigns');
+        Route::post('updateMedicalHistory', 'PatientRecordController@updateMedicalHistory')->name('updateMedicalHistory');
+        Route::post('updateVitalSign', 'PatientRecordController@updateVitalSign')->name('updateVitalSign');
         Route::post('storeMedicalHistory', 'PatientRecordController@storeMedicalHistory')->name('storeMedicalHistory');
         Route::post('storeVitalSigns', 'PatientRecordController@storeVitalSigns')->name('storeVitalSigns');
+        Route::post('deleteMedicalHistory', 'PatientRecordController@deleteMedicalHistory')->name('deleteMedicalHistory');
+        Route::post('deleteVitalSign', 'PatientRecordController@deleteVitalSign')->name('deleteVitalSign');
+        Route::post('restoreMedicalHistory', 'PatientRecordController@restoreMedicalHistory')->name('restoreMedicalHistory');
+        Route::post('restoreVitalSign', 'PatientRecordController@restoreVitalSign')->name('restoreVitalSign');
         Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
 
         // ADMIN ROUTES
@@ -28,6 +34,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::get('admin/messages/{name}', 'AdminPageController@message')->name('admin.message');
             Route::get('admin/settings/{name}', 'AdminPageController@setting')->name('admin.setting');
             Route::get('admin/services/{name}', 'AdminPageController@service')->name('admin.services');
+            Route::get('admin/patient_records/{name}', 'AdminPageController@patient_records')->name('admin.patient_records');
 
             Route::resource('admin_service', 'Admin_ServiceController');
             Route::post('/restore/{id}', 'Admin_UserMGTController@restore')->name('admin_usermgt.restore');

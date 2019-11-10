@@ -9,6 +9,8 @@ use App\doctor_schedule;
 use App\appointment;
 use App\medical_service;
 use App\bloodtype;
+use App\user_vital_signs;
+use App\vital_sign;
 use Auth;
 use DB;
 
@@ -57,6 +59,21 @@ class AdminPageController extends Controller
         $bloodtypes = bloodtype::all();
        
         return view('pages.admin.user_mgt', compact('users', 'roles', 'bloodtypes', 'sexs', 'civil_statuses'));
+    }
+    
+    public function patient_records()
+    {
+        $patients = appointment::join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
+        ->join('users', 'users.id', '=', 'appointments.patient_id')
+        ->join('medical_histories', 'medical_histories.user_id', '=', 'users.id')
+        ->join('user_vital_signs', 'user_vital_signs.patient_id', '=', 'users.id')        
+        ->get(); 
+
+        $users = user::all()->where('role_id', 2);
+
+        $vitals = vital_sign::all();
+                    
+        return view('pages.admin.patient_record', compact('patients', 'vitals', 'users'));
     }
 
     public function doc_schedule()

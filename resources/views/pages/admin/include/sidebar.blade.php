@@ -31,6 +31,12 @@
                     <p>DOCTOR'S SCHEDULE</p>
                 </a>
             </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'admin.patient_records') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.patient_records', ['name' => Auth::user()->username]) }}">
+                    <i class="fas fa-poll-h"></i>
+                    <p>PATIENT RECORDS</p>
+                </a>
+            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.billing') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.billing', ['name' => Auth::user()->username]) }}">
                     <i class="material-icons">library_books</i>
