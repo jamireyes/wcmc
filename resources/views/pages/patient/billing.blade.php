@@ -22,33 +22,19 @@
                                                     <th>Date</th>
                                                     <th>Doctor</th>
                                                     <th>Services</th>
-                                                    <th>Total</th>
-                                                    <th>Status</th>
-                                                    <th>View</th>
+                                                    <th>Rate</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if(count($bills))
-                                                    @foreach($bills as $bill)
-                                                <tr>
-                                                    <td>{{ $bill->id }}</td>
-                                                    <td>{{ $bill->date }}</td>
-                                                    <td>{{ $bill->doctorfname }} {{ $bill->doctormname }} {{ $bill->doctorlname }}</td>
-                                                    <td>{{ $bill->description }}</td>
-                                                    <td>Php {{ $bill->total }}</td>
-                                                    <td class="text-primary">
-                                                        @if( $bill->status == "PAID" )
-                                                            <span class="badge badge-pill badge-success">PAID</span>
-                                                        @elseif( $bill->status = "UNPAID")
-                                                        <span class="badge badge-pill badge-danger">NOT PAID!</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" data-toggle="modal" data-target="#BillingModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
-                                                    </td>
-                                                </tr>
-                                                    @endforeach
-                                                @endif
+                                                @foreach($bills as $bill)
+                                                    <tr>
+                                                        <td>{{ $bill->services_availed_id }}</td>
+                                                        <td>{{ $bill->created_at }}</td>
+                                                        <td>{{ $bill->first_name }} {{ $bill->middle_name }} {{ $bill->last_name }}</td>
+                                                        <td>{{ $bill->description }}</td>
+                                                        <td>PHP {{ $bill->rate }}</td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

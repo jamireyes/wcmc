@@ -71,13 +71,13 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Birthday</label>
-                            <input id="view_birthday" type="date" class="form-control disabled" value="{{Auth::user()->birthday}}" disabled>
+                            <input type="date" class="form-control disabled" value="{{Auth::user()->birthday}}" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Citizenship</label>
-                            <input id="view_citizenship" type="text" class="form-control disabled" value="{{Auth::user()->citizenship}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->citizenship}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label >Adress Line 1</label>
-                            <input id="view_address_line_1" type="text" class="form-control disabled" value="{{Auth::user()->address_line_1}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->address_line_1}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label>Adress Line 2</label>
-                            <input id="view_address_line_2" type="text" class="form-control disabled" value="{{Auth::user()->address_line_2}}" disabled>
+                            <input type="text" class="form-control disabled" value="{{Auth::user()->address_line_2}}" disabled>
                         </div>
                     </div>
                 </div>

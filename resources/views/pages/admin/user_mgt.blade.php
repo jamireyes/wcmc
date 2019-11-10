@@ -91,7 +91,7 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input id="username" type="text" class="form-control" value="">
+                                <input id="username" name="username" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -99,19 +99,19 @@
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input id="first_name" type="text" class="form-control" value="">
+                                <input id="first_name" name="first_name" type="text" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Middle Name</label>
-                                <input id="middle_name" type="text" class="form-control" value="">
+                                <input id="middle_name" name="middle_name" type="text" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input id="last_name" type="text" class="form-control" value="">
+                                <input id="last_name" name="last_name" type="text" class="form-control" >
                             </div>
                         </div>
                     </div>
@@ -119,13 +119,13 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Email Address</label>
-                                <input id="email" type="email" class="form-control" value="">
+                                <input id="email" name="email" type="email" class="form-control" >
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Contact No.</label>
-                                <input id="contact_no" type="text" class="form-control" value="">
+                                <input id="contact_no" name="contact_no" type="text" class="form-control" >
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Sex</label>
-                                <select id="sex" class="form-control">
+                                <select id="sex" name="sex" class="form-control">
                                     @foreach ($sexs as $sex)
                                         <option value="{{$sex}}">{{$sex}}</option>
                                     @endforeach
@@ -143,7 +143,7 @@
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Civil Status</label>
-                                <select id="civil_status" class="form-control">
+                                <select id="civil_status" name="civil_status" class="form-control">
                                     @foreach ($civil_statuses as $civil_status)
                                         <option value="{{$civil_status}}">{{$civil_status}}</option>
                                     @endforeach
@@ -153,7 +153,7 @@
                         <div class="col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Bloodtype</label>
-                                <select id="bloodtype_id" class="form-control">
+                                <select id="bloodtype_id" name="bloodtype_id" class="form-control">
                                     @foreach ($bloodtypes as $bloodtype)
                                         <option value="{{$bloodtype->bloodtype_id}}">{{$bloodtype->description}}</option>
                                     @endforeach
@@ -165,13 +165,13 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Birthday</label>
-                                <input id="birthday" type="date" class="form-control" value="">
+                                <input id="birthday" name="birthday" type="date" class="form-control" value="">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Citizenship</label>
-                                <input id="citizenship" type="text" class="form-control" value="">
+                                <input id="citizenship" name="citizenship" type="text" class="form-control" value="">
                             </div>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label >Adress Line 1</label>
-                                <input id="address_line_1" type="text" class="form-control" value="">
+                                <input id="address_line_1" name="address_line_1" type="text" class="form-control" value="">
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label>Adress Line 2</label>
-                                <input id="address_line_2" type="text" class="form-control" value="">
+                                <input id="address_line_2" name="address_line_2" type="text" class="form-control" value="">
                             </div>
                         </div>
                     </div>
@@ -388,7 +388,7 @@
             $('#first_name').val(user.first_name);
             $('#last_name').val(user.last_name);
             $('#middle_name').val(user.middle_name);
-            $('#contact_no').val('0'+user.contact_no);
+            $('#contact_no').val(user.contact_no);
             $('#sex').val(user.sex);
             $('#birthday').val(user.birthday);
             $('#citizenship').val(user.citizenship);
@@ -414,7 +414,7 @@
             var user = $(this).data('user');
             var bloodtype = $(this).data('bloodtype');
             var role = $(this).data('role');
-
+            
             $('#view_role').val(role);
             $('#view_username').val(user.username);
             $('#view_email').val(user.email);

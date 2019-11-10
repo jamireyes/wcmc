@@ -29,7 +29,7 @@ class Admin_UserMGTController extends Controller
         //     'address_line_2' => ['required'],
         //     'bloodtype' => ['required']
         // ]);
-        
+        // dd($request->all());
         $data = User::find($id);
         $data->role_id = $request->input('role_id');
         $data->username = $request->input('username');
@@ -51,7 +51,7 @@ class Admin_UserMGTController extends Controller
 
         return redirect()->route('admin.user_mgt', ['name' => Auth::user()->username]);
     }
-    
+
     public function destroy($id)
     {
         $user = User::find($id)->delete();
