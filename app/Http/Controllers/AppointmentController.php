@@ -187,6 +187,7 @@ class AppointmentController extends Controller
             $doctor_sched = doctor_schedules::find($doctor_schedule_id);
             $doctor = user::find($doctor_sched->doctor_id);
             event(new NurseDoctor('info', 'Notification!', 'You have a new ongoing appointment!', $doctor));
+            $message = '';
         }
 
         return compact('');
@@ -288,7 +289,7 @@ class AppointmentController extends Controller
 
     public function getPatient($id)
     {
-        $user = user::find($id);
+        $user = user::where('id', $id)->with('bloodtype')->get();
         
         return compact('user');
     }

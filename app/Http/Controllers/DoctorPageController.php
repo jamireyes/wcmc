@@ -20,9 +20,10 @@ class DoctorPageController extends Controller
     {
         
         $doctors = user::where('role_id', 3)->get();
+        $patients = user::where('role_id', 2)->get();
         $schedules = doctor_schedule::all();
 
-        return view('pages.doctor.appointment', compact('doctors', 'schedules'));
+        return view('pages.doctor.appointment', compact('doctors', 'schedules', 'patients'));
         // return view('pages.doctor.appointment');
     }
     public function patientRecords()

@@ -35,46 +35,44 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <div class="d-flex justify-content-between">
-                                    <div></div>
-                                    <div>MEDICAL HISTORY</div>
-                                    <div></div>
-                                </div></div>
-                            <div class="card-body">
-                                <table id="medical_history_table" class="table display table-striped">
-                                    <thead>
-                                        <th style="font-size: 1em;">Description</th>
-                                        <th style="font-size: 1em;">Created At</th>
-                                        <th style="font-size: 1em;">Last Update</th>
-                                        <th style="font-size: 1em;">Action</th>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                                <div class="d-flex justify-content-between">
-                                    <div></div>
-                                    <div>VITAL SIGNS</div>
-                                    <div></div>
+                                <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+                                <div class="nav-tabs-navigation">
+                                    <ul class="nav nav-tabs" data-tabs="tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#medical_history" data-toggle="tab">Medical History</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#vital_signs" data-toggle="tab">Vital Signs</a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="vital_signs_table" class="table display table-striped">
-                                    <thead>
-                                        <th style="font-size: 1em;">Doctor</th>
-                                        <th style="font-size: 1em;">Description</th>
-                                        <th style="font-size: 1em;">Value</th>
-                                        <th style="font-size: 1em;">Created At</th>
-                                        <th style="font-size: 1em;">Last Update</th>
-                                        <th style="font-size: 1em;">Action</th>
-                                    </thead>
-                                </table>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="medical_history">
+                                        <table id="medical_history_table" class="table display table-striped compact nowrap w-100">
+                                            <thead>
+                                                <th style="font-size: 1em;">Description</th>
+                                                <th style="font-size: 1em;">Add on</th>
+                                                <th style="font-size: 1em;">Last Update</th>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="vital_signs">
+                                        <table id="vital_signs_table" class="table table-striped display compact nowrap w-100">
+                                            <thead>
+                                                <th style="font-size: 1em;">Doctor</th>
+                                                <th style="font-size: 1em;">Description</th>
+                                                <th style="font-size: 1em;">Value</th>
+                                                <th style="font-size: 1em;">Add on</th>
+                                                <th style="font-size: 1em;">Last Update</th>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -126,8 +124,7 @@
                 columns: [
                     { data: "description", name: "description" },
                     { data: "created_at", name: "created_at" },
-                    { data: "updated_at", name: "updated_at" },
-                    { data: "Action", name: "Action" }
+                    { data: "updated_at", name: "updated_at" }
                 ]
             });
         }
@@ -148,9 +145,8 @@
                     { data: "fullname", name: "fullname" },
                     { data: "name", name: "name" },
                     { data: "value", name: "value" },
-                    { data: "created_at", name: "created_at" },
-                    { data: "updated_at", name: "updated_at" },
-                    { data: "Action", name: "Action" }
+                    { data: "add_on", name: "add_on" },
+                    { data: "last_update", name: "last_update" }
                 ]
             });
         }

@@ -23,8 +23,8 @@ class PatientRecordController extends Controller
             ->join('users', 'users.id', '=', 'medical_histories.user_id')
             ->where('user_id', '=', $request->input('patient_id'))
             ->get();
-        // dd($datas);
-        return datatables()->of($datas)
+        if(Auth::user()->role_id == 1){
+            return datatables()->of($datas)
             ->addColumn('Action', function($data){
                 if(is_null($data->deleted_at)){
                     $result = "<a id='EditMHBtn' data-id=".$data->medical_history_id." data-description=".$data->description." data-toggle='modal' data-target='#EditMHModal'><i class='fas fa-edit text-warning pr-1'></i></a>";
@@ -38,32 +38,39 @@ class PatientRecordController extends Controller
             })
             ->rawColumns(['Action'])
             ->make(true);
+        }elseif(Auth::user()->role_id == 3){
+            return datatables()->of($datas)->make(true);
+        }
+        
     }
 
     public function getVitalSigns(Request $request)
     {
         $datas = DB::table('user_vital_signs')
-            ->select(DB::raw("concat(s.first_name, ' ', s.middle_name, ' ', s.last_name) as fullname"), 'p.id', 'vital_signs.vital_sign_id', 'vital_signs.name', 'user_vital_signs.value', 'user_vital_signs.created_at', 'user_vital_signs.updated_at', 'user_vital_signs.deleted_at')
+            ->select(DB::raw("concat(s.first_name, ' ', s.middle_name, ' ', s.last_name) as fullname"), 'p.id', 'vital_signs.vital_sign_id', 'vital_signs.name', 'user_vital_signs.value', 'user_vital_signs.created_at', 'user_vital_signs.updated_at', 'user_vital_signs.deleted_at', DB::raw("DATE_FORMAT(user_vital_signs.created_at, '%b %d, %Y %l:%i %p') as add_on"), DB::raw("DATE_FORMAT(user_vital_signs.updated_at, '%b %d, %Y %l:%i %p') as last_update"))
             ->join('users as s', 's.id', '=', 'user_vital_signs.staff_id')
             ->join('users as p', 'p.id', '=', 'user_vital_signs.patient_id')
             ->join('vital_signs', 'vital_signs.vital_sign_id', '=', 'user_vital_signs.vital_sign_id')
             ->where('patient_id', '=', $request->input('patient_id'))
             ->get();
             
-
-        return datatables()->of($datas)
-            ->addColumn('Action', function($data){
-                if(is_null($data->deleted_at)){
-                    $result = "<a id='EditVSBtn' data-created=".json_encode($data->created_at)." data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-toggle='modal' data-target='#EditVSModal'><i class='fas fa-edit text-warning pr-1'></i></a>";
-                    $result .= "<a href='#' id='DeleteVSBtn' data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-created_at=".json_encode($data->created_at)." data-toggle='modal' data-target='#DeleteVSModal'><i class='fa fa-trash text-danger' aria-hidden='true'></i></a>";
-                }elseif(!(is_null($data->deleted_at))){
-                    $result = "<a id='EditVSBtn' data-created=".json_encode($data->created_at)." data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-toggle='modal' data-target='#EditVSModal'><i class='fas fa-edit text-warning pr-1'></i></a>";
-                $result .= "<a href='#' id='RestoreVSBtn' data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-created_at=".json_encode($data->created_at)." data-toggle='modal' data-target='#RestoreVSModal'><i class='fas fa-trash-restore text-primary'></i></a>";
-                }
-                return $result;
-            })
-            ->rawColumns(['Action'])
-            ->make(true);
+        if(Auth::user()->role_id == 1){
+            return datatables()->of($datas)
+                ->addColumn('Action', function($data){
+                    if(is_null($data->deleted_at)){
+                        $result = "<a id='EditVSBtn' data-created=".json_encode($data->created_at)." data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-toggle='modal' data-target='#EditVSModal'><i class='fas fa-edit text-warning pr-1'></i></a>";
+                        $result .= "<a href='#' id='DeleteVSBtn' data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-created_at=".json_encode($data->created_at)." data-toggle='modal' data-target='#DeleteVSModal'><i class='fa fa-trash text-danger' aria-hidden='true'></i></a>";
+                    }elseif(!(is_null($data->deleted_at))){
+                        $result = "<a id='EditVSBtn' data-created=".json_encode($data->created_at)." data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-toggle='modal' data-target='#EditVSModal'><i class='fas fa-edit text-warning pr-1'></i></a>";
+                    $result .= "<a href='#' id='RestoreVSBtn' data-patient_id=".$data->id." data-vs_id=".$data->vital_sign_id." data-value=".$data->value." data-created_at=".json_encode($data->created_at)." data-toggle='modal' data-target='#RestoreVSModal'><i class='fas fa-trash-restore text-primary'></i></a>";
+                    }
+                    return $result;
+                })
+                ->rawColumns(['Action'])
+                ->make(true);
+        }elseif(Auth::user()->role_id == 3){
+            return datatables()->of($datas)->make(true);
+        }
     }
 
     public function updateMedicalHistory(Request $request)

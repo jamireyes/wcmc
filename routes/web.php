@@ -90,7 +90,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::get('doctor/patient_records/{name}', 'DoctorPageController@patientRecords')->name('doctor.patient_records');
             Route::get('doctor/billings/{name}', 'DoctorPageController@billings')->name('doctor.billings');
             Route::get('doctor/settings/{name}', 'DoctorPageController@settings')->name('doctor.settings');
-            Route::get('doctor/getPatient', 'AppointmentController@getPatient')->name('doctor.getPatient');
+            Route::get('doctor/getPatient/{id}', 'AppointmentController@getPatient')->name('doctor.getPatient');
         });
 
     });
