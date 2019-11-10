@@ -36,7 +36,7 @@
                                                 <td>{{$patient->first_name}} {{$patient->last_name}}</td>
                                                 <td>{{$patient->username}}</td>
                                                 <td>{{$patient->email}}</td>
-                                                <td>{{$patient->contact_no}}</td>
+                                                <td>0{{$patient->contact_no}}</td>
                                                 <td>{{$patient->role->description}}</td>
                                                 <td>
                                                     <a href="#" id="ViewBtn" data-data="{{$patient}}" data-toggle="modal" data-target="#ViewModal"><i class="fas fa-eye text-primary mx-1"></i></a>
@@ -170,9 +170,8 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
+{{-- <script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script> --}}
 <script>
-    
     $( document ).ready(function(){
 
         PusherListener();
