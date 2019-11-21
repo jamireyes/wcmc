@@ -69,7 +69,7 @@
                                                         <i class="fas fa-thermometer"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="temperature" class="form-control" placeholder="Temperature">
+                                                <input type="number" step=".01" id="temperature" class="form-control" placeholder="Temperature">   
                                             </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -77,7 +77,7 @@
                                                         <i class="fas fa-wind"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="respiratory_rate" class="form-control" placeholder="Respiratory Rate">
+                                                <input type="number" step=".01" id="respiratory_rate" class="form-control" placeholder="Respiratory Rate">
                                             </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -85,7 +85,7 @@
                                                         <i class="fas fa-heartbeat"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="pulse_rate" class="form-control" placeholder="Pulse Rate">
+                                                <input type="number" step=".01" id="pulse_rate" class="form-control" placeholder="Pulse Rate">
                                             </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -93,7 +93,8 @@
                                                         <i class="fas fa-tint"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="blood_pressure" class="form-control" placeholder="Blood Pressure">
+                                                <input type="text" step=".01" id="blood_pressure" class="form-control" placeholder="Blood Pressure">
+                                                
                                             </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -101,7 +102,7 @@
                                                         <i class="fas fa-ruler-vertical"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="height" class="form-control" placeholder="Height">
+                                                <input type="number" step=".01" id="height" class="form-control" placeholder="Height">
                                             </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -109,7 +110,7 @@
                                                         <i class="fas fa-balance-scale"></i>
                                                     </span>
                                                 </div>
-                                                <input type="text" id="weight" class="form-control" placeholder="Weight">
+                                                <input type="number" step=".01" id="weight" class="form-control" placeholder="Weight">
                                             </div>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -370,6 +371,7 @@
         });
 
         $('#vs_submit').click(function(){
+            
             var temperature = $('#temperature').val();
             var respiratory_rate = $('#respiratory_rate').val();
             var pulse_rate = $('#pulse_rate').val();
@@ -394,11 +396,14 @@
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(){
-                    toastr.info('Vital Signs Added!');
+                    toastr.error('Something seems wrong :/');
                 },
-                error: function(){
-                    toastr.error('Something seems to be wrong :/');
-                }
+                 error: function(){
+                     toastr.info('Vital Signs Added!');
+                 }
+                // error: function(){
+                //     toastr.error('Something seems wrong :/');
+                // }
             })
         });
 

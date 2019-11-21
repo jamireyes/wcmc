@@ -17,6 +17,7 @@ class CreateServicesAvailedLinesTable extends Migration
             $table->bigInteger('services_availed_id')->unsigned()->index();
             $table->bigInteger('medical_service_id')->unsigned()->index();
             $table->bigInteger('appointment_id')->unsigned()->index()->nullable();
+            $table->timestamps();
         });
     }
 

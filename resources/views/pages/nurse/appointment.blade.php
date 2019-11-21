@@ -381,12 +381,24 @@
                                         <span class="input-group-text">
                                         </span>
                                     </div>
+                                    <select class='form-control' id='bill_doctor_id'>
+                                        <option value=''disabled selected>Select Doctor</option>
+                                        @foreach($doctors as $doctor)
+                                            <option value='{{$doctor->id}}'>{{$doctor->first_name}} {{$doctor->last_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                        </span>
+                                    </div>
                                     <select class='form-control' id='medical_service'>
                                         <option value=''disabled selected>Select Medical Service</option>
                                         @foreach($medical_services as $medical_service)
-                                            @if($medical_service->medical_service_id != 1)
-                                                <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
-                                            @endif
+                                            <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
                                         @endforeach
                                     </select>
                                     <button id="add_row" type="submit" class="btn btn-outline-primary btn-sm">+</button>
@@ -404,9 +416,23 @@
                             </tbody>
                             <tr>
                                 <th class="text-right">Grand Total</th>
-                                <td id="GrandTotal" class="text-success"></td>
+                                <td class="text-success"><input id="GrandTotal" type="text" class="form-control" disabled></td>
                             </tr>
                         </table>
+                        <div class="d-flex justify-content-center w-100">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Amount Paid</label>
+                                    <input type="number" id="amount_paid" name="amount_paid" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Change</label>
+                                    <input type="number" id="change" name="change" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -551,9 +577,6 @@
                         toastr.info('Appointment Approved!');
                         $('#ApproveModal').modal('hide');
                         refresh_dt();
-                    },
-                    error: function(){
-                        toastr.error('Something went wrong :/', 'Error!');
                     }
                 });
             })
@@ -671,6 +694,28 @@
             }
         });
 
+        $('.dynamic-add').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $('#mdl_doctor_id').val();
+                var appointment_date = $('#mdl_appointment_date').val();
+
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#mdl_doctor_schedule_id').html(output);
+                        }
+                    });
+                }
+            }
+        });
+
         $('.dynamic-modal').change(function(){
             if($(this).val() != ''){
                 var doctor_id = $('#mdl_doctor_id').val();
@@ -720,22 +765,35 @@
             });
         });
 
+        $('#medical_service').change(function(){
+            var html
+        });
+
+        var arr = [];
+
         $('#add_row').click(function(){
             var rate = $('#medical_service').val();
             var description = $('#medical_service option:selected').text();
             var id = $('#medical_service option:selected').data('id');
-            
-            if(rate != null){
-                var html = "<tr><td data-id="+id+" class='attrDes'>"+description+"</td><td data-rate="+rate+" class='attrRate'>"+rate+"</td></tr>";
+            var currTotal = $('#GrandTotal').val();
 
-                $('#medical_service_list').append(html);
-                var currTotal = $('#GrandTotal').html();
-                console.log(currTotal);
-                // var total = parseFloat(currTotal) + parseFloat(rate);
-                // $('#GrandTotal').append(total);
-                // console.log(rate);
-               
+            var html = "<tr><td data-id="+id+" class='attrDes'>"+description+"</td><td data-rate="+rate+" class='attrRate'>"+rate+"</td></tr>";
+            $('#medical_service_list').append(html);
+
+            arr.push(parseFloat(rate));
+            var total = 0;
+
+            for(var x=0; x < arr.length; x++){
+                total = parseFloat(total) + arr[x];
             }
+            
+            $('#GrandTotal').val(total);
+
+        });
+
+        $('#amount_paid').keyup(function(){
+            var GrandTotal = $('#GrandTotal').val();
+            $('#change').val($(this).val()-parseInt(GrandTotal));
         });
 
         $('#ClearBtn').click(function(){
@@ -745,13 +803,24 @@
         $('#Pay').click(function(){
             var bill_patient_id = $('#bill_patient_id').val();
             var bill_doctor_id = $('#bill_doctor_id').val();
+            var amount_paid = $('#amount_paid').val();
+            var GrandTotal = $('#GrandTotal').val();
             var ary = [];
+
+            if($('input[type=checkbox]').prop('checked') == true){
+                var discount = 1;
+            }else{
+                var discount = 0;
+            }
+
             $('#medical_serv_bill tbody tr').each(function (a, b) {
                 var id = $('.attrDes', b).data('id');
                 var rate = $('.attrRate', b).data('rate');
                 ary.push({ id: id, rate: rate });
             });
+
             JSON.stringify(ary);
+
             $.ajax({
                 type: 'POST',
                 url: "{{ route('billing.store') }}",
@@ -759,6 +828,9 @@
                     medical_services: JSON.stringify(ary),
                     patient_id: bill_patient_id,
                     doctor_id: bill_doctor_id,
+                    total: GrandTotal,
+                    amount_paid: amount_paid,
+                    discount: discount,
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(){
