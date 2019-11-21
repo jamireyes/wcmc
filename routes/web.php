@@ -31,6 +31,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('restoreMedicalHistory', 'PatientRecordController@restoreMedicalHistory')->name('restoreMedicalHistory');
         Route::post('restoreVitalSign', 'PatientRecordController@restoreVitalSign')->name('restoreVitalSign');
         Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
+        Route::post('resultsForPatient', 'ResultController@resultsForPatient')->name('patient.resultsForPatient');
 
         Route::post('notify/getNotifications', 'NotificationController@getNotifications')->name('notify.getNotifications');
         Route::post('notify/storeNotifications', 'NotificationController@storeNotifications')->name('notify.storeNotifications');

@@ -180,8 +180,8 @@ class AppointmentController extends Controller
 
     public function approve($id)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
 
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
@@ -199,11 +199,11 @@ class AppointmentController extends Controller
         $notification->message = $message;
         $notification->save();
 
-        $message = $client->message()->send([
-            'to' => '639171358009',
-            'from' => 'Nexmo',
-            'text' => $message
-        ]);
+        // $message = $client->message()->send([
+        //     'to' => '639171358009',
+        //     'from' => 'Nexmo',
+        //     'text' => $message
+        // ]);
 
     }
 

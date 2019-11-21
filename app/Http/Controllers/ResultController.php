@@ -147,4 +147,38 @@ class ResultController extends Controller
 
         return compact('message', 'type');
     } 
+
+    public function resultsForPatient(Request $request)
+    {
+        $results = DB::table('results')
+            ->select('results.result_id', DB::raw("concat(p.first_name, ' ', p.middle_name, ' ', p.last_name) as patient_name"), 'results.description as description', 'results.created_at as created_at', 'results.updated_at as updated_at', 'results.deleted_at as deleted_at', 'results.status as status')
+            ->join('users as p', 'p.id', '=', 'results.patient_id')
+            ->where('patient_id', Auth::user()->id)
+            ->get();
+
+        return datatables()->of($results)
+            ->addColumn('created_at', function($result){
+                return Carbon::parse($result->created_at)->format('M d, Y h:i A');
+            })
+            ->addColumn('updated_at', function($result){
+                return Carbon::parse($result->updated_at)->format('M d, Y h:i A');
+            })
+            ->addColumn('Status', function($result){
+                
+                if($result->status == 'READY'){
+                    $status = "<a data-id='".$result->result_id."' data-toggle='modal' data-target='#UpdateStatusModal'><span class='badge badge-primary'>READY</span></a>";
+                }elseif($result->status == 'CLAIMED'){
+                    $status = "<span class='badge badge-success'>CLAIMED</span>";
+                }
+
+                return $status;
+            })
+            ->addColumn('Action', function($result){
+                $action = "<a href='".route('results.show', ['id' => $result->result_id])."'><i class='fas fa-download text-secondary fa-sm' aria-hidden='true'></i></a>";
+
+                return $action;
+            })
+            ->rawColumns(['Status', 'Action', 'created_at', 'updated_at'])    
+            ->make(true);
+    }
 }
