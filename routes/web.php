@@ -35,6 +35,9 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('notify/getNotifications', 'NotificationController@getNotifications')->name('notify.getNotifications');
         Route::post('notify/storeNotifications', 'NotificationController@storeNotifications')->name('notify.storeNotifications');
         Route::get('notify/seenNotifications', 'NotificationController@seenNotifications')->name('notify.seenNotifications');
+        Route::get('appointment/today', 'AppointmentController@todaystaff');
+         Route::get('appointment/request', 'AppointmentController@patientrequeststaff');
+            Route::get('appointment/count', 'AppointmentController@patientcountstaff');
 
         // ADMIN ROUTES
         Route::group(['middleware' => 'role:ADMIN'], function () {
@@ -72,6 +75,10 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         
         // NURSE ROUTES
         Route::group(['middleware' => 'role:NURSE'], function () {
+            Route::get('appointment/todayn', 'AppointmentController@todaystaff');
+            Route::get('appointment/requestn', 'AppointmentController@patientrequeststaff');
+            Route::get('appointment/countn', 'AppointmentController@patientcountstaff');
+            
             Route::get('nurse/dashboard/{name}', 'NursePageController@dashboard')->name('nurse.dashboard');
             Route::get('nurse/appointments/{name}', 'NursePageController@appointment')->name('nurse.appointment');
             Route::get('nurse/patient_records/{name}', 'NursePageController@patientRecords')->name('nurse.patient_records');
@@ -91,19 +98,21 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('ongoing/{id}', 'AppointmentController@ongoing')->name('appointment.ongoing');
             Route::post('cancel/{id}', 'AppointmentController@cancel')->name('appointment.cancel');
             Route::post('reschedule', 'AppointmentController@reschedule')->name('appointment.reschedule');
-            // Route::resource('appointment', 'AppointmentController');
+            Route::get('appointment/today', 'AppointmentController@today');
+            Route::get('appointment/request', 'AppointmentController@patientrequest');
+            Route::get('appointment/count', 'AppointmentController@patientcount');
+
+            Route::resource('appointment', 'AppointmentController');
             Route::post('billing/store', 'BillingController@store')->name('billing.store');
             Route::post('billing/getMedicalService', 'BillingController@getMedicalService')->name('billing.getMedicalService');
             Route::post('billing/destroy', 'BillingController@destroy')->name('billing.destroy');
             Route::post('billing/restore', 'BillingController@restore')->name('billing.restore');
             Route::post('billing/search', 'BillingController@getBilling')->name('billing.getBilling');
-            Route::get('appointment/today', 'AppointmentController@today');
-            Route::get('appointment/request', 'AppointmentController@patientrequest');
-            Route::get('appointment/count', 'AppointmentController@patientcount');
         });
 
         // DOCTOR ROUTES
         Route::group(['middleware' => 'role:DOCTOR'], function () {
+            
             Route::get('doctor/dashboard/{name}', 'DoctorPageController@dashboard')->name('doctor.dashboard');
             Route::get('doctor/appointments/{name}', 'DoctorPageController@appointments')->name('doctor.appointments');
             Route::get('doctor/patient_records/{name}', 'DoctorPageController@patientRecords')->name('doctor.patient_records');

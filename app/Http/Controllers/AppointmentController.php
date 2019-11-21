@@ -19,12 +19,6 @@ use Auth;
 
 class AppointmentController extends Controller
 {
-    public function index()
-    {
-        $appointments = DB::table('appointments')->get();
-
-        return $appointments;
-    }
 
     public function today()
     {
@@ -58,6 +52,45 @@ class AppointmentController extends Controller
 
         return $appointments;
     }
+
+
+// staff
+public function todaystaff()
+{
+    $date = date('Y-m-d');
+    
+
+    $appointments = DB::table('appointments')
+                        ->where('appointment_date', '=', $date)
+                        ->where('staff_id', '=',  Auth::user()->id)
+                        ->where('status','APPROVED')
+                        ->count();
+
+    return $appointments;
+}
+
+public function patientrequeststaff(){
+    $date = date('Y-m-d');
+
+    $appointments = DB::table('appointments')
+                        ->where('appointment_date', '=', $date)
+                        ->where('staff_id', '=',  Auth::user()->id)
+                        ->where('status','PENDING')
+                        ->count();
+
+    return $appointments;
+}
+
+
+public function patientcountstaff(){
+
+
+    $appointments = DB::table('appointments')
+                        ->where('staff_id', '=',  Auth::user()->id)
+                        ->where('status','DONE')
+                        ->count();
+    return $appointments;
+}
     
     public function getPatientAppointments()
     {
@@ -180,8 +213,8 @@ class AppointmentController extends Controller
 
     public function approve($id)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
 
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
@@ -199,11 +232,11 @@ class AppointmentController extends Controller
         $notification->message = $message;
         $notification->save();
 
-        $message = $client->message()->send([
-            'to' => '639171358009',
-            'from' => 'Nexmo',
-            'text' => $message
-        ]);
+        // // $message = $client->message()->send([
+        // //     'to' => '639171358009',
+        // //     'from' => 'Nexmo',
+        // //     'text' => $message
+        // ]);
 
     }
 
@@ -278,7 +311,7 @@ class AppointmentController extends Controller
     {
         $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
         $client = new \Nexmo\Client($basic);
-
+        
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
         $appointment->status = 'CANCELLED';
@@ -421,8 +454,8 @@ class AppointmentController extends Controller
 
     public function requestAppointment(Request $request)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
 
         $validator = Validator::make($request->all(), [
             'doctor_schedule_id' => 'required',
@@ -463,11 +496,11 @@ class AppointmentController extends Controller
                     $notification->save();
                 }
 
-                $message = $client->message()->send([
-                    'to' => '639171358009',
-                    'from' => 'Nexmo',
-                    'text' => 'Your appointment request has been sent!',
-                ]);
+                // $message = $client->message()->send([
+                //     'to' => '639171358009',
+                //     'from' => 'Nexmo',
+                //     'text' => 'Your appointment request has been sent!',
+                // ]);
                 
             } else {
                 $message = "Appointment exists!";
