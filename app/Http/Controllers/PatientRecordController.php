@@ -140,12 +140,14 @@ class PatientRecordController extends Controller
         $last_menstrual_period = $request->input('last_menstrual_period');
 
         if($request->has('temperature')){
-            $data = new user_vital_signs;
-            $data->patient_id = $p_id;
-            $data->staff_id = Auth::id();
-            $data->vital_sign_id = 1;
-            $data->value = $temperature;
-            $data->save();
+            if($request->input('temperature') > 20){
+                $data = new user_vital_signs;
+                $data->patient_id = $p_id;
+                $data->staff_id = Auth::id();
+                $data->vital_sign_id = 1;
+                $data->value = $temperature;
+                $data->save();
+            }
         }
 
         if($request->has('respiratory_rate')){

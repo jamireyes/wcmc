@@ -694,6 +694,28 @@
             }
         });
 
+        $('.dynamic-add').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $('#mdl_doctor_id').val();
+                var appointment_date = $('#mdl_appointment_date').val();
+
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#mdl_doctor_schedule_id').html(output);
+                        }
+                    });
+                }
+            }
+        });
+
         $('.dynamic-modal').change(function(){
             if($(this).val() != ''){
                 var doctor_id = $('#mdl_doctor_id').val();

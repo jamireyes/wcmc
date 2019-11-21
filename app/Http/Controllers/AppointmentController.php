@@ -279,6 +279,8 @@ class AppointmentController extends Controller
         $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
         $client = new \Nexmo\Client($basic);
 
+        dd('Your appointment has been cancelled!'.' '.$request->input('message'));
+
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
         $appointment->status = 'CANCELLED';
