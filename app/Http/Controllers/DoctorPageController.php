@@ -62,5 +62,5 @@ class DoctorPageController extends Controller
         return view('pages.doctor.setting', compact('user', 'items_1', 'items_2'));
     }
 
-    
+   
 }

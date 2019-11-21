@@ -140,32 +140,38 @@ class PatientRecordController extends Controller
         $last_menstrual_period = $request->input('last_menstrual_period');
 
         if($request->has('temperature')){
-            if($request->input('temperature') > 20){
-                $data = new user_vital_signs;
-                $data->patient_id = $p_id;
-                $data->staff_id = Auth::id();
-                $data->vital_sign_id = 1;
-                $data->value = $temperature;
-                $data->save();
+            if($request->input('temperature') > 29){
+            $data = new user_vital_signs;
+            $data->patient_id = $p_id;
+            $data->staff_id = Auth::id();
+            $data->vital_sign_id = 1;
+            $data->value = $temperature;
+            $data->save();
             }
         }
 
         if($request->has('respiratory_rate')){
+            if($request->input('respiratory_rate') > 5){
             $data = new user_vital_signs;
             $data->patient_id = $p_id;
             $data->staff_id = Auth::id();
             $data->vital_sign_id = 2;
             $data->value = $respiratory_rate;
             $data->save();
+            }
+            
         }
 
         if($request->has('pulse_rate')){
+            if($request->input('pulse_rate') >= 0){
             $data = new user_vital_signs;
             $data->patient_id = $p_id;
             $data->staff_id = Auth::id();
             $data->vital_sign_id = 3;
             $data->value = $pulse_rate;
             $data->save();
+            }
+            
         }
 
         if($request->has('blood_pressure')){
@@ -174,25 +180,32 @@ class PatientRecordController extends Controller
             $data->staff_id = Auth::id();
             $data->vital_sign_id = 4;
             $data->value = $blood_pressure;
-            $data->save();
+            $data->save();   
+            
         }
 
         if($request->has('height')){
+            if($request->input('height') > 0){
             $data = new user_vital_signs;
             $data->patient_id = $p_id;
             $data->staff_id = Auth::id();
             $data->vital_sign_id = 5;
             $data->value = $height;
             $data->save();
+            }
+            
         }
 
         if($request->has('weight')){
+            if($request->input('weight') > 0){
             $data = new user_vital_signs;
             $data->patient_id = $p_id;
             $data->staff_id = Auth::id();
             $data->vital_sign_id = 6;
             $data->value = $weight;
             $data->save();
+            }
+            
         }
 
         if($request->has('last_menstrual_period')){
