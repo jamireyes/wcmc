@@ -32,7 +32,7 @@ class Admin_ServiceController extends Controller
         }else{
             $message = "false";
         }
-
+        toastr()->success('Service successfully updated!');
         return $message ? redirect()->back()->with("message", "Successfully Updated") 
                         : redirect()->back()->with("message", "Failure to Update") ;
     }
@@ -50,8 +50,16 @@ class Admin_ServiceController extends Controller
             $message = "false";
         }
 
+        toastr()->error('Service successfully removed!');
         return $message ? redirect()->back()->with("message", "Successfully Deleted") 
                         : redirect()->back()->with("message", "Failure to Delete") ;
             
+    }
+
+    public function restore($id)
+    {
+        $service = medical_service::withTrashed()->find($id)->restore();
+        toastr()->info('Service successfully restored!');
+        return back();
     }
 }

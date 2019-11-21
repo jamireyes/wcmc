@@ -20,6 +20,15 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="notifDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="material-icons">notifications</i>
+                        <div id="ctr"></div>
+                        <p class="d-lg-none d-md-block">NOTIFICATIONS</p>
+                    </a>
+                    <div id="notifications" class="dropdown-menu dropdown-menu-right" aria-labelledby="notifDropdown">
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons text-secondary">person</i>
                         <p class="d-lg-none d-md-block">

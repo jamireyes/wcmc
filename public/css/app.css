@@ -10777,31 +10777,12 @@ body {
   }
 }
 
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
+#app {
+  overflow-x: hidden !important;
 }
 
 .font-abril {
   font-family: "Abril Fatface", cursive;
-}
-
-.carousel-control-prev-icon {
-  color: #007bff !important;
-}
-
-.carousel-control-next-icon {
-  color: #007bff !important;
 }
 
 .head_menu ul {
@@ -10834,24 +10815,14 @@ body {
   }
 
   .carousel-caption {
-    top: 50px !important;
+    top: 200px !important;
     text-align: center !important;
-  }
-
-  .carousel-caption h2 {
-    text-shadow: 2px 2px 5px #343a40 !important;
-    font-size: 20px !important;
-  }
-
-  .carousel-caption p {
-    text-shadow: 2px 2px 5px #343a40 !important;
-    font-size: 12px !important;
   }
 }
 
 @media (min-width: 576px) and (max-width: 1199.98px) {
   .carousel-caption {
-    top: 150px !important;
+    top: 200px !important;
     text-align: left !important;
   }
 
@@ -10926,7 +10897,10 @@ body {
 
 .carousel-item {
   height: 100vh !important;
-  background: no-repeat center center scroll !important;
+}
+
+.carousel-item > img {
+  background-position: center !important;
   background-size: cover !important;
 }
 

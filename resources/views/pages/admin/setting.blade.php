@@ -181,7 +181,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group{{ $errors->has('CurrentPassword') ? ' has-error' : '' }}">
                                                 <label >Current Password</label>
-                                                <input name="CurrentPassword" type="text" class="form-control">
+                                                <input name="CurrentPassword" type="password" class="form-control">
                                                 
                                                 @if ($errors->has('CurrentPassword'))
                                                     <small class="text-danger">{{ $errors->first('CurrentPassword') }}</small>
@@ -252,6 +252,7 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
 
+        LoadNotification();
         PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
 
@@ -274,8 +275,46 @@
                 } else if (data.type == 'error') {
                     toastr.error(data.message, data.title);
                 }
+                LoadNotification();
             });
         }
+
+        function LoadNotification(){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notify.getNotifications') }}",
+                data: {
+                    user_id: "{{ Auth::user()->id }}",
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(data){
+                    console.log(data.notifications.length);
+                    $('#notifications').empty();
+                    $('#ctr').empty();
+
+                    for(var x = 0; x < data.notifications.length; x++){
+                        $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
+                    }
+                    if(data.ctr != 0){
+                        $('#ctr').append("<span class='notification'>"+data.ctr+"</span>");
+                    }else{
+                        $('#ctr').append();
+                    }
+                    
+                }
+
+            });
+        }
+
+        $('#notifDropdown').click(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notify.seenNotifications') }}",
+                success: function(){
+                    LoadNotification();
+                }
+            });
+        });
     });
 </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\doctor_schedule;
 
 class DoctorSchedController extends Controller
@@ -55,7 +56,7 @@ class DoctorSchedController extends Controller
                     $query_id = implode('', $query->get()->pluck('doctor_schedule_id')->toArray());
                     $query_day = implode('', $query->get()->pluck('day')->toArray());
 
-                    $data = doctor_schedule::find($id);
+                    $data = doctor_schedule::find($query_id);
                     $data->doctor_id = $doctor_id;
                     $data->day = implode(',', $days).','.$query_day;
                     $data->start_time = $start_time;

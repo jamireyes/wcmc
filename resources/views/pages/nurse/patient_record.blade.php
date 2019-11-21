@@ -19,7 +19,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="patient_record_table" class="table display">
+                                    <table id="patient_record_table" class="table display table-bordered nowrap compact">
                                         <thead>
                                             <th></th>
                                             <th>Full Name</th>
@@ -173,6 +173,7 @@
 <script>
     $( document ).ready(function(){
 
+        LoadNotification();
         PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
 
@@ -195,10 +196,13 @@
                 } else if (data.type == 'error') {
                     toastr.error(data.message, data.title);
                 }
+                LoadNotification();
             });
         }
 
-        const patient_record_table = $('#patient_record_table').DataTable();
+        const patient_record_table = $('#patient_record_table').DataTable({
+            "bLengthChange": false,
+        });
 
         patient_record_table.on('click', '#ViewBtn', function(){
             var data = $(this).data('data');
@@ -215,6 +219,43 @@
             $('#view_bloodtype').val(data.bloodtype);
             $('#view_address_line_1').val(data.address_line_1);
             $('#view_address_line_2').val(data.address_line_2);
+        });
+
+        function LoadNotification(){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notify.getNotifications') }}",
+                data: {
+                    user_id: "{{ Auth::user()->id }}",
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(data){
+                    console.log(data.notifications.length);
+                    $('#notifications').empty();
+                    $('#ctr').empty();
+
+                    for(var x = 0; x < data.notifications.length; x++){
+                        $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
+                    }
+                    if(data.ctr != 0){
+                        $('#ctr').append("<span class='notification'>"+data.ctr+"</span>");
+                    }else{
+                        $('#ctr').append();
+                    }
+                    
+                }
+
+            });
+        }
+
+        $('#notifDropdown').click(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notify.seenNotifications') }}",
+                success: function(){
+                    LoadNotification();
+                }
+            });
         });
     });
 </script>

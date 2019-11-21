@@ -13,23 +13,6 @@ class Admin_UserMGTController extends Controller
 {
     public function update(Request $request, $id)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'contact_no' => ['required'],
-        //     'username' => ['required'],
-        //     'email' => ['required', 'email'],
-        //     'role_id' => ['required'],
-        //     'first_name' => ['required'],
-        //     'last_name' => ['required'],
-        //     'middle_name' => ['required'],
-        //     'sex' => ['required'],
-        //     'birthday' => ['required'],
-        //     'citizenship' => ['required'],
-        //     'civil_status' => ['required'],
-        //     'address_line_1' => ['required'],
-        //     'address_line_2' => ['required'],
-        //     'bloodtype' => ['required']
-        // ]);
-        // dd($request->all());
         $data = User::find($id);
         $data->role_id = $request->input('role_id');
         $data->username = $request->input('username');

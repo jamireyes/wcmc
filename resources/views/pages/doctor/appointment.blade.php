@@ -14,7 +14,7 @@
                             <div class="card-header card-header-primary">ENTER PATIENT DETAILS</div>
                             <div class="card-body">
                                 <form id="patient_submit" class="row">
-                                    <div class="col-lg-6 col-sm-12 col-xs-12">
+                                    <div class="col-lg-8 col-sm-12 col-xs-12">
                                         <label for="">Patient's Name</label>
                                         <select name="patient_id" id="patient_id" class="form-control">
                                             <option value="" disabled selected>Select Patient Name</option>
@@ -23,7 +23,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-lg-6 col-sm-12 col-xs-12">
+                                    <div class="col-lg-4 col-sm-12 col-xs-12">
                                         <div class="d-flex justify-content-end align-items-end w-100 h-100">
                                             <button type="submit" class="btn btn-primary btn-sm m-0">Submit</button>
                                         </div>
@@ -344,10 +344,10 @@
             });
         });
 
-        $('#patient_submit').click(function(e){
+        $('#patient_submit').submit(function(e){
             e.preventDefault();
             var patient_id = $('#patient_id').val();
-
+            
             $.ajax({
                 type: 'GET',
                 url: "{{ route('doctor.getPatient', '') }}/"+patient_id,
@@ -364,7 +364,6 @@
                     $('#citizenship').val(response.user[0].citizenship);
                     $('#address_line_1').val(response.user[0].address_line_1);
                     $('#address_line_2').val(response.user[0].address_line_2);
-                    console.log(response);
                     getMedicalHistory(patient_id);
                 }
             });
@@ -423,6 +422,8 @@
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
+
+        $('#patient_id').select2();
 
     });
 </script>

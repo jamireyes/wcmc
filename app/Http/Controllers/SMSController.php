@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\services_availed;
 
-class Admin_BillingController extends Controller
+class SMSController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -80,5 +79,6 @@ class Admin_BillingController extends Controller
      */
     public function destroy($id)
     {
+        //
     }
 }

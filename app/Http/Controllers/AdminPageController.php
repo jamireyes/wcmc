@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\user;
 use App\role;
 use App\doctor_schedule;
@@ -11,6 +12,9 @@ use App\medical_service;
 use App\bloodtype;
 use App\user_vital_signs;
 use App\vital_sign;
+use App\services_availed;
+use App\services_availed_lines;
+use App\result;
 use Auth;
 use DB;
 
@@ -33,20 +37,14 @@ class AdminPageController extends Controller
 
     public function billing()
     {
-        $bill = DB::table('services_availed')
-            ->select(DB::raw("SUM(ms.rate) as total"), 'patient_id', 'p.first_name as patientfname', 'p.middle_name as patientmname', 'p.last_name as patientlname', 'services_availed.created_at', 'services_availed.deleted_at', 'services_availed.discount')
-            ->join('users as d', 'd.id', '=', 'services_availed.staff_id')
-            ->join('users as p', 'p.id', '=', 'services_availed.patient_id')
-            ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
-            ->groupBy(['created_at', 'deleted_at', 'patient_id', 'p.first_name', 'p.middle_name', 'p.last_name', 'discount'])
-            ->get();
+        $patients = user::where('role_id', 2)->get();
         
-        return view('pages.admin.billing')->with('bills', $bill);
+        return view('pages.admin.billing', compact('patients'));
     }
 
     public function service()
     {
-        $services = medical_service::all();
+        $services = medical_service::withTrashed()->get();
         return view('pages.admin.medical_service')->with('services', $services);
     }
 
@@ -74,6 +72,15 @@ class AdminPageController extends Controller
         $vitals = vital_sign::all();
                     
         return view('pages.admin.patient_record', compact('patients', 'vitals', 'users'));
+    }
+
+    public function results()
+    {
+        // $results = result::all();
+        $patients = user::where('role_id', 2)->get();
+        $services = medical_service::all();
+
+        return view('pages.admin.results', compact('patients', 'services'));
     }
 
     public function doc_schedule()

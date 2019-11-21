@@ -18,14 +18,7 @@ class PatientPageController extends Controller
     }
     public function billing()
     {
-        $bill = DB::table('services_availed')
-            ->select('services_availed_id', 'services_availed.created_at', 'd.first_name', 'd.last_name', 'd.middle_name', 'ms.description', 'ms.rate')
-            ->join('users as d', 'd.id', '=', 'services_availed.staff_id')
-            ->join('medical_services as ms', 'ms.medical_service_id', '=', 'services_availed.medical_service_id')
-            ->where('patient_id', Auth::user()->id)
-            ->get();
-
-        return view('pages.patient.billing')->with('bills', $bill);
+        return view('pages.patient.billing');
     }
     public function results()
     {

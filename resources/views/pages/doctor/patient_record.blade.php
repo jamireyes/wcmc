@@ -8,34 +8,29 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-5 col-sm-12 col-xs-12">
                         <div class="card">
                             <form id="patient_details">
                                 @csrf
-                                <div class="card-header card-header-primary">
-                                    <div class="d-flex w-100">
-                                        <div class="mr-auto">ENTER PATIENT NAME</div>
-                                        <div></div>
-                                        <div><button type="submit" id="submit_patient" class="btn btn-secondary btn-sm m-0">SUBMIT</button></div>
-                                    </div>
-                                </div>
+                                <div class="card-header card-header-primary"><i class="fas fa-search" aria-hidden="true"></i> Search Patient Records</div>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Patient's Name</label>
-                                        <select id="patient_id" name="patient_id" class="form-control">
-                                            <option value="" disabled selected>Select a patient...</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
-                                                @endforeach
-                                        </select>
+                                        <input id="patient_id" list="patient_list" class="form-control" placeholder="Select Patient" autocomplete="off">
+                                        <datalist id="patient_list">
+                                            @foreach ($users as $user)
+                                                <option data-value="{{ $user->id }}" value="{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}"></option>
+                                            @endforeach
+                                        </datalist>
+                                    </div>
+                                    <div class="d-flex justify-content-end w-100">
+                                        <button type="submit" id="submit_patient" class="btn btn-primary btn-sm"><i class="fas fa-search" aria-hidden="true"></i> Search</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-7 col-sm-12 col-xs-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
                                 <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
@@ -50,7 +45,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body" style="height:30rem;">
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="medical_history">
                                         <table id="medical_history_table" class="table display table-striped compact nowrap w-100">
@@ -94,8 +89,8 @@
         $('#submit_patient').click(function(e){
             e.preventDefault();
             
-            var patient_id = $('#patient_id').val();
-            console.log(patient_id);
+            var label = $('#patient_id').val();
+            var patient_id = $('#patient_list [value="' + label + '"]').data('value');
             
             if( patient_id != '' ){
                 $('#medical_history_table').DataTable().destroy();

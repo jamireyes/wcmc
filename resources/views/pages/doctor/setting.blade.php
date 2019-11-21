@@ -181,7 +181,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group{{ $errors->has('CurrentPassword') ? ' has-error' : '' }}">
                                                 <label >Current Password</label>
-                                                <input name="CurrentPassword" type="text" class="form-control">
+                                                <input name="CurrentPassword" type="password" class="form-control">
                                                 
                                                 @if ($errors->has('CurrentPassword'))
                                                     <small class="text-danger">{{ $errors->first('CurrentPassword') }}</small>

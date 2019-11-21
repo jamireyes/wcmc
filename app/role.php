@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class role extends Model
 {
     protected $table = 'roles';
-    public $primarykey = 'role_id';
+    public $primaryKey = 'role_id';
     
     public function user()
     {

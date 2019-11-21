@@ -25,6 +25,12 @@
                     <p>PATIENTS</p>
                 </a>
             </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'nurse.results') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('nurse.results', ['name' => Auth::user()->username]) }}">
+                    <i class="fas fa-flask"></i>
+                    <p>LAB RESULTS</p>
+                </a>
+            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'nurse.billing') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('nurse.billing', ['name' => Auth::user()->username]) }}">
                     <i class="material-icons">library_books</i>

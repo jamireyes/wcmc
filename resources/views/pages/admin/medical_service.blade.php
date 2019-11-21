@@ -14,14 +14,14 @@
                                 <div class="d-flex justify-content-between">
                                     <div></div>
                                     <div>MEDICAL SERVICE</div>
-                                    <div><a data-toggle="modal" id="Add_Button" data-target="#AddModal"><i class="fas fa-user-plus text-white"></i></a></div>
+                                    <div><button type="button" class="btn btn-secondary btn-sm my-0" data-toggle="modal" id="Add_Button" data-target="#AddModal">+ Add Service</button></div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="medical_service_table" class="table display">
+                                    <table id="medical_service_table" class="table display table-bordered nowrap compact">
                                         <thead>
-                                            <!-- <th></th> -->
+                                            <th>#</th>
                                             <th>Description</th>
                                             <th>Rate</th>
                                             <th>Actions</th>
@@ -30,14 +30,16 @@
                                         @if(count($services))
                                             @foreach($services as $service)
                                             <tr>
-                                                <!-- <td>{{ $service->medical_service_id }}</td> -->
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $service->description }}</td>
                                                 <td>{{ $service->rate }}</td>
                                                 <td>
-                                                    <!-- <a href="#" id="View_Button" data-user="{{ $service }}" data-toggle="modal" data-target="#ViewModal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> -->
                                                     <a href="#" id="Edit_Button" data-service="{{ $service }}" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit text-warning mx-1"></i></a>
-                                                    <a href="#" id="Delete_Button" data-id="{{ $service->medical_service_id }}" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
-                                                    <!-- <a href="#" id="Restore_Button" data-id="{{ $service->id }}" data-toggle="modal" data-target="#RestoreModal"><i class="fas fa-trash-restore primary"></i></a>   -->
+                                                    @if($service->deleted_at == NULL)
+                                                        <a href="#" id="Delete_Button" data-id="{{ $service->medical_service_id }}" data-toggle="modal" data-target="#DeleteModal"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                                    @else
+                                                        <a href="#" id="Restore_Button" data-id="{{ $service->medical_service_id }}" data-toggle="modal" data-target="#RestoreModal"><i class="fas fa-trash-restore primary"></i></a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -68,11 +70,11 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group col-12">
-                        <label for="description">Description</label>
+                        <label for="description"><i class="fa fa-file pr-2" aria-hidden="true"></i>Description</label>
                         <input type="text" name="description" id="description" class="form-control" value="">
                     </div>
                     <div class="form-group col-12">
-                        <label for="rate">Rate</label>
+                        <label for="rate"><i class="fas fa-coins pr-2"></i>Rate</label>
                         <input type="number" name="rate" id="rate" class="form-control" value="">
                     </div>
                 </div>
@@ -151,8 +153,7 @@
             </div>
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
-                    <form id="RestoreUserForm" method="POST">
-                        @csrf
+                    <form id="RestoreForm" method="GET">
                         <button type="submit" class="btn btn-primary">YES, RESTORE IT!</button>
                         <button type="button" class="btn btn-dark" data-dismiss="modal">NO, LEAVE IT</button>
                     </form>
@@ -161,72 +162,6 @@
         </div>
     </div>
 </div>
-
-<!-- View Modal -->
-
-<div class="modal fade" id="ViewModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body p-5">
-                <div class="text-center w-100 mb-5">
-                    <i class="fas fa-user-circle fa-5x text-primary" aria-hidden="true"></i>
-                </div>
-                <table id="ViewProfile">
-                    <tbody>
-                        <tr>
-                            <td>Username&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="username"></td>
-                        </tr>
-                        <tr>
-                            <td>Full Name&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="fullname"></td>
-                        </tr>
-                        <tr>
-                            <td>Email&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="email"></td>
-                        </tr>
-                        <tr>
-                            <td>Contact No.&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="contact_no"></td>
-                        </tr>
-                        <tr>
-                            <td>Sex&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="sex"></td>
-                        </tr>
-                        <tr>
-                            <td>Birthday&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="birthday"></td>
-                        </tr>
-                        <tr>
-                            <td>Citizenship&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="citizenship"></td>
-                        </tr>
-                        <tr>
-                            <td>Civil Status&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="civil_status"></td>
-                        </tr>
-                        <tr>
-                            <td>Address&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="address_line_1"></td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp&nbsp&nbsp&nbsp</td>
-                            <td class="address_line_2"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <div class="d-flex justify-content-center w-100">
-                    <div>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 @endsection
 
@@ -251,10 +186,17 @@
             $('#DeleteForm').attr('action', route);
         });
         
+        medical_service_table.on('click', '#Restore_Button', function(){
+            var service = $(this).data('id');
+            var route = "{{route('admin_service.restore', '')}}/"+service;
+            $('#RestoreForm').attr('action', route);
+        });
+
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         });
 
+        LoadNotification();
         PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
 
@@ -277,8 +219,46 @@
                 } else if (data.type == 'error') {
                     toastr.error(data.message, data.title);
                 }
+                LoadNotification();
             });
         }
+
+        function LoadNotification(){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notify.getNotifications') }}",
+                data: {
+                    user_id: "{{ Auth::user()->id }}",
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(data){
+                    console.log(data.notifications.length);
+                    $('#notifications').empty();
+                    $('#ctr').empty();
+
+                    for(var x = 0; x < data.notifications.length; x++){
+                        $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
+                    }
+                    if(data.ctr != 0){
+                        $('#ctr').append("<span class='notification'>"+data.ctr+"</span>");
+                    }else{
+                        $('#ctr').append();
+                    }
+                    
+                }
+
+            });
+        }
+
+        $('#notifDropdown').click(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notify.seenNotifications') }}",
+                success: function(){
+                    LoadNotification();
+                }
+            });
+        });
     });
 </script>
 @endsection

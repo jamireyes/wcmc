@@ -37,6 +37,12 @@
                     <p>PATIENT RECORDS</p>
                 </a>
             </li>
+            <li class="nav-item {{ (Route::current()->getName() == 'admin.results') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.results', ['name' => Auth::user()->username]) }}">
+                    <i class="fas fa-flask"></i>
+                    <p>LAB RESULTS</p>
+                </a>
+            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.billing') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.billing', ['name' => Auth::user()->username]) }}">
                     <i class="material-icons">library_books</i>
@@ -61,7 +67,7 @@
                     <p>SETTINGS</p>
                 </a>
             </li>
-            <li class="nav-item logout">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

@@ -19,6 +19,7 @@ class CreateAppointmentsTable extends Migration
             $table->bigInteger('doctor_schedule_id')->unsigned()->index();
             $table->bigInteger('staff_id')->unsigned()->index()->nullable();
             $table->bigInteger('patient_id')->unsigned()->index();
+            $table->string('remarks')->nullable();
             $table->enum('status', ['DONE', 'ONGOING', 'PENDING', 'CANCELLED', 'APPROVED'])->default('PENDING');
             $table->timestamps();
             $table->softDeletes();

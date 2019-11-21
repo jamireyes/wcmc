@@ -26,12 +26,6 @@
                     <p>PATIENT RECORDS</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'doctor.billings') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('doctor.billings', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-paper-plane"></i>
-                    <p>BILLING</p>
-                </a>
-            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'doctor.settings') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('doctor.settings', ['name' => Auth::user()->username]) }}">
                     <i class="fa fa-cog" aria-hidden="true"></i>

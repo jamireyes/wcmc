@@ -21,13 +21,13 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Patient's Name</label>
-                                        <select id="patient_id" name="patient_id" class="form-control">
-                                            <option value="" disabled selected>Select a patient...</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}</option>
-                                                @endforeach
-                                        </select>
+                                        <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Select Patient</label>
+                                        <input id="patient_id" list="patient_list" class="form-control">
+                                        <datalist id="patient_list">
+                                            @foreach ($users as $user)
+                                                <option data-value="{{ $user->id }}" value="{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }}"></option>
+                                            @endforeach
+                                        </datalist>
                                     </div>
                                 </div>
                             </form>
@@ -233,9 +233,39 @@
         const mh_tb = $('#medical_history_table').DataTable({
             "scrollX": true
         });
+
         const vs_tb = $('#vital_signs_table').DataTable({
             "scrollX": true
         });
+
+        LoadNotification();
+        PusherListener();
+        $.fn.dataTable.ext.errMode = 'none';
+
+        function PusherListener() {
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('89973cf8f98acc38053a', {
+                cluster: 'ap1',
+                'useTLS': false,
+            });
+            
+            var channel = pusher.subscribe('PatientStaff.2');
+            channel.bind('PatientStaff', function(data) {
+                if (data.type == 'success') {
+                    toastr.success(data.message, data.title);
+                } else if (data.type == 'info') {
+                    toastr.info(data.message, data.title);
+                } else if (data.type == 'warning') {
+                    toastr.warning(data.message, data.title);
+                } else if (data.type == 'error') {
+                    toastr.error(data.message, data.title);
+                }
+                LoadNotification();
+            });
+        }
+
+        $('.selectpicker').selectpicker();
 
         $('#submit_patient').click(function(e){
             e.preventDefault();
@@ -244,7 +274,8 @@
         });
 
         function refreshTB(){
-            var patient_id = $('#patient_id').val();
+            var label = $('#patient_id').val();
+            var patient_id = $('#patient_list [value="' + label + '"]').data('value');
             
             if( patient_id != '' ){
                 $('#medical_history_table').DataTable().destroy();
@@ -487,6 +518,43 @@
                 ]
             });
         }
+
+        function LoadNotification(){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notify.getNotifications') }}",
+                data: {
+                    user_id: "{{ Auth::user()->id }}",
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(data){
+                    console.log(data.notifications.length);
+                    $('#notifications').empty();
+                    $('#ctr').empty();
+
+                    for(var x = 0; x < data.notifications.length; x++){
+                        $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
+                    }
+                    if(data.ctr != 0){
+                        $('#ctr').append("<span class='notification'>"+data.ctr+"</span>");
+                    }else{
+                        $('#ctr').append();
+                    }
+                    
+                }
+
+            });
+        }
+
+        $('#notifDropdown').click(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notify.seenNotifications') }}",
+                success: function(){
+                    LoadNotification();
+                }
+            });
+        });
     });
 </script>
 @endsection

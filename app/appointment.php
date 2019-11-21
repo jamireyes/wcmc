@@ -24,7 +24,7 @@ class appointment extends Model
 
     public function doctor_schedule()
     {
-        return $this->hasMany('App\doctor_schedule', 'doctor_schedule_id', 'doctor_schedule_id'); 
+        return $this->hasOne('App\doctor_schedule', 'doctor_schedule_id', 'doctor_schedule_id'); 
     }
 
     public function nurse()

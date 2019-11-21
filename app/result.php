@@ -10,5 +10,10 @@ class result extends Model
     use SoftDeletes;
 
     protected $table = 'results';
-    public $primarykey = 'result_id';
+    public $primaryKey = 'result_id';
+
+    public function patient()
+    {
+        return $this->hasOne('App\User', 'id', 'patient_id'); 
+    }
 }

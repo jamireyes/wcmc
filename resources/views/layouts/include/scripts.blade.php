@@ -1,6 +1,6 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-{{-- <script src="{{ asset('vendor/material/js/core/bootstrap-material-design.min.js') }}"></script> --}}
+<script src="{{ asset('vendor/material/js/core/bootstrap-material-design.min.js') }}"></script>
 <script src="{{ asset('vendor/material/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/material/js/plugins/moment.min.js') }}"></script>
 {{-- <script src="{{ asset('vendor/material/js/plugins/sweetalert2.js') }}"></script> --}}
@@ -18,3 +18,5 @@
 {{-- <script src="{{ asset('vendor/material/js/plugins/arrive.min.js') }}"></script> --}}
 <script src="{{ asset('vendor/material/js/plugins/chartist.min.js') }}"></script>
 <script src="{{ asset('vendor/material/js/plugins/bootstrap-notify.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+ 

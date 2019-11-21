@@ -26,10 +26,7 @@
                         {{ config('app.name', 'White Cross Medical Clinic') }}
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        {{-- <span class="navbar-toggler-icon"> --}}
-                        {{-- <i class="custom-navbar-icon fas fa-bars"></i> --}}
                         <i class="custom-navbar-icon material-icons">menu</i>
-                        {{-- </span> --}}
                     </button>
             
                     <div class="navbar-collapse collapse" id="navbarCollapse">
@@ -87,7 +84,7 @@
                 </div>
             </nav>
             <section id="top-page">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
                     <ol class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -96,12 +93,10 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="{{ asset('img/doctor.jpg') }}">
-                            <div class="container">
-                                <div class="carousel-caption">
-                                    <h2 class="text-primary font-abril">White Cross Medical Clinic</h2>
-                                    <p>Medical Clinic and Clinical Laboratory in Cebu City<br>Opening at 9:00 AM on Monday</p>
-                                    <a class="btn btn-lg btn-primary js-scroll-trigger" href="#Contact" >Contact Us</a>
-                                </div>
+                            <div class="carousel-caption">
+                                <h2 class="text-primary font-abril">White Cross Medical Clinic</h2>
+                                <p>Medical Clinic and Clinical Laboratory in Cebu City<br>Opening at 9:00 AM on Monday</p>
+                                <a class="btn btn-lg btn-primary js-scroll-trigger" href="#Contact" >Contact Us</a>
                             </div>
                         </div>
                         <div class="carousel-item">

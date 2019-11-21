@@ -14,18 +14,20 @@
                                 <div class="d-flex justify-content-between">
                                     <div></div>
                                     <div>DOCTOR'S SCHEDULE</div>
-                                    <div><a href="#" data-target="#AddModal" data-toggle="modal"><i class="fa fa-plus-square text-white" aria-hidden="true"></i></a></div>
+                                    <div>
+                                        <button type="button" class="btn btn-secondary btn-sm my-0" data-target="#AddModal" data-toggle="modal">+ Add Schedule</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="schedule_table" class="table display">
+                                    <table id="schedule_table" class="table display table-bordered nowrap compact">
                                         <thead>
                                             <th></th>
                                             <th>Doctor</th>
                                             <th>Day</th>
                                             <th>Time</th>
-                                            <th>Date Added</th>
+                                            <th>Added On</th>
                                             <th>Last Update</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -36,9 +38,9 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $sched->doctor->first_name }} {{ $sched->doctor->middle_name }} {{ $sched->doctor->last_name }} </td>
                                                 <td>{{ $sched->day }}</td>
-                                                <td>{{ $sched->start_time }} - {{ $sched->end_time }}</td>
-                                                <td>{{ $sched->created_at }}</td>
-                                                <td>{{ $sched->updated_at }}</td>
+                                                <td>{{ Carbon\Carbon::parse($sched->start_time)->format('h:i A') }} - {{ Carbon\Carbon::parse($sched->end_time)->format('h:i A') }}</td>
+                                                <td>{{ Carbon\Carbon::parse($sched->created_at)->format('M d, Y h:i A') }}</td>
+                                                <td>{{ Carbon\Carbon::parse($sched->updated_at)->format('M d, Y h:i A') }}</td>
                                                 <td>
                                                     @if($sched->deleted_at == NULL)
                                                     <span class="badge badge-success">Available</span>
@@ -349,6 +351,7 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
 
+        LoadNotification();
         PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
 
@@ -371,8 +374,46 @@
                 } else if (data.type == 'error') {
                     toastr.error(data.message, data.title);
                 }
+                LoadNotification();
             });
         }
+
+        function LoadNotification(){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notify.getNotifications') }}",
+                data: {
+                    user_id: "{{ Auth::user()->id }}",
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(data){
+                    console.log(data.notifications.length);
+                    $('#notifications').empty();
+                    $('#ctr').empty();
+
+                    for(var x = 0; x < data.notifications.length; x++){
+                        $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
+                    }
+                    if(data.ctr != 0){
+                        $('#ctr').append("<span class='notification'>"+data.ctr+"</span>");
+                    }else{
+                        $('#ctr').append();
+                    }
+                    
+                }
+
+            });
+        }
+
+        $('#notifDropdown').click(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notify.seenNotifications') }}",
+                success: function(){
+                    LoadNotification();
+                }
+            });
+        });
     });
 </script>
 @endsection

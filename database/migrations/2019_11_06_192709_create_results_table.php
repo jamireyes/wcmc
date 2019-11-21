@@ -17,6 +17,7 @@ class CreateResultsTable extends Migration
             $table->bigIncrements('result_id');
             $table->bigInteger('patient_id')->unsigned()->index();
             $table->string('description');
+            $table->string('file_name');
             $table->string('file_path');
             $table->enum('status', ['READY', 'CLAIMED']);
             $table->timestamps();

@@ -15,14 +15,14 @@
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'patient.billing') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('patient.billing', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <p>BILLING</p>
+                    <i class="material-icons">library_books</i>
+                    <p>BILL PAYMENTS</p>
                 </a>
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'patient.results') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('patient.results', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                    <p>RESULTS</p>
+                    <i class="fas fa-flask"></i>
+                    <p>LAB RESULTS</p>
                 </a>
             </li>
             <li class="nav-item {{ (Route::current()->getName() == 'patient.settings') ? 'active' : '' }}">

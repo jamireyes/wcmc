@@ -8,25 +8,36 @@
         <div class="content mt-5">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-md-12">
                         <div class="card">
-                            <form id="AppointmentDetails" >
-                                @csrf
-                                <div class="card-header card-header-primary">
-                                    <div class="d-flex w-100">
-                                        <div class="mr-auto">ENTER APPOINTMENT DETAILS</div>
-                                        <div class="pr-2">
-                                            <button type="button" data-toggle='modal' data-target='#AddBillModal' class="btn btn-secondary btn-sm m-0">Add Bill</button>
-                                            <button type="button" data-toggle='modal' data-target='#AddAppointment' class="btn btn-secondary btn-sm m-0">ADD APPOINTMENT</button>
-                                            <button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button>
-                                        </div>
+                            <div class="card-header card-header-primary">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#Approved" data-toggle="tab">Approved</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#Pending" data-toggle="tab">Pending</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
+                            </div>
+                            <div class="card-body" style="height:30rem;">
+                                <form id="AppointmentDetails" class="pb-3">
+                                    @csrf
+                                    <div class="d-flex align-items-center w-100">
+                                        <div class="mr-auto">
+                                            <button type="button" data-toggle='modal' data-target='#AddAppointment' class="btn btn-primary btn-sm m-0">+ ADD APPOINTMENT</button>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-user text-secondary pr-2" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
                                                 <select id="doctor_id" name="doctor_id" class="form-control dynamic">
                                                     <option value="" disabled selected>Select a doctor...</option>
                                                         @foreach ($doctors as $doctor)
@@ -35,54 +46,43 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar text-secondary pr-2" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
                                                 <input id="appointment_date" name="appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
-                                                <select id="doctor_schedule_id" class="form-control" name="appointment_time">
-                                                </select>
+                                                <button id="submit_app_details" type="submit" class="btn btn-primary btn-round btn-sm"><i class="fas fa-search" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                     </div>
+                                </form>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="Approved">
+                                        <table id="app_approved_table" class="table display table-bordered nowrap compact" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Time Schedule</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="Pending">
+                                        <table id="app_request_table" class="table display table-bordered nowrap compact" style="width:100%">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Time Schedule</th>
+                                                <th>Action</th>
+                                            </thead>
+                                        </table>
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header card-header-primary">APPROVED APPOINTMENTS</div>
-                            <div class="card-body">
-                                <table id="app_approved_table" class="table display w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header card-header-warning">APPOINTMENT REQUESTS</div>
-                            <div class="card-body">
-                                <table id="app_request_table" class="table display w-100">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Time</th>
-                                        <th>Action</th>
-                                    </thead>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -217,6 +217,26 @@
     </div>
 </div>
 
+<!-- ONGOING Modal -->
+<div class="modal fade" id="OngoingModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <i class="fas fa-question-circle fa-3x text-info pt-4" aria-hidden="true"></i>
+                <h3>Appointment Ongoing?</h3>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-center w-100">
+                    <form id="OngoingForm">
+                        <button type="submit" class="btn btn-info">YES!</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">NO</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- CANCEL Modal -->
 <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -333,6 +353,7 @@
 <script>
     $( document ).ready(function() {
         
+        LoadNotification();
         PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
 
@@ -355,26 +376,31 @@
                 } else if (data.type == 'error') {
                     toastr.error(data.message, data.title);
                 }
+                LoadNotification();
             });
         }
 
-        const request_dataTable = $('#app_request_table').DataTable();
-        const approved_dataTable = $('#app_approved_table').DataTable();
+        const request_dataTable = $('#app_request_table').DataTable({
+            searching: false,
+            bLengthChange: false
+        });
+        const approved_dataTable = $('#app_approved_table').DataTable({
+            searching: false,
+            bLengthChange: false
+        });
 
         function refresh_dt(){
-            
-            var doctor_id = "{{Session::get('doctor_id')}}";
-            var appointment_date = "{{Session::get('appointment_date')}}";
-            var appointment_time = "{{Session::get('appointment_time')}}";
 
             $('#app_request_table').DataTable().destroy();
             $('#app_approved_table').DataTable().destroy();
-            request_dt(doctor_id, appointment_date, appointment_time);
-            approved_dt(doctor_id, appointment_date, appointment_time);
+            request_dt(doctor_id, appointment_date);
+            approved_dt(doctor_id, appointment_date);
         };
 
-        function request_dt(doctor_id = '', appointment_date = '', appointment_time = ''){
+        function request_dt(doctor_id = '', appointment_date = ''){
             $('#app_request_table').DataTable({
+                searching: false,
+                bLengthChange: false,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -383,21 +409,22 @@
                     data: {
                         '_token' : "{{csrf_token() }}",
                         doctor_id: doctor_id, 
-                        appointment_date: appointment_date, 
-                        appointment_time: appointment_time
+                        appointment_date: appointment_date
                     }
                 },
                 columns: [
                     { data: "appointment_id", name : "appointment_id"},
                     { data: "fullname", name: "fullname" },
-                    { data: "appointment_date", name: "appointment_date" },
+                    { data: "time_schedule", name: "time_schedule" },
                     { data: "Action", name: "Action" }
                 ]
             });
         }
 
-        function approved_dt(doctor_id = '', appointment_date = '', appointment_time = ''){
+        function approved_dt(doctor_id = '', appointment_date = ''){
             $('#app_approved_table').DataTable({
+                searching: false,
+                bLengthChange: false,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -406,13 +433,13 @@
                     data: {
                         '_token' : "{{csrf_token() }}",
                         doctor_id: doctor_id, 
-                        appointment_date: appointment_date, 
-                        appointment_time: appointment_time
+                        appointment_date: appointment_date
                     }
                 },
                 columns: [
                     { data: "appointment_id", name : "appointment_id"},
                     { data: "fullname", name: "fullname" },
+                    { data: "time_schedule", name: "time_schedule" },
                     { data: "Action", name: "Action" }
                 ]
             });
@@ -422,17 +449,16 @@
             
             var doctor_id = $('#doctor_id').val();
             var appointment_date = $('#appointment_date').val();
-            var appointment_time = $('#doctor_schedule_id').val();
 
             e.preventDefault();
 
-            if(doctor_id != '' && appointment_date != '' && appointment_time != ''){
+            if(doctor_id != '' && appointment_date != ''){
                 
                 $('#app_request_table').DataTable().destroy();
                 $('#app_approved_table').DataTable().destroy();
 
-                request_dt(doctor_id, appointment_date, appointment_time);
-                approved_dt(doctor_id, appointment_date, appointment_time);
+                request_dt(doctor_id, appointment_date);
+                approved_dt(doctor_id, appointment_date);
             }else{
                 toastr.warning('Kindly fill up all input fields!');
             }
@@ -471,6 +497,27 @@
                     success: function(){
                         toastr.warning('Appointment Cancelled!');
                         $('#CancelModal').modal('hide');
+                        refresh_dt();
+                    },
+                    error: function(){
+                        toastr.error('Something went wrong :/', 'Error!');
+                    }
+                });
+            })
+        });
+
+        approved_dataTable.on('click', '#OngoingBtn', function(){
+            var id = $(this).data('id');
+            var route = "{{ route('appointment.ongoing', '')}}/"+id;
+            $('#OngoingForm').submit(function(){
+                event.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: route,
+                    data: {'_token' : "{{csrf_token() }}"},
+                    success: function(){
+                        toastr.success('Appointment Ongoing!');
+                        $('#OngoingModal').modal('hide');
                         refresh_dt();
                     },
                     error: function(){
@@ -711,6 +758,43 @@
         
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
+        });
+
+        function LoadNotification(){
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notify.getNotifications') }}",
+                data: {
+                    user_id: "{{ Auth::user()->id }}",
+                    '_token' : "{{csrf_token() }}"
+                },
+                success: function(data){
+                    console.log(data.notifications.length);
+                    $('#notifications').empty();
+                    $('#ctr').empty();
+
+                    for(var x = 0; x < data.notifications.length; x++){
+                        $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
+                    }
+                    if(data.ctr != 0){
+                        $('#ctr').append("<span class='notification'>"+data.ctr+"</span>");
+                    }else{
+                        $('#ctr').append();
+                    }
+                    
+                }
+
+            });
+        }
+
+        $('#notifDropdown').click(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('notify.seenNotifications') }}",
+                success: function(){
+                    LoadNotification();
+                }
+            });
         });
 
     });
