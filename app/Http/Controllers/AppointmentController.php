@@ -19,6 +19,45 @@ use Auth;
 
 class AppointmentController extends Controller
 {
+    public function index()
+    {
+        $appointments = DB::table('appointments')->get();
+
+        return $appointments;
+    }
+
+    public function today()
+    {
+        $date = date('Y-m-d');
+
+        $appointments = DB::table('appointments')
+                            ->where('appointment_date', '=', $date)
+                            ->where('status','APPROVED')
+                            ->count();
+
+        return $appointments;
+    }
+    
+    public function patientrequest(){
+        $date = date('Y-m-d');
+
+        $appointments = DB::table('appointments')
+                            ->where('appointment_date', '=', $date)
+                            ->where('status','PENDING')
+                            ->count();
+
+        return $appointments;
+    }
+
+
+    public function patientcount(){
+
+        $appointments = DB::table('users')
+                            ->where('users.role_id', '=', '2')
+                            ->count();
+
+        return $appointments;
+    }
     
     public function getPatientAppointments()
     {
@@ -239,7 +278,7 @@ class AppointmentController extends Controller
     {
         $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
         $client = new \Nexmo\Client($basic);
-        
+
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
         $appointment->status = 'CANCELLED';

@@ -91,12 +91,15 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('ongoing/{id}', 'AppointmentController@ongoing')->name('appointment.ongoing');
             Route::post('cancel/{id}', 'AppointmentController@cancel')->name('appointment.cancel');
             Route::post('reschedule', 'AppointmentController@reschedule')->name('appointment.reschedule');
-            Route::resource('appointment', 'AppointmentController');
+            // Route::resource('appointment', 'AppointmentController');
             Route::post('billing/store', 'BillingController@store')->name('billing.store');
             Route::post('billing/getMedicalService', 'BillingController@getMedicalService')->name('billing.getMedicalService');
             Route::post('billing/destroy', 'BillingController@destroy')->name('billing.destroy');
             Route::post('billing/restore', 'BillingController@restore')->name('billing.restore');
             Route::post('billing/search', 'BillingController@getBilling')->name('billing.getBilling');
+            Route::get('appointment/today', 'AppointmentController@today');
+            Route::get('appointment/request', 'AppointmentController@patientrequest');
+            Route::get('appointment/count', 'AppointmentController@patientcount');
         });
 
         // DOCTOR ROUTES
