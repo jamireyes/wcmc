@@ -17,25 +17,26 @@ class BillingController extends Controller
 {
     public function store(Request $request)
     {
+        // dd($request->all());
         $medical_services = json_decode($request->input('medical_services'));
 
         $data = new services_availed;
-        $data->medical_service_id = $medical_service->id;
         $data->patient_id = $request->input('patient_id');
         $data->staff_id = Auth::user()->id;
-        $data->discount = $request->input('discount');
-        $data->amount_paid = $request->input('amount_paid');
-        foreach($medical_services as $medical_service){
-            
+        if($request->input('discount') == 1){
+            $data->discount = .20;
         }
+        $data->amount_paid = $request->input('amount_paid');
+        $data->total_amount = $request->input('total') - ($request->input('total') * .20);
         $data->save();
-
         
-        // if($medical_service->id == 1){
-            //     $data->staff_id = $request->input('doctor_id');
-            // }else{
-            //     $
-            // }
+        foreach($medical_services as $ms){
+            $saID = DB::table('services_availed')->latest()->first();
+            $data = new services_availed_lines;
+            $data->services_availed_id = $saID->services_availed_id;
+            $data->medical_service_id = $ms->id;
+            $data->save();
+        }
     }
 
     public function getMedicalService(Request $request)

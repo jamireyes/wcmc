@@ -11,46 +11,20 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <div class="p-0 "><h3 class="card-title ">Results</h3></div>
+                                Lab Results
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                     <table class="table" id="Results_Patient">
-                                        <thead class="text-primary">
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Doctor</th>
-                                                <th>Description</th>
-                                                <th>Status</th>
-                                                <th>View</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                            <td>08/30/2019</td>
-                                            <td>Dr. Jose Montesclaros</td>   
-                                            <td>Urinalysis</td>   
-                                            <td class="text-primary">        
-                                                <span class="badge badge-warning"><b>Pending</b></span>   
-                                            </td>    
-                                            <td class="text-primary">
-                                                <a href="#" data-toggle="modal" data-target="#Results_P_Modal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
-                                            </td>        
-                                            </tr>    
-                                            <tr>
-                                            <td>09/21/2019</td>
-                                            <td>Dr. Jollibee McAdoo</td>   
-                                            <td>Chest X-ray</td>   
-                                            <td class="text-primary">        
-                                                <span class="badge badge-success"><b>Claimed</b></span>   
-                                            </td>    
-                                            <td class="text-primary">
-                                                <a href="#" data-toggle="modal" data-target="#Results_P_Modal"><i class="fa fa-eye text-primary" aria-hidden="true"></i></a> 
-                                            </td>        
-                                            </tr>        
-                                        </tbody>
-                                    </table>
-                                </div>      
+                                <table id="results_tb" class="table display table-bordered nowrap compact" style="font-size: 1em; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Add On</th>
+                                            <th>Last Update</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -60,21 +34,6 @@
     </div>
 </div>
 
-<!-- Modals -->
-
-<div class="modal fade" id="Results_P_Modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Results</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>         
-<!-- End Modals -->
 @endsection
 
 
@@ -82,16 +41,33 @@
 <script src="{{ asset('vendor/material/js/material-dashboard.js') }}"></script>
 <script>
     $( document ).ready(function() {
-        const ResultPatient = $('#Results_Patient').DataTable({
-            
+        
+        $('#results_tb').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: "{{ route('patient.resultsForPatient') }}",
+                data: {
+                    '_token' : "{{csrf_token() }}"
+                }
+            },
+            columns: [
+                { data: "description", name: "description"},
+                { data: "created_at", name: "created_at"},
+                { data: "updated_at", name: "updated_at"},
+                { data: "Status", name: "Status"},
+                { data: "Action", name: "Action"},
+            ]
         });
+
         LoadNotification();
         PusherListener();
         $.fn.dataTable.ext.errMode = 'none';
-
+        
         function PusherListener() {
             Pusher.logToConsole = true;
-
+            
             var pusher = new Pusher('89973cf8f98acc38053a', {
                 cluster: 'ap1',
                 'useTLS': false,
@@ -111,7 +87,7 @@
                 LoadNotification();
             });
         }
-
+        
         function LoadNotification(){
             $.ajax({
                 type: "POST",
@@ -124,7 +100,7 @@
                     console.log(data.notifications.length);
                     $('#notifications').empty();
                     $('#ctr').empty();
-
+                    
                     for(var x = 0; x < data.notifications.length; x++){
                         $('#notifications').append("<a class='dropdown-item'> "+data.notifications[x].message+"&nbsp<small class='text-muted'>("+moment(data.notifications[x].created_at).fromNow()+")</small></a>");
                     }
@@ -135,10 +111,10 @@
                     }
                     
                 }
-
+                
             });
         }
-
+        
         $('#notifDropdown').click(function(){
             $.ajax({
                 type: "GET",
@@ -148,6 +124,7 @@
                 }
             });
         });
+
     });
 </script>
 @endsection

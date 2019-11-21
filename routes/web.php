@@ -31,6 +31,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('restoreMedicalHistory', 'PatientRecordController@restoreMedicalHistory')->name('restoreMedicalHistory');
         Route::post('restoreVitalSign', 'PatientRecordController@restoreVitalSign')->name('restoreVitalSign');
         Route::post('getDocSchedules', 'AppointmentController@getDocSchedules')->name('appointment.getDocSchedules');
+        Route::post('resultsForPatient', 'ResultController@resultsForPatient')->name('patient.resultsForPatient');
 
         Route::post('notify/getNotifications', 'NotificationController@getNotifications')->name('notify.getNotifications');
         Route::post('notify/storeNotifications', 'NotificationController@storeNotifications')->name('notify.storeNotifications');
@@ -91,7 +92,7 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('ongoing/{id}', 'AppointmentController@ongoing')->name('appointment.ongoing');
             Route::post('cancel/{id}', 'AppointmentController@cancel')->name('appointment.cancel');
             Route::post('reschedule', 'AppointmentController@reschedule')->name('appointment.reschedule');
-            // Route::resource('appointment', 'AppointmentController');
+            Route::resource('appointment', 'AppointmentController');
             Route::post('billing/store', 'BillingController@store')->name('billing.store');
             Route::post('billing/getMedicalService', 'BillingController@getMedicalService')->name('billing.getMedicalService');
             Route::post('billing/destroy', 'BillingController@destroy')->name('billing.destroy');

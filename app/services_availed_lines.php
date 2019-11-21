@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class services_availed_lines extends Model
 {
+    protected $table = 'services_availed_lines';
+
+    protected $fillable = [
+        'services_availed_id',
+        'medical_service_id',
+        'appointment_id'
+    ];
+
     public function services_availed()
     {
         return $this->belongsTo('App\services_availed', 'services_availed_id', 'services_availed_id'); 
