@@ -105,11 +105,10 @@ class AppointmentController extends Controller
     public function getAppointments(Request $request)
     {
         $appointments = DB::table('appointments')
-            ->select(DB::raw("concat(users.first_name, ' ', users.middle_name, ' ', users.last_name) as fullname"), DB::raw("concat(TIME_FORMAT(doctor_schedules.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(doctor_schedules.end_time, '%h:%i %p')) as time_schedule"), 'appointments.appointment_id', DB::raw("DATE_FORMAT(appointments.updated_at, '%h:%i %p') as last_update"))
+            ->select('appointments.remarks', DB::raw("concat(users.first_name, ' ', users.middle_name, ' ', users.last_name) as fullname"), DB::raw("concat(TIME_FORMAT(doctor_schedules.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(doctor_schedules.end_time, '%h:%i %p')) as time_schedule"), 'appointments.appointment_id', DB::raw("DATE_FORMAT(appointments.updated_at, '%h:%i %p') as last_update"))
             ->join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
             ->join('users', 'users.id', '=', 'appointments.patient_id')
             ->where('doctor_schedules.doctor_id', $request->input('doctor_id'))
-            // ->where('doctor_schedules.doctor_schedule_id', $request->input('appointment_time'))
             ->where('appointment_date', $request->input('appointment_date'))
             ->where('status', 'PENDING')
             ->get();
@@ -125,11 +124,10 @@ class AppointmentController extends Controller
     public function getApprovedAppointments(Request $request)
     {                
         $appointments = DB::table('appointments')
-            ->select(DB::raw("concat(users.first_name, ' ', users.middle_name, ' ', users.last_name) as fullname"), DB::raw("concat(TIME_FORMAT(doctor_schedules.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(doctor_schedules.end_time, '%h:%i %p')) as time_schedule"), 'appointments.appointment_id', DB::raw("DATE_FORMAT(appointments.updated_at, '%h:%i %p') as last_update"), 'appointments.doctor_schedule_id', 'appointments.status', 'appointments.appointment_date')
+            ->select('appointments.remarks', DB::raw("concat(users.first_name, ' ', users.middle_name, ' ', users.last_name) as fullname"), DB::raw("concat(TIME_FORMAT(doctor_schedules.start_time, '%h:%i %p'), ' - ', TIME_FORMAT(doctor_schedules.end_time, '%h:%i %p')) as time_schedule"), 'appointments.appointment_id', DB::raw("DATE_FORMAT(appointments.updated_at, '%h:%i %p') as last_update"), 'appointments.doctor_schedule_id', 'appointments.status', 'appointments.appointment_date')
             ->join('doctor_schedules', 'doctor_schedules.doctor_schedule_id', '=', 'appointments.doctor_schedule_id')
             ->join('users', 'users.id', '=', 'appointments.patient_id')
             ->where('doctor_schedules.doctor_id', $request->input('doctor_id'))
-            // ->where('doctor_schedules.doctor_schedule_id', $request->input('appointment_time'))
             ->where('appointment_date', $request->input('appointment_date'))
             ->whereIn('status', ['APPROVED', 'ONGOING'])
             ->get();
@@ -306,8 +304,8 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
 
         $validator = Validator::make($request->all(), [
             'doctor_schedule_id' => 'required',
@@ -329,6 +327,7 @@ class AppointmentController extends Controller
                 $data->appointment_date = $request->input('appointment_date');
                 $data->doctor_schedule_id = $request->input('doctor_schedule_id');
                 $data->staff_id = Auth::user()->id;
+                $data->remarks = $request->input('remarks');
                 $data->patient_id = $request->input('patient_id');
                 $data->status = 'APPROVED';
                 $data->save();
@@ -350,11 +349,11 @@ class AppointmentController extends Controller
             }
         }
 
-        $message = $client->message()->send([
-            'to' => '639171358009',
-            'from' => 'Nexmo',
-            'text' => $message
-        ]);
+        // $message = $client->message()->send([
+        //     'to' => '639171358009',
+        //     'from' => 'Nexmo',
+        //     'text' => $message
+        // ]);
 
         return compact('message', 'type');
     }

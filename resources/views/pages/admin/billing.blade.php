@@ -85,7 +85,7 @@
                                                                 <tr>
                                                                     <td>
                                                                         {{$s->medical_service->description}}
-                                                                        @if ($s->medical_service_id == 1) 
+                                                                        {{-- @if ($s->medical_service_id == 1) 
                                                                         <br>
                                                                         <small class="text-secondary">
                                                                             Dr. 
@@ -93,7 +93,7 @@
                                                                             {{$s->appointment->doctor_schedule->doctor->middle_name}}
                                                                             {{$s->appointment->doctor_schedule->doctor->last_name}}
                                                                         </small>
-                                                                        @endif
+                                                                        @endif --}}
                                                                         
                                                                     </td>
                                                                     <td>{{$s->medical_service->rate}}</td>

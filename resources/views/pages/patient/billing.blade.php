@@ -23,11 +23,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="form-group pt-0 mt-0">
+                                                    <div class="col-6 form-group pt-0 mt-0">
                                                         <label>From:</label>
                                                         <input id="start_date" name="start_date" type="date" class="form-control" required>
                                                     </div>
-                                                    <div class="form-group pt-0 mt-0">
+                                                    <div class="col-6 form-group pt-0 mt-0">
                                                         <label>To:</label>
                                                         <input id="end_date" name="end_date" type="date" class="form-control" required>
                                                     </div>

@@ -251,7 +251,6 @@
 
             $.ajax({
                 type: 'POST',
-                
                 contentType: false,
                 url: "{{ route('results.store') }}",
                 data: new FormData(this),

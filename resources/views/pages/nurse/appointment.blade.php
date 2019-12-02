@@ -7,86 +7,6 @@
         @include('pages.nurse.include.navbar')
         <div class="content mt-5">
             <div class="container-fluid">
-                {{-- <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <form id="AppointmentDetails" >
-                                @csrf
-                                <div class="card-header card-header-primary">
-                                    <div class="d-flex w-100">
-                                        <div class="mr-auto">ENTER APPOINTMENT DETAILS</div>
-                                        <div class="pr-2">
-                                            <button type="button" data-toggle='modal' data-target='#AddBillModal' class="btn btn-secondary btn-sm m-0">Add Bill</button>
-                                            <button type="button" data-toggle='modal' data-target='#AddAppointment' class="btn btn-secondary btn-sm m-0">ADD APPOINTMENT</button>
-                                            <button type="submit" id="submit_app_details" class="btn btn-secondary btn-sm m-0">SUBMIT</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label><i class="fa fa-user pr-2" aria-hidden="true"></i>Doctor's Name</label>
-                                                <select id="doctor_id" name="doctor_id" class="form-control dynamic">
-                                                    <option value="" disabled selected>Select a doctor...</option>
-                                                        @foreach ($doctors as $doctor)
-                                                            <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
-                                                        @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label style="position: static !important; margin-bottom: 0.9rem;"><i class="fa fa-calendar pr-2" aria-hidden="true"></i>Appointment Date</label>
-                                                <input id="appointment_date" name="appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
-                                                <select id="doctor_schedule_id" class="form-control" name="appointment_time">
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header card-header-primary">APPROVED APPOINTMENTS</div>
-                            <div class="card-body">
-                                <table id="app_approved_table" class="table display w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-header card-header-warning">APPOINTMENT REQUESTS</div>
-                            <div class="card-body">
-                                <table id="app_request_table" class="table display w-100">
-                                    <thead>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Time</th>
-                                        <th>Action</th>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
@@ -147,6 +67,7 @@
                                                 <tr>
                                                     <th>Last Update</th>
                                                     <th>Name</th>
+                                                    <th>Remarks</th>
                                                     <th>Time Schedule</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -158,6 +79,7 @@
                                             <thead>
                                                 <th>Last Update</th>
                                                 <th>Name</th>
+                                                <th>Remarks</th>
                                                 <th>Time Schedule</th>
                                                 <th>Action</th>
                                             </thead>
@@ -211,6 +133,10 @@
                         <label><i class="fas fa-clock pr-2" aria-hidden="true"></i>Appointment Time</label>
                         <select id="mdl_doctor_schedule_id" class="form-control">
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-pen pr-2"></i>Remarks</label>
+                        <input type="text" id="mdl_remarks" name="mdl_remarks" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -515,6 +441,7 @@
                 columns: [
                     { data: "last_update", name : "last_update"},
                     { data: "fullname", name: "fullname" },
+                    { data: "remarks", name: "remarks" },
                     { data: "time_schedule", name: "time_schedule" },
                     { data: "Action", name: "Action" }
                 ]
@@ -539,6 +466,7 @@
                 columns: [
                     { data: "last_update", name : "last_update"},
                     { data: "fullname", name: "fullname" },
+                    { data: "remarks", name: "remarks" },
                     { data: "time_schedule", name: "time_schedule" },
                     { data: "Action", name: "Action" }
                 ]
@@ -743,6 +671,7 @@
             var doctor_schedule_id = $('#mdl_doctor_schedule_id').val();
             var patient_id = $('#mdl_patient_id').val();
             var appointment_date = $('#mdl_appointment_date').val();
+            var remarks = $('#mdl_remarks').val();
 
             $.ajax({
                 url: "{{ route('appointment.store') }}",
@@ -751,6 +680,7 @@
                     doctor_schedule_id: doctor_schedule_id,
                     appointment_date: appointment_date,
                     patient_id: patient_id, 
+                    remarks: remarks,
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(response){

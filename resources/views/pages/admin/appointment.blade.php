@@ -7,7 +7,7 @@
         @include('pages.admin.include.navbar')
         <div class="content mt-5">
             <div class="container-fluid">
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
@@ -77,6 +77,89 @@
                                             <thead>
                                                 <th>#</th>
                                                 <th>Name</th>
+                                                <th>Time Schedule</th>
+                                                <th>Action</th>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <div class="nav-tabs-navigation">
+                                    <div class="nav-tabs-wrapper">
+                                        <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#Approved" data-toggle="tab">Approved</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#Pending" data-toggle="tab">Pending</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body" style="height:30rem;">
+                                <form id="AppointmentDetails" class="pb-3">
+                                    @csrf
+                                    <div class="d-flex align-items-center w-100">
+                                        <div class="mr-auto">
+                                            <button type="button" data-toggle='modal' data-target='#AddAppointment' class="btn btn-outline-primary btn-sm m-0">+ ADD APPOINTMENT</button>
+                                            <button type="button" data-toggle='modal' data-target='#AddBillModal' class="btn btn-outline-success btn-sm m-0">+ ADD PAYMENT</button>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-user text-secondary pr-2" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                                <select id="doctor_id" name="doctor_id" class="form-control dynamic">
+                                                    <option value="" disabled selected>Select a doctor...</option>
+                                                        @foreach ($doctors as $doctor)
+                                                            <option value="{{ $doctor->id }}">{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
+                                                        @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="fa fa-calendar text-secondary pr-2" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                                <input id="appointment_date" name="appointment_date" type="date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" min="{{ Carbon\Carbon::now()->format('Y-m-d') }}" max="{{ Carbon\Carbon::now()->addYear(1)->format('Y-m-d') }}" class="form-control dynamic">
+                                                <button id="submit_app_details" type="submit" class="btn btn-primary btn-round btn-sm"><i class="fas fa-search" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="Approved">
+                                        <table id="app_approved_table" class="table display table-bordered nowrap compact" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Last Update</th>
+                                                    <th>Name</th>
+                                                    <th>Remarks</th>
+                                                    <th>Time Schedule</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="Pending">
+                                        <table id="app_request_table" class="table display table-bordered nowrap compact" style="width:100%">
+                                            <thead>
+                                                <th>Last Update</th>
+                                                <th>Name</th>
+                                                <th>Remarks</th>
                                                 <th>Time Schedule</th>
                                                 <th>Action</th>
                                             </thead>
@@ -258,11 +341,11 @@
 </div>
 
 <!-- ADD BILL Modal -->
-<div class="modal fade" id="AddBillModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="AddBillModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Bill Payment</h5>
+                <h5 class="modal-title">Add Payment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -282,7 +365,7 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input id="bill_discount" class="form-check-input" type="checkbox" value=".20">
-                                Patient Discount
+                                Discount
                                 <span class="form-check-sign">
                                     <span class="check"></span>
                                 </span>
@@ -291,46 +374,64 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex flex-row w-100">
-                                    <div class="w-100">
-                                        <div class="form-group">
-                                            <select class='form-control' id='medical_service'>
-                                                <option value=''disabled selected>Select Medical Service</option>
-                                                @foreach($medical_services as $medical_service)
-                                                    <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div id='doctor_input' class='form-group'>
-                                            <select id='bill_doctor_id' class='form-control'>
-                                                <option value='' disabled selected>Select Doctor</option>
-                                                    @foreach ($doctors as $doctor)
-                                                        <option value='{{ $doctor->id }}'>{{ $doctor->first_name }} {{ $doctor->middle_name }} {{ $doctor->last_name }}</option>
-                                                    @endforeach
-                                            </select>
-                                        </div>
-                                        <button id="add_row" type="button" class="btn btn-primary btn-sm btn-block">+</button>
+                    <div class="col-lg-12">
+                        <div class="d-flex justify-content-end w-100">
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                        </span>
                                     </div>
+                                    <select class='form-control' id='bill_doctor_id'>
+                                        <option value=''disabled selected>Select Doctor</option>
+                                        @foreach($doctors as $doctor)
+                                            <option value='{{$doctor->id}}'>{{$doctor->first_name}} {{$doctor->last_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                        </span>
+                                    </div>
+                                    <select class='form-control' id='medical_service'>
+                                        <option value=''disabled selected>Select Medical Service</option>
+                                        @foreach($medical_services as $medical_service)
+                                            <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
+                                        @endforeach
+                                    </select>
+                                    <button id="add_row" type="submit" class="btn btn-outline-primary btn-sm">+</button>
+                                </div>
+                            </div>   
                         </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <table id='medical_serv_bill' class="table display">
-                                    <thead>
-                                        <tr>
-                                            <th>Description</th>
-                                            <th>Rate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="medical_service_list">
-                                    </tbody>
-                                </table>
+                        <table id='medical_serv_bill' class="table display table-bordered nowrap compact">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medical_service_list">
+                            </tbody>
+                            <tr>
+                                <th class="text-right">Grand Total</th>
+                                <td class="text-success"><input id="GrandTotal" type="text" class="form-control" disabled></td>
+                            </tr>
+                        </table>
+                        <div class="d-flex justify-content-center w-100">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Amount Paid</label>
+                                    <input type="number" id="amount_paid" name="amount_paid" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="">Change</label>
+                                    <input type="number" id="change" name="change" class="form-control" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -339,7 +440,7 @@
             <div class="modal-footer">
                 <div class="d-flex justify-content-center w-100">
                     <button id="ClearBtn" type="button" class="btn btn-secondary">Clear</button>
-                    <button id="Checkout" type="button" class="btn btn-primary">Checkout</button>
+                    <button id="Pay" type="button" class="btn btn-success">Pay</button>
                 </div>
             </div>
         </div>
@@ -413,8 +514,9 @@
                     }
                 },
                 columns: [
-                    { data: "appointment_id", name : "appointment_id"},
+                    { data: "last_update", name : "last_update"},
                     { data: "fullname", name: "fullname" },
+                    { data: "remarks", name: "remarks" },
                     { data: "time_schedule", name: "time_schedule" },
                     { data: "Action", name: "Action" }
                 ]
@@ -437,8 +539,9 @@
                     }
                 },
                 columns: [
-                    { data: "appointment_id", name : "appointment_id"},
+                    { data: "last_update", name : "last_update"},
                     { data: "fullname", name: "fullname" },
+                    { data: "remarks", name: "remarks" },
                     { data: "time_schedule", name: "time_schedule" },
                     { data: "Action", name: "Action" }
                 ]
@@ -477,9 +580,6 @@
                         toastr.info('Appointment Approved!');
                         $('#ApproveModal').modal('hide');
                         refresh_dt();
-                    },
-                    error: function(){
-                        toastr.error('Something went wrong :/', 'Error!');
                     }
                 });
             })
@@ -488,12 +588,13 @@
         request_dataTable.on('click', '#CancelBtn', function(){
             var id = $(this).data('id');
             var route = "{{ route('appointment.cancel', '')}}/"+id;
+            var message = $('#message').val();
             $('#CancelForm').submit(function(){
                 event.preventDefault();
                 $.ajax({
                     type: "POST",
                     url: route,
-                    data: {'_token' : "{{csrf_token() }}"},
+                    data: {'_token' : "{{csrf_token() }}", message: message},
                     success: function(){
                         toastr.warning('Appointment Cancelled!');
                         $('#CancelModal').modal('hide');
@@ -596,6 +697,28 @@
             }
         });
 
+        $('.dynamic-add').change(function(){
+            if($(this).val() != ''){
+                var doctor_id = $('#mdl_doctor_id').val();
+                var appointment_date = $('#mdl_appointment_date').val();
+
+                if( doctor_id != '' && appointment_date != ''){
+                    $.ajax({
+                        url: "{{ route('appointment.getDocSchedules') }}",
+                        method: "POST",
+                        data: {
+                            doctor_id: doctor_id,
+                            appointment_date: appointment_date, 
+                            '_token' : "{{csrf_token() }}"
+                        },
+                        success: function(output){
+                            $('#mdl_doctor_schedule_id').html(output);
+                        }
+                    });
+                }
+            }
+        });
+
         $('.dynamic-modal').change(function(){
             if($(this).val() != ''){
                 var doctor_id = $('#mdl_doctor_id').val();
@@ -623,6 +746,7 @@
             var doctor_schedule_id = $('#mdl_doctor_schedule_id').val();
             var patient_id = $('#mdl_patient_id').val();
             var appointment_date = $('#mdl_appointment_date').val();
+            var remarks = $('#mdl_remarks').val();
 
             $.ajax({
                 url: "{{ route('appointment.store') }}",
@@ -631,6 +755,7 @@
                     doctor_schedule_id: doctor_schedule_id,
                     appointment_date: appointment_date,
                     patient_id: patient_id, 
+                    remarks: remarks,
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(response){
@@ -645,31 +770,60 @@
             });
         });
 
+        $('#medical_service').change(function(){
+            var html
+        });
+
+        var arr = [];
+
         $('#add_row').click(function(){
             var rate = $('#medical_service').val();
             var description = $('#medical_service option:selected').text();
             var id = $('#medical_service option:selected').data('id');
-            
-            if(rate != null){
-                var html = "<tr><td data-id="+id+" class='attrDes'>"+description+"</td><td class='attrRate'>"+rate+"</td></tr>";
+            var currTotal = $('#GrandTotal').val();
 
-                $('#medical_service_list').append(html);
+            var html = "<tr><td data-id="+id+" class='attrDes'>"+description+"</td><td data-rate="+rate+" class='attrRate'>"+rate+"</td></tr>";
+            $('#medical_service_list').append(html);
+
+            arr.push(parseFloat(rate));
+            var total = 0;
+
+            for(var x=0; x < arr.length; x++){
+                total = parseFloat(total) + arr[x];
             }
+            
+            $('#GrandTotal').val(total);
+
+        });
+
+        $('#amount_paid').keyup(function(){
+            var GrandTotal = $('#GrandTotal').val();
+            $('#change').val($(this).val()-parseInt(GrandTotal));
         });
 
         $('#ClearBtn').click(function(){
             $('#medical_service_list').empty();
         });
 
-        $('#Checkout').click(function(){
+        $('#Pay').click(function(){
             var bill_patient_id = $('#bill_patient_id').val();
             var bill_doctor_id = $('#bill_doctor_id').val();
+            var amount_paid = $('#amount_paid').val();
+            var GrandTotal = $('#GrandTotal').val();
             var ary = [];
+
+            if($('input[type=checkbox]').prop('checked') == true){
+                var discount = 1;
+            }else{
+                var discount = 0;
+            }
+
             $('#medical_serv_bill tbody tr').each(function (a, b) {
                 var id = $('.attrDes', b).data('id');
-                ary.push({ id: id });
+                var rate = $('.attrRate', b).data('rate');
+                ary.push({ id: id, rate: rate });
             });
-            JSON.stringify(ary);
+
             $.ajax({
                 type: 'POST',
                 url: "{{ route('billing.store') }}",
@@ -677,6 +831,9 @@
                     medical_services: JSON.stringify(ary),
                     patient_id: bill_patient_id,
                     doctor_id: bill_doctor_id,
+                    total: GrandTotal,
+                    amount_paid: amount_paid,
+                    discount: discount,
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(){

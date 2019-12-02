@@ -36,6 +36,11 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('notify/getNotifications', 'NotificationController@getNotifications')->name('notify.getNotifications');
         Route::post('notify/storeNotifications', 'NotificationController@storeNotifications')->name('notify.storeNotifications');
         Route::get('notify/seenNotifications', 'NotificationController@seenNotifications')->name('notify.seenNotifications');
+        Route::get('appointment/today', 'AppointmentController@todaystaff');
+        Route::get('appointment/request', 'AppointmentController@patientrequeststaff');
+        Route::get('appointment/count', 'AppointmentController@patientcountstaff');
+
+
 
         // ADMIN ROUTES
         Route::group(['middleware' => 'role:ADMIN'], function () {

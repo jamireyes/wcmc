@@ -55,12 +55,6 @@
                     <p>MEDICAL SERVICES</p>
                 </a>
             </li>
-            <li class="nav-item {{ (Route::current()->getName() == 'admin.message') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.message', ['name' => Auth::user()->username]) }}">
-                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                    <p>MESSAGES</p>
-                </a>
-            </li>
             <li class="nav-item {{ (Route::current()->getName() == 'admin.setting') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.setting', ['name' => Auth::user()->username]) }}">
                     <i class="fa fa-cog" aria-hidden="true"></i>

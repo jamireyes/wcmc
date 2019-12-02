@@ -73,6 +73,10 @@
                         <select id="mdl_doctor_schedule_id" class="form-control">
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-pen pr-2"></i>Remarks</label>
+                        <input type="text" id="mdl_remarks" name="mdl_remarks" class="form-control">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -154,11 +158,6 @@
                 }
             });
         }
-
-        // setInterval(function(){
-        //     AppHistory.ajax.reload(null, false);
-        //     getApprovedAppointments();
-        // }, 1000);
         
         $('.dynamic-add').change(function(){
             if($(this).val() != ''){
@@ -187,6 +186,7 @@
 
             var doctor_schedule_id = $('#mdl_doctor_schedule_id').val();
             var appointment_date = $('#mdl_appointment_date').val();
+            var remarks = $('#mdl_remarks').val();
             
             $.ajax({
                 type: "POST",
@@ -194,6 +194,7 @@
                 data: {
                     doctor_schedule_id: doctor_schedule_id,
                     appointment_date: appointment_date,
+                    remarks: remarks,
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(response){
