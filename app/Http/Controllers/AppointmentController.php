@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\EmailNotification;
 use App\Events\AppointmentStatus;
 use App\Events\PatientStaff;
 use Yajra\Datatables\Facades\DataTables;
@@ -54,43 +55,43 @@ class AppointmentController extends Controller
     }
 
 
-// staff
-public function todaystaff()
-{
-    $date = date('Y-m-d');
-    
+    // staff
+    public function todaystaff()
+    {
+        $date = date('Y-m-d');
+        
 
-    $appointments = DB::table('appointments')
-                        ->where('appointment_date', '=', $date)
-                        ->where('staff_id', '=',  Auth::user()->id)
-                        ->where('status','APPROVED')
-                        ->count();
+        $appointments = DB::table('appointments')
+                            ->where('appointment_date', '=', $date)
+                            ->where('staff_id', '=',  Auth::user()->id)
+                            ->where('status','APPROVED')
+                            ->count();
 
-    return $appointments;
-}
+        return $appointments;
+    }
 
-public function patientrequeststaff(){
-    $date = date('Y-m-d');
+    public function patientrequeststaff(){
+        $date = date('Y-m-d');
 
-    $appointments = DB::table('appointments')
-                        ->where('appointment_date', '=', $date)
-                        ->where('staff_id', '=',  Auth::user()->id)
-                        ->where('status','PENDING')
-                        ->count();
+        $appointments = DB::table('appointments')
+                            ->where('appointment_date', '=', $date)
+                            ->where('staff_id', '=',  Auth::user()->id)
+                            ->where('status','PENDING')
+                            ->count();
 
-    return $appointments;
-}
-
-
-public function patientcountstaff(){
+        return $appointments;
+    }
 
 
-    $appointments = DB::table('appointments')
-                        ->where('staff_id', '=',  Auth::user()->id)
-                        ->where('status','DONE')
-                        ->count();
-    return $appointments;
-}
+    public function patientcountstaff(){
+
+
+        $appointments = DB::table('appointments')
+                            ->where('staff_id', '=',  Auth::user()->id)
+                            ->where('status','DONE')
+                            ->count();
+        return $appointments;
+    }
     
     public function getPatientAppointments()
     {
@@ -213,16 +214,17 @@ public function patientcountstaff(){
     {
         // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
         // $client = new \Nexmo\Client($basic);
+        $type = 'info';
+        $title = 'Notification!';
+        $message = 'Your appointment has been approved!';
 
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
+        $user->notify(new EmailNotification($message));
         $appointment->status = 'APPROVED';
         $appointment->staff_id = Auth::user()->id;
         $appointment->save();
 
-        $type = 'info';
-        $title = 'Notification!';
-        $message = 'Your appointment has been approved!';
         event(new AppointmentStatus($type, $title, $message, $user));
         
         $notification = new notification;
@@ -240,18 +242,19 @@ public function patientcountstaff(){
 
     public function done($id)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
+        $type = 'success';
+        $title = 'Successful!';
+        $message = 'Your appointment has been completed!';
 
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
+        $user->notify(new EmailNotification($message));
         $appointment->status = 'DONE';
         $appointment->staff_id = Auth::user()->id;
         $appointment->save();
 
-        $type = 'success';
-        $title = 'Successful!';
-        $message = 'Your appointment has been completed!';
         event(new AppointmentStatus($type, $title, $message, $user));
 
         $notification = new notification;
@@ -259,17 +262,17 @@ public function patientcountstaff(){
         $notification->message = $message;
         $notification->save();
 
-        $message = $client->message()->send([
-            'to' => '639171358009',
-            'from' => 'Nexmo',
-            'text' => $message
-        ]);
+        // $message = $client->message()->send([
+        //     'to' => '639171358009',
+        //     'from' => 'Nexmo',
+        //     'text' => $message
+        // ]);
     }
 
     public function ongoing($id)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
 
         $appointment = appointment::find($id);
         $appointment_date = $appointment->appointment_date;
@@ -282,6 +285,7 @@ public function patientcountstaff(){
 
         if ($query->doesntExist()) {
             $user = user::find($appointment->patient_id);
+            $user->notify(new EmailNotification('Your appointment is now ongoing!'));
             $appointment->status = 'ONGOING';
             $appointment->staff_id = Auth::user()->id;
             $appointment->save();
@@ -298,27 +302,28 @@ public function patientcountstaff(){
             event(new NurseDoctor('info', 'Notification!', 'You have a new ongoing appointment!', $doctor));
         }
 
-        $message = $client->message()->send([
-            'to' => '639171358009',
-            'from' => 'Nexmo',
-            'text' => $message
-        ]);
+        // $message = $client->message()->send([
+        //     'to' => '639171358009',
+        //     'from' => 'Nexmo',
+        //     'text' => $message
+        // ]);
     }
 
     public function cancel(Request $request, $id)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
+        $type = 'warning';
+        $title = 'Notification!';
+        $message = 'Your appointment has been cancelled!'.' '.$request->input('message');
         
         $appointment = appointment::find($id);
         $user = user::find($appointment->patient_id);
+        $user->notify(new EmailNotification($message));
         $appointment->status = 'CANCELLED';
         $appointment->staff_id = Auth::user()->id;
         $appointment->save();
 
-        $type = 'warning';
-        $title = 'Notification!';
-        $message = 'Your appointment has been cancelled!'.' '.$request->input('message');
         event(new AppointmentStatus($type, $title, $message, $user));
         
         $notification = new notification;
@@ -326,11 +331,11 @@ public function patientcountstaff(){
         $notification->message = $message;
         $notification->save();
 
-        $message = $client->message()->send([
-            'to' => '639171358009',
-            'from' => 'Nexmo',
-            'text' => $message
-        ]);
+        // $message = $client->message()->send([
+        //     'to' => '639171358009',
+        //     'from' => 'Nexmo',
+        //     'text' => $message
+        // ]);
     }
 
     public function store(Request $request)
@@ -363,10 +368,11 @@ public function patientcountstaff(){
                 $data->status = 'APPROVED';
                 $data->save();
 
-                $user = user::find($request->input('patient_id'));
-
                 $message = "Appointment successfully created!";
                 $type = "success";
+
+                $user = user::find($request->input('patient_id'));
+                $user->notify(new EmailNotification($message));
 
                 event(new AppointmentStatus('info', 'Notification!', $message, $user));
                 
@@ -391,8 +397,8 @@ public function patientcountstaff(){
 
     public function reschedule(Request $request)
     {    
-        $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
-        $client = new \Nexmo\Client($basic);
+        // $basic  = new \Nexmo\Client\Credentials\Basic('0816dbbe', 'I3kGYH92u1kdoDPe');
+        // $client = new \Nexmo\Client($basic);
     
         $validator = Validator::make($request->all(), [
             'appointment_id' => 'required',
@@ -416,10 +422,12 @@ public function patientcountstaff(){
                 $data->save();
 
                 $message = 'Appointment has been rescheduled!';
+                $message1 = 'Your appointment has been rescheduled!';
                 $type = 'success';
 
                 $user = User::find($app->patient_id);
-                $message1 = 'Your appointment has been rescheduled!';
+                $user->notify(new EmailNotification($message1));
+
                 event(new AppointmentStatus('info', 'Notification!', $message1, $user));
 
                 $notification = new notification;
@@ -427,11 +435,11 @@ public function patientcountstaff(){
                 $notification->message = $message1;
                 $notification->save();
 
-                $message = $client->message()->send([
-                    'to' => '639171358009',
-                    'from' => 'Nexmo',
-                    'text' => $message1
-                ]);
+                // $message = $client->message()->send([
+                //     'to' => '639171358009',
+                //     'from' => 'Nexmo',
+                //     'text' => $message1
+                // ]);
             } else {
                 $message = 'Appointment conflicts with an existing record!';
                 $type = "error";
@@ -472,6 +480,9 @@ public function patientcountstaff(){
                 ->whereNotIn('status', ['DONE', 'CANCELLED']);
 
             if ($query->doesntExist()) {
+                $message = "Appointment requested by ".Auth::user()->first_name.' '.Auth::user()->last_name;
+                $type = "success";
+
                 $data = new appointment;
                 $data->appointment_date = $request->input('appointment_date');
                 $data->doctor_schedule_id = $request->input('doctor_schedule_id');
@@ -479,8 +490,7 @@ public function patientcountstaff(){
                 $data->status = 'PENDING';
                 $data->save();
 
-                $message = "Appointment requested by ".Auth::user()->first_name.' '.Auth::user()->last_name;
-                $type = "success";
+                User::find(Auth::user()->id)->notify(new EmailNotification('You have requested for a new appointment!'));
 
                 event(new PatientStaff('info', 'Notification!', $message));
 

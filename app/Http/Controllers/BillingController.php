@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\EmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,6 +20,9 @@ class BillingController extends Controller
     {
         // dd($request->all());
         $medical_services = json_decode($request->input('medical_services'));
+
+        $user = User::find($request->input('patient_id'));
+        $user->notify(new EmailNotification('Thank you for your payment!'));
 
         $data = new services_availed;
         $data->patient_id = $request->input('patient_id');

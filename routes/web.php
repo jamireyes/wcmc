@@ -2,6 +2,8 @@
 
 use App\Events\AppointmentStatus;
 use App\Events\PatientStaff;
+use App\User;
+use App\Notifications\EmailNotification;
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -121,24 +123,6 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
 
 });
 
-
-// FOR TESTING [DO NOT TOUCH] //
-
-    // Event Trigger []
-    Route::get('event', function(){
-        // $user = Auth::user();
-        // $user = App\User::find(3);
-        // $title = 'Appointment Request!';
-        // $message = $user->first_name.' '.$user->last_name.' '.'has sent a request.';
-
-        // event(new AppointmentStatus($title, $message, $user));
-        $message = "Appointment successfully created by".Auth::user()->first_name.' '.Auth::user()->last_name;
-        $type = "success";
-
-        event(new PatientStaff($type, 'Notification!', $message));
-        
-        return 'Event Sent!';
-    });
-
-
-// END TESTING AREA //    
+// Route::get('/fire', function(){
+//     $user = User::find(3)->notify(new EmailNotification);
+// });

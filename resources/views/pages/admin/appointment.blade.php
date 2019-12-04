@@ -402,7 +402,7 @@
                                             <option data-id='{{$medical_service->medical_service_id}}' value='{{$medical_service->rate}}'>{{$medical_service->description}}</option>
                                         @endforeach
                                     </select>
-                                    <button id="add_row" type="submit" class="btn btn-outline-primary btn-sm">+</button>
+                                    <button id="add_row" type="button" class="btn btn-outline-primary btn-sm">+</button>
                                 </div>
                             </div>   
                         </div>
@@ -601,7 +601,7 @@
                         refresh_dt();
                     },
                     error: function(){
-                        toastr.error('Something went wrong :/', 'Error!');
+                        // toastr.error('Something went wrong :/', 'Error!');
                     }
                 });
             })
@@ -622,7 +622,7 @@
                         refresh_dt();
                     },
                     error: function(){
-                        toastr.error('Something went wrong :/', 'Error!');
+                        // toastr.error('Something went wrong :/', 'Error!');
                     }
                 });
             })
@@ -643,7 +643,7 @@
                         refresh_dt();
                     },
                     error: function(){
-                        toastr.error('Something went wrong :/', 'Error!');
+                        // toastr.error('Something went wrong :/', 'Error!');
                     }
                 });
             })
@@ -837,6 +837,10 @@
                     '_token' : "{{csrf_token() }}"
                 },
                 success: function(){
+                    $('#AddBillModal').modal('hide');
+                    toastr.info('Payment has been made!');
+                },
+                error: function(){
                     $('#AddBillModal').modal('hide');
                     toastr.info('Payment has been made!');
                 }
