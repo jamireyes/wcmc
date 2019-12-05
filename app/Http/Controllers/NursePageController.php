@@ -9,6 +9,7 @@ use App\doctor_schedule;
 use App\appointment;
 use App\user_vital_signs;
 use App\medical_service;
+use Carbon\Carbon;
 use Auth;
 use DB;
 
@@ -17,7 +18,23 @@ class NursePageController extends Controller
 {
     public function dashboard()
     {
-        return view('pages.nurse.dashboard');
+        $date = date('Y-m-d');
+
+        $todaystaff = DB::table('appointments')
+                            ->where('appointment_date', '=', Carbon::now()->format('Y-m-d'))
+                            ->where('status','APPROVED')
+                            ->count();
+
+        $patientrequeststaff = DB::table('appointments')
+                            // ->where('appointment_date', '=', Carbon::now()->format('Y-m-d'))
+                            ->where('status','PENDING')
+                            ->count();
+
+        $patientcountstaff = DB::table('users')
+                            ->where('users.role_id', '=', '2')
+                            ->count();
+
+        return view('pages.nurse.dashboard', compact('todaystaff', 'patientrequeststaff', 'patientcountstaff'));
     }
 
     public function appointment()

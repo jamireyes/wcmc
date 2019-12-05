@@ -38,10 +38,13 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
         Route::post('notify/getNotifications', 'NotificationController@getNotifications')->name('notify.getNotifications');
         Route::post('notify/storeNotifications', 'NotificationController@storeNotifications')->name('notify.storeNotifications');
         Route::get('notify/seenNotifications', 'NotificationController@seenNotifications')->name('notify.seenNotifications');
-        Route::get('appointment/today', 'AppointmentController@todaystaff');
-        Route::get('appointment/request', 'AppointmentController@patientrequeststaff');
-        Route::get('appointment/count', 'AppointmentController@patientcountstaff');
+        Route::get('appointment/todaystaff', 'AppointmentController@todaystaff');
+        Route::get('appointment/requeststaff', 'AppointmentController@patientrequeststaff');
+        Route::get('appointment/countstaff', 'AppointmentController@patientcountstaff');
 
+        Route::get('appointment/today', 'AppointmentController@today');
+        Route::get('appointment/request', 'AppointmentController@patientrequest');
+        Route::get('appointment/count', 'AppointmentController@patientcount');
 
 
         // ADMIN ROUTES
@@ -105,9 +108,6 @@ Route::group(['middleware' => 'preventBackHistory'], function() {
             Route::post('billing/destroy', 'BillingController@destroy')->name('billing.destroy');
             Route::post('billing/restore', 'BillingController@restore')->name('billing.restore');
             Route::post('billing/search', 'BillingController@getBilling')->name('billing.getBilling');
-            Route::get('appointment/today', 'AppointmentController@today');
-            Route::get('appointment/request', 'AppointmentController@patientrequest');
-            Route::get('appointment/count', 'AppointmentController@patientcount');
         });
 
         // DOCTOR ROUTES

@@ -25,35 +25,23 @@ class AppointmentController extends Controller
     {
         $date = date('Y-m-d');
 
-        $appointments = DB::table('appointments')
-                            ->where('appointment_date', '=', $date)
+        $today = DB::table('appointments')
+                            ->where('appointment_date', '=', Carbon::now()->format('Y-m-d'))
                             ->where('status','APPROVED')
                             ->count();
 
-        return $appointments;
-    }
-    
-    public function patientrequest(){
-        $date = date('Y-m-d');
-
-        $appointments = DB::table('appointments')
-                            ->where('appointment_date', '=', $date)
+        $patientrequest = DB::table('appointments')
+                            ->where('appointment_date', '=', Carbon::now()->format('Y-m-d'))
                             ->where('status','PENDING')
                             ->count();
-
-        return $appointments;
-    }
-
-
-    public function patientcount(){
-
-        $appointments = DB::table('users')
+        
+        $patientcount = DB::table('users')
                             ->where('users.role_id', '=', '2')
                             ->count();
+        // dd(Carbon::now()->format('Y-m-d'));
 
-        return $appointments;
+        // return view('pages.admin.dashboard', compact('today', 'patientrequest', 'patientcount'));
     }
-
 
     // staff
     public function todaystaff()

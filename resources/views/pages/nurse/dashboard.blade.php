@@ -15,7 +15,7 @@
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <p class="card-category">TODAY'S APPOINTMENTS</p>
-                                <h3 class="card-title" id="today-appoint"></h3>
+                                <h3 class="card-title" id="today-appoint">{{$todaystaff}}</h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats"></div>
@@ -29,7 +29,7 @@
                                     <i class="material-icons">info_outline</i>
                                 </div>
                                 <p class="card-category">REQUESTED APPOINTMENTS</p>
-                                <h3 class="card-title" id="requested-appoint"></h3>
+                                <h3 class="card-title" id="requested-appoint">{{$patientrequeststaff}}</h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats"></div>
@@ -43,7 +43,7 @@
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </div>
                                 <p class="card-category">NO. OF PATIENTS</p>
-                                <h3 class="card-title" id="patientcount-appoint"></h3>
+                                <h3 class="card-title" id="patientcount-appoint">{{$patientcountstaff}}</h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">

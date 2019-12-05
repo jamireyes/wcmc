@@ -22,7 +22,26 @@ class AdminPageController extends Controller
 {
     public function dashboard()
     {
-        return view('pages.admin.dashboard');
+        $date = date('Y-m-d');
+
+        $today = DB::table('appointments')
+                            ->where('appointment_date', '=', Carbon::now()->format('Y-m-d'))
+                            ->where('status', 'APPROVED')
+                            ->count();
+
+        $patientrequest = DB::table('appointments')
+                            // ->where('appointment_date', '=', Carbon::now()->format('Y-m-d'))
+                            ->where('status', 'PENDING')
+                            ->count();
+        
+        $patientcount = DB::table('users')
+                            ->where('users.role_id', '=', '2')
+                            ->count();
+        // dd(Carbon::now()->format('Y-m-d'));
+        // dd($today);
+
+        return view('pages.admin.dashboard', compact('today', 'patientrequest', 'patientcount'));
+        // return view('pages.admin.dashboard');
     }
 
     public function appointment()

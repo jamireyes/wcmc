@@ -209,7 +209,7 @@
                 },
                 error: function(){
                     $('#RequestAppointment').modal('hide');
-                    toastr.error('Something went wrong :/', 'Error!');
+                    // toastr.error('Something went wrong :/', 'Error!');
                 }
             });
         });
