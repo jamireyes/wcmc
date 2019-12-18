@@ -2,21 +2,6 @@
     overflow-x: hidden !important;
 }
 
-// .bd-placeholder-img {
-//     font-size: 1.125rem;
-//     text-anchor: middle;
-//     -webkit-user-select: none;
-//     -moz-user-select: none;
-//     -ms-user-select: none;
-//     user-select: none;
-// }
-
-// @media (min-width: 768px) {
-//     .bd-placeholder-img-lg {
-//         font-size: 3.5rem;
-//     }
-// }
-
 .font-abril {
     font-family: 'Abril Fatface', cursive;
 }
@@ -53,14 +38,6 @@
     .carousel-caption {
         top: 200px !important;
         text-align: center !important;
-        // h2 {
-        //     text-shadow: 2px 2px 5px $dark !important;
-        //     font-size: 20px !important;
-        // }
-        // p {
-        //     text-shadow: 2px 2px 5px $dark !important;
-        //     font-size: 12px !important;
-        // }
     }
 }
 @media (min-width: 576px) and (max-width: 1199.98px) {
@@ -129,11 +106,6 @@
 
 .carousel-item {
     height: 100vh !important;
-    // background: no-repeat center center scroll !important;
-    // -webkit-background-size: cover !important;
-    // -moz-background-size: cover !important;
-    // -o-background-size: cover !important;
-    // background-size: cover !important;
 }
 
 .carousel-item > img {
